@@ -1,0 +1,18 @@
+#
+# Misc PATH additions
+#
+if [ -d $HOME/eclipse ]; then
+	export PATH=$PATH:$HOME/eclipse
+fi
+
+if [ -d $HOME/bin ]; then
+	export PATH=$PATH:$HOME/bin
+fi
+
+if [ -d $HOME/dbconfig/bin ]; then
+	export PATH=$PATH:$HOME/dbconfig/bin
+fi
+
+if [ -d $HOME/avr/bin ]; then
+    export PATH=$PATH:$HOME/avr/bin
+fi

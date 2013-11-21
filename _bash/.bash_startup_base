@@ -1,0 +1,15 @@
+#! /bin/bash
+#
+# Startup scripts and functions
+# IMPORTANT: DO NOT sym-link this file. 
+#   Hard-copy it to each machine so it can be changed.
+#
+clear
+
+if [[ `shparproc` != ssh* ]]; then
+	echo "Not connected via SSH."
+else
+	echo "Connected via SSH."
+fi
+
+ls
