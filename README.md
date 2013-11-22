@@ -35,5 +35,6 @@ Prerequisites
 
 Thanks to
 ---------
-[John Anderson's dotfiles repo](https://github.com/sontek/dotfiles)
+[John Anderson's dotfiles](https://github.com/sontek/dotfiles)
+[Mathias Bynens's dotfiles](https://github.com/mathiasbynens/dotfiles)
 

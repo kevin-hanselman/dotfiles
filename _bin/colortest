@@ -362,4 +362,5 @@ else {
     print "\n";
 }
 print "0m";
+print "\n";
 exit;

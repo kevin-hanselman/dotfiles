@@ -16,7 +16,6 @@ confirm() {
 link_file() {
     source="${PWD}/$1"
     target="${HOME}/${1/_/.}"
-    echo "source=$source,  target=$target"
 
     if [ ! -e "${source}" ]; then
         echo "File '${source}' not found." >&2
