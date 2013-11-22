@@ -9,23 +9,23 @@
 # Run helper scripts to get aliases, functions, etc.
 #
 if [ -f $HOME/.bash_aliases ]; then
-	source $HOME/.bash_aliases
+	source $HOME/.bash/aliases
 fi
 
 if [ -f $HOME/.bash_functions ]; then
-	source $HOME/.bash_functions
+	source $HOME/.bash/functions
 fi
 
 if [ -f $HOME/.bash_colors ]; then
-	source $HOME/.bash_colors
+	source $HOME/.bash/colors
 fi
 
 if [ -f $HOME/.bash_paths ]; then
-	source $HOME/.bash_paths
+	source $HOME/.bash/paths
 fi
 
 if [ -f $HOME/.bash_vars ]; then
-	source $HOME/.bash_vars
+	source $HOME/.bash/vars
 fi
 
 if [ -f $HOME/.cygrc ]; then

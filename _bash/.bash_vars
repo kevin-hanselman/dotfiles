@@ -1,8 +1,0 @@
-export EDITOR="vim"
-export ECE="khanselman@hammer.eece.maine.edu"
-export BPI="xbian@192.168.2.7"
-export XPI="xbian@192.168.2.9"
-export IRL="irl@130.111.219.37"
-
-#export PROMPT_COMMAND="history -a"
-export LESS="-R"
