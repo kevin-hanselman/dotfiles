@@ -16,7 +16,7 @@ alias src='source ~/.bash_profile'
 alias functions='vim ~/.bash/functions'
 alias aliases='vim ~/.bash/aliases'
 alias startup='vim ~/.bash/startup'
-alias paths='vim ~/.bash/paths'
+alias paths='vim ~/.bash/path'
 alias vars='vim ~/.bash/vars'
 
 alias brc='vim ~/.bashrc'
