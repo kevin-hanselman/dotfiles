@@ -8,23 +8,23 @@
 #
 # Run helper scripts to get aliases, functions, etc.
 #
-if [ -f $HOME/.bash_aliases ]; then
+if [ -f $HOME/.bash/aliases ]; then
 	source $HOME/.bash/aliases
 fi
 
-if [ -f $HOME/.bash_functions ]; then
+if [ -f $HOME/.bash/functions ]; then
 	source $HOME/.bash/functions
 fi
 
-if [ -f $HOME/.bash_colors ]; then
+if [ -f $HOME/.bash/colors ]; then
 	source $HOME/.bash/colors
 fi
 
-if [ -f $HOME/.bash_paths ]; then
+if [ -f $HOME/.bash/paths ]; then
 	source $HOME/.bash/paths
 fi
 
-if [ -f $HOME/.bash_vars ]; then
+if [ -f $HOME/.bash/vars ]; then
 	source $HOME/.bash/vars
 fi
 
@@ -111,7 +111,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # Miscellaneous scripts/commands to run at startup
-if [ -f ~/.bash_startup ]; then
-	source ~/.bash_startup
+if [ -f ~/.bash/startup ]; then
+	source ~/.bash/startup
 fi
 
