@@ -9,9 +9,9 @@ set shiftwidth=4
 set tabstop=4
 set expandtab   " use spaces in place of tabs
 set smarttab
-set autoindent  
-"set smartindent " apparently decprecated 
+set autoindent
 set listchars=tab:->,trail:~
+set list
 
 " GENERAL
 set autoread    " read when file is changed externally
