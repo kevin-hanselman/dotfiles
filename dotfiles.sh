@@ -28,7 +28,6 @@ link_file() {
         mv $target $target.df.bak
     fi
 
-    #[ -n "$2" ] && echo "L: $1 -> $target"
     ln -sf $2 $source $target
 }
 
@@ -37,7 +36,6 @@ unlink_file() {
     target="${HOME}/${1/_/.}"
 
     if [ -L "$target" ]; then
-        #[ -n "$2" ] && echo "Removing '$target'."
         rm $2 $target
         if [ -e "$target.df.bak" ]; then
             [ -n "$2" ] && echo "Restoring from '$target.df.bak'."

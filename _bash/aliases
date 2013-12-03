@@ -1,6 +1,6 @@
 #! /usr/bash
 #
-# Aliases 
+# Aliases
 #
 
 alias ls='ls --color=auto'
@@ -24,7 +24,8 @@ alias bprof='vim ~/.bash_profile'
 alias vrc='vim ~/.vimrc'
 alias tconf='vim ~/.tmux.conf'
 
-alias cmk='colormake'
+# apt/dpkg shortcuts
+alias pkg-stat='dpkg --get-selections | grep'
 
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
