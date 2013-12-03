@@ -16,20 +16,21 @@ Features
 Usage
 -----
 ```
-usage: dotfiles.sh [options] [restore | file ... ]
+usage: dotfiles.sh [options] [file ... ]
 
 Configuration file manager
 Author: Kevin Hanselman | www.github.com/kevlar1818/dotfiles
 
 Arguments:
-  restore	remove symlinks and restore backups if present
   file(s)	attempts to link only the glob/file(s)
   		 (defaults to all files matching the glob '_*')
 
 Options:
   -h		show this help text and exit
+  -r		remove symlinks and restore backups if present
+  -x		all excluding '[file] ...' (ignored if no file args)
   -y		don't ask for confirmation
-  -x		sync all, excluding '[file] ...' (ignored if no file args)
+  -q		quiet mode/suppress output
 ```
 
 Prerequisites
