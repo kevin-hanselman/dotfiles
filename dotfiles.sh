@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
-
-# utility functions
+#
+#   dotfiles.sh
+#   http://www.github.com/kevlar1818/dotfiles
+#
+#   Copyright 2013 Kevin Hanselman
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
 confirm() {
     # call with a prompt string or use a default
     read -r -p "${1:-Continue? [y/N]} " response
@@ -46,18 +62,22 @@ unlink_file() {
 
 usage() {
     echo -e "usage: `basename $0` [options] [file ... ]\n"
-    echo -e "Configuration file manager"
-    echo -e "Author: Kevin Hanselman | www.github.com/kevlar1818/dotfiles"
+    echo -e "Configuration file manager | www.github.com/kevlar1818/dotfiles"
+    echo -e "\nCopyright 2013 Kevin Hanselman (See LICENSE or source)"
     echo -e "\nArguments:"
     echo -e "  file(s)\tattempts to link only the glob/file(s)"
     echo -e "  \t\t (defaults to all files matching the glob '_*')"
     echo -e "\nOptions:"
     echo -e "  -h\t\tshow this help text and exit"
     echo -e "  -r\t\tremove symlinks and restore backups if present"
-    echo -e "  -x\t\tall excluding '[file] ...' (ignored if no file args)"
+    echo -e "  -x\t\tact on all files excluding '[file] ...'"
     echo -e "  -y\t\tdon't ask for confirmation"
     echo -e "  -q\t\tquiet mode/suppress output"
 }
+
+# get path to this script and cd quietly
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+pushd "$dir" > /dev/null
 
 verbose="-v"
 while getopts ":h :y :x :r :q" opt; do
@@ -131,4 +151,5 @@ for i in $files; do
         link_file "$i" "$verbose"
     fi
 done
+popd > /dev/null
 
