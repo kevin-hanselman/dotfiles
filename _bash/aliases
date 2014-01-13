@@ -8,6 +8,8 @@ alias ll='ls -Alh'
 
 alias cls='clear; ls'
 
+#alias tmux='tmux -2'
+
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -15,7 +17,7 @@ alias egrep='egrep --color=auto'
 alias src='source ~/.bash_profile'
 alias functions='vim ~/.bash/functions'
 alias aliases='vim ~/.bash/aliases'
-alias startup='vim ~/.bash/startup'
+alias startup='vim ~/.bash/init.sh'
 alias paths='vim ~/.bash/path'
 alias vars='vim ~/.bash/vars'
 
@@ -36,8 +38,8 @@ alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # View HTTP traffic
-alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i eth0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Get week number
 alias week='date +%V'

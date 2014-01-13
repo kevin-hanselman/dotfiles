@@ -47,6 +47,12 @@ chext()
     for f in *$1; do
         name=`echo $f | cut -d . -f 1`
         new=$name$2
-        mv $f $new
+        mv -i $f $new
     done
 }
+
+cmd-exists()
+{
+    type $1 &> /dev/null
+}
+

@@ -125,9 +125,9 @@ fi
 
 shift $(($OPTIND-1))
 
-if [ -n "$*" ] && [ -z "$exclude" ]; then
+if [ -n "$*" ] && [ -z "$exclude" ]; then # if we passed args to this script
     files=$@
-else
+else # default to all files matching glob _*
     files=_*
 fi
 for i in $files; do
