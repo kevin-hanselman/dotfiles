@@ -5,7 +5,7 @@
 
 cl()
 {
-	cd $1; clear; ls
+    clear; cd $@; ls
 }
 
 cltest()
@@ -35,7 +35,7 @@ function fs() {
 
 shparproc()
 {
-	cat /proc/$PPID/status | head -1 | cut -f2
+    cat /proc/$PPID/status | head -1 | cut -f2
 }
 
 # change extensions for all files in the current directory
@@ -54,5 +54,10 @@ chext()
 cmd-exists()
 {
     type $1 &> /dev/null
+}
+
+gui2pid()
+{
+    xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps `cat`
 }
 

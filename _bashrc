@@ -30,8 +30,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=500
-HISTFILESIZE=1000
+HISTSIZE=2000
+HISTFILESIZE=2000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -44,7 +44,7 @@ shopt -s checkwinsize
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-	. /etc/bash_completion
+    . /etc/bash_completion
 fi
 
 export LESS="-R"

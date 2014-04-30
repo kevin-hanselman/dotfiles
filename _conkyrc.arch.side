@@ -1,0 +1,92 @@
+background yes
+use_xft yes
+#xftfont DejaVu Sans:size=10
+xftfont Roboto:style=Medium:size=10
+xftalpha 0.1
+update_interval 5.0
+total_run_times 0
+own_window no
+own_window_type override
+#own_window_transparent yes
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 200 5
+maximum_width 200
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color bbb
+alignment top_right
+gap_x 5
+gap_y 25
+no_buffers no
+uppercase no
+cpu_avg_samples 2
+net_avg_samples 1
+override_utf8_locale yes
+color1 1793d1
+color2 fff
+
+TEXT
+${image ~/.icons/archlinux-logo-light-90dpi.png -s 200x66}
+${font}${color}
+${voffset 20}
+${font Roboto:size=10}${color2}SYSTEM ${color1}${hr 2}
+${font}${color}$sysname $kernel ${alignr} $machine
+#${execi 6000 cat /proc/cpuinfo | grep 'model name' | head -n 1 | cut -d' ' -f3-5}
+#${execi 6000 lspci -v | grep VGA | cut -d' ' -f12-15 | tr -d "[]"}
+Uptime ${alignr}${uptime}
+${if_empty ${battery_percent}}${else}
+${font Roboto:size=10}${color2}BATTERY ${color1}${hr 2}
+${font}${color}${battery_percent}% ${battery}${alignr}${battery_time}
+${color1}${battery_bar}
+${voffset -15}${color}${cpubar cpu9}
+${endif}
+${font Roboto:size=10}${color2}CPU ${color1}${hr 2}
+${font}${color}${cpu cpu0}%${alignr}(${freq_g} GHz)
+${cpugraph 15,200 1793d1 1793d1}
+
+${alignr}${running_processes} / ${processes} running processes
+#1: ${cpu cpu1}% ${cpubar 6,90 cpu1}${alignr}5: ${cpu cpu5}% ${cpubar 6,90 cpu5}
+#2: ${cpu cpu2}% ${cpubar 6,90 cpu2}${alignr}6: ${cpu cpu6}% ${cpubar 6,90 cpu6}
+#3: ${cpu cpu3}% ${cpubar 6,90 cpu3}${alignr}7: ${cpu cpu7}% ${cpubar 6,90 cpu7}
+#4: ${cpu cpu4}% ${cpubar 6,90 cpu4}${alignr}8: ${cpu cpu8}% ${cpubar 6,90 cpu8}
+${top name 1}${alignr}${top pid 1}  ${alignr}${top cpu 1}%
+${top name 2}${alignr}${top pid 2}  ${alignr}${top cpu 2}%
+${top name 3}${alignr}${top pid 3}  ${alignr}${top cpu 3}%
+#${top name 4}${alignr}${top pid 4}  ${alignr}${top cpu 4}%
+
+${font Roboto:size=10}${color2}MEMORY ${color1}${hr 2}
+${font}${color}$memperc%${alignr}$mem / $memmax
+${memgraph 15,200 1793d1 1793d1}
+
+${top_mem name 1}${alignr}${top pid 1}  ${alignr}${top_mem mem 1}%
+${top_mem name 2}${alignr}${top pid 2}  ${alignr}${top_mem mem 2}%
+${top_mem name 3}${alignr}${top pid 3}  ${alignr}${top_mem mem 3}%
+#${top_mem name 4}${alignr}${top pid 4}  ${alignr}${top_mem mem 4}%
+
+${font Roboto:size=10}${color2}DISK ${color1}${hr 2}
+${font}${color}/           ${alignc}${fs_used /} / ${fs_size /}${alignr}${fs_used_perc /}%
+${color1}${fs_bar /}
+${voffset -15}${color}${cpubar cpu9}
+/home  ${alignc}${fs_used /home} / ${fs_size /home}${alignr}${fs_used_perc /home}%
+${color1}${fs_bar /home}
+${voffset -15}${color}${cpubar cpu9}
+
+${font}${color}Read: ${diskio_read /dev/sda}${alignr}Write: ${diskio_write /dev/sda}
+${diskiograph_read /dev/sda 10,95 1793d1 1793d1}${alignr}${diskiograph_write /dev/sda 10,95 1793d1 1793d1}
+${top_io name 1}${alignr}R: ${top_io io_read 1}${alignr}W: ${top_io io_write 1}
+${top_io name 2}${alignr}R: ${top_io io_read 2}${alignr}W: ${top_io io_write 2}
+${top_io name 3}${alignr}R: ${top_io io_read 3}${alignr}W: ${top_io io_write 3}
+#${top_io name 4}${alignr}R: ${top_io io_read 4}${alignr}W: ${top_io io_write 4}
+
+${font Roboto:size=10}${color2}NETWORK ${color1}${hr 2}
+${if_existing /proc/net/route eno1}${font}${color}eno1:${alignr}${addr eno1}
+Down: ${downspeed eno1}/s${alignr}Up: ${upspeed eno1}/s
+${downspeedgraph eno1 15,95 1793d1 1793d1}${alignr}${upspeedgraph eno1 15,95 1793d1 1793d1}
+${voffset 5}${totaldown eno1}${alignr}${totalup eno1}
+$endif${if_existing /proc/net/route wlp3s0}${font}${color}wlp3s0:${alignr}${addr wlp3s0}
+Down: ${downspeed wlp3s0}/s${alignr}Up: ${upspeed wlp3s0}/s
+${downspeedgraph wlp3s0 15,95 1793d1 1793d1}${alignr}${upspeedgraph wlp3s0 15,95 1793d1 1793d1}
+${voffset 5}${totaldown eno1}${alignr}${totalup eno1}${endif}

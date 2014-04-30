@@ -1,0 +1,31 @@
+background yes
+use_xft yes
+xftfont DejaVu Sans Mono:size=10
+#xftalpha 0.1
+update_interval 1
+total_run_times 0
+own_window no
+#own_window_type override
+#own_window_transparent yes
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 800 5
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+show_graph_scale no
+default_color fff
+alignment bottom_left
+gap_x 43
+gap_y 5
+#pad_percents 3
+no_buffers no
+uppercase no
+#cpu_avg_samples 1
+#net_avg_samples 1
+override_utf8_locale yes
+
+TEXT
+CPU ${cpu cpu0}%${goto 110}${cpugraph 10,60 0088cc 0088cc}|DR ${diskio_read}${goto 260}${diskiograph_read /dev/sda 10,60 0088cc 0088cc}|${if_existing /proc/net/route eno1}UL ${upspeed eno1}${goto 410}${upspeedgraph eno1 10,60 0088cc 0088cc}|eno1${else}${if_existing /proc/net/route wlp3s0}UL ${upspeed wlp3s0}${goto 410}${upspeedgraph wlp3s0 10,60 0088cc 0088cc}|wlp3s0${endif}${endif}
+MEM ${memperc}%${goto 110}${memgraph 10,60 0088cc 0088cc}|DW ${diskio_write}${goto 260}${diskiograph_write /dev/sda 10,60 0088cc 0088cc}|${if_existing /proc/net/route eno1}DL ${downspeed eno1}${goto 410}${downspeedgraph eno1 10,60 0088cc 0088cc}|${addr eno1}${else}${if_existing /proc/net/route wlp3s0}DL ${downspeed wlp3s0}${goto 410}${downspeedgraph wlp3s0 10,60 0088cc 0088cc}|${addr wlp3s0}${endif}${endif}
