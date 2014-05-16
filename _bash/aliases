@@ -26,6 +26,8 @@ alias bprof='vim ~/.bash_profile'
 alias vrc='vim ~/.vimrc'
 alias tconf='vim ~/.tmux.conf'
 
+alias vimprof='vim --startuptime /dev/stdout +qall'
+
 alias bigfiles="find . -type f -print0 | xargs -0 du | sort -n | tail -30 | cut -f2 | xargs -I{} du -sh {} && echo total: $(du -sh . | awk '{print $1}')"
 
 # apt/dpkg
@@ -37,6 +39,8 @@ alias pac-aur='pacman -Qmq'
 alias pac-manual='comm -23 <(pacman -Qeq|sort) <(pacman -Qgq base base-devel|sort)'
 alias pac-standalone='comm -23 <(pacman -Qetq|sort) <(pacman -Qgq base base-devel|sort)'
 alias pac-log='less /var/log/pacman.log'
+alias pac-dated="expac -l ',' -H M -t '%s %c' '(%N) [%G] %l\t%m\t%n\t' | grep '()' | grep -v '\[base\|base-devel\]' | cut -d' ' -f3- | sort -n | cut -d' ' -f2-"
+alias pac-recent="expac -l ',' -H M -t '%s %c' '(%N) [%G] %l\t%m\t%n\t' | grep '()' | grep -v '\[base\|base-devel\]' | cut -d' ' -f3- | awk -v old=\$(date --date='2 weeks ago 00:00' +%s) '\$1>old' | sort -n | cut -d' ' -f2-"
 
 # IP addresses
 #alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
