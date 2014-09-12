@@ -1,38 +1,50 @@
 " run vundle
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+" General maps and functions
+
+" play nice with Vim sessions: close all extraneous buffers before leaving vim
+autocmd VimLeavePre * :tabdo call CloseExtraBuffers()
+function! CloseExtraBuffers()
+    :NERDTreeClose
+    :TagbarClose
+    :GundoHide
+endfunction
 
     " plugin management
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
     " fancypants status line. note that the powerline patched fonts are installed and used above
-Bundle 'bling/vim-airline'
+Plugin 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline_theme="base16"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 
     " nice motion plugin, relieves 'w' spam
-Bundle 'Lokaltog/vim-easymotion'
+Plugin 'Lokaltog/vim-easymotion'
 
     " file tree
-Bundle 'scrooloose/nerdtree'
-map <A-f> :NERDTreeFind<CR>
+Plugin 'scrooloose/nerdtree'
+"map <leader>f :NERDTreeFind<CR>
 
     " NERDTree syncs and plays better across tabs
-Bundle 'jistr/vim-nerdtree-tabs'
-map <C-f> :NERDTreeMirrorToggle<CR>
-let g:nerdtree_tabs_open_on_gui_startup=0
+"Plugin 'jistr/vim-nerdtree-tabs'
+"map <C-f> :NERDTreeMirrorToggle<CR>
+"let g:nerdtree_tabs_open_on_gui_startup=0
+
+Plugin 'tpope/vim-vinegar'
 
     " syntax checking and reporting (YCM integration removed in Jan 2014)
-Bundle 'scrooloose/syntastic'
-let g:syntastic_cpp_checkers = [ 'cpplint', 'gcc' ]
+Plugin 'scrooloose/syntastic'
+"let g:syntastic_cpp_checkers = [ 'cpplint', 'gcc' ]
 
     " multi-cursors ala Sublime Text
-"Bundle 'terryma/vim-multiple-cursors'
+"Plugin 'terryma/vim-multiple-cursors'
 
     " syntax autocompletion and intellisense. requires llvm/clang for c/c++
-Bundle 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 let g:ycm_enable_diagnostic_signs = 0
 let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_add_preview_to_completeopt = 1
@@ -40,68 +52,77 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 "let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 let g:ycm_confirm_extra_conf = 0
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-nnoremap <C-]> :YcmCompleter GoTo<CR>
-inoremap <C-]> :YcmCompleter GoTo<CR>
+nnoremap <leader>gd :YcmCompleter GoTo<CR>
+"inoremap <leader>gd :YcmCompleter GoTo<CR>
 
     " adds a window that shows all of the functions in the current file
-Bundle 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-map <C-b> :TagbarToggle<CR>
+map <leader>b :TagbarToggle<CR>
 
     " visual undo tree. nice for when you need to go back to a branch
-Bundle 'sjl/gundo.vim'
-map <C-g> :GundoToggle<CR>
+Plugin 'sjl/gundo.vim'
+map <leader>g :GundoToggle<CR>
 
     " ctrl-p for go to anything
-Bundle 'kien/ctrlp.vim'
-inoremap <M-p> :CtrlPTag<CR>
-nnoremap <M-p> :CtrlPTag<CR>
-vnoremap <M-p> :CtrlPTag<CR>
+Plugin 'kien/ctrlp.vim'
+nnoremap <leader>p :CtrlPTag<CR>
+vnoremap <leader>p :CtrlPTag<CR>
 if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
     " provides a method to switch between .h and .cpp
-Bundle 'derekwyatt/vim-fswitch'
-map <M-o> :FSHere<CR>
+"Plugin 'derekwyatt/vim-fswitch'
+"map <leader>f :FSHere<CR>
+Plugin 'vim-scripts/a.vim'
+map <leader>a :A<CR>
 
     " vim front end for 'the silver searcher' - an awfully named, incredibly fast search program (installation required)
-Bundle 'rking/ag.vim'
+Plugin 'rking/ag.vim'
 let g:aghighlight = 1
-nnoremap <M-/> :call SearchCurrentWord() <Bar> tabnew <Bar> AgFromSearch<CR>
-inoremap <M-/> :call SearchCurrentWord() <Bar> tabnew <Bar> AgFromSearch<CR>
+let g:agprg="ag --column --smart-case"
+nnoremap <leader>/ :call SearchCurrentWord() <Bar> tabnew <Bar> AgFromSearch<CR>
+"inoremap <leader>/ :call SearchCurrentWord() <Bar> tabnew <Bar> AgFromSearch<CR>
 
     " provides hg/git change status in the left gutter
-Bundle 'mhinz/vim-signify'
+Plugin 'mhinz/vim-signify'
 
     " shows function/variable signature on mouse-hover when available
-Bundle 'vim-scripts/Tag-Signature-Balloons'
+"Plugin 'vim-scripts/Tag-Signature-Balloons'
 
     " shows indent levels, handy for python code
-Bundle 'nathanaelkane/vim-indent-guides'
+Plugin 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
-nnoremap <M-i> :IndentGuidesToggle<CR>
-inoremap <M-i> :IndentGuidesToggle<CR>
+nnoremap <leader>i :IndentGuidesToggle<CR>
 
     " colorschemes
-Bundle 'noah/vim256-color'
-"Bundle 'nanotech/jellybeans.vim'
-"Bundle 'flazz/vim-colorschemes'
+Plugin 'w0ng/vim-hybrid'
+"Plugin 'noah/vim256-color'
+"Plugin 'nanotech/jellybeans.vim'
+"Plugin 'flazz/vim-colorschemes'
 
     " improved vim session management
-Bundle 'tpope/vim-obsession'
-"Bundle 'xolox/vim-misc'
-"Bundle 'xolox/vim-session'
+Plugin 'tpope/vim-obsession'
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-session'
 
     " handy shortcuts, buffer movement
-"Bundle 'tpope/vim-unimpaired'
+"Plugin 'tpope/vim-unimpaired'
 
     " browse and manage open buffers
-Bundle 'jlanzarotta/bufexplorer'
+Plugin 'jlanzarotta/bufexplorer'
 
     " commands for modifying quotes, brackets, etc.
-Bundle 'tpope/vim-surround'
+Plugin 'tpope/vim-surround'
 
-"Bundle 'tmhedberg/matchit'
+Plugin 'roman/golden-ratio'
+let g:golden_ratio_wrap_ignored = 0
+
+"Plugin 'tmhedberg/matchit'
+
+Plugin 'edkolev/promptline.vim'
+
+call vundle#end()
