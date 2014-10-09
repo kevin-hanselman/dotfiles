@@ -1,0 +1,54 @@
+background yes
+out_to_console yes
+out_to_x no
+short_units yes
+update_interval 1
+#temperature_unit fahrenheit
+
+# BAR formatted colors
+#old red: ff802828
+template0 %{F\\\#ff0088cc}
+template1 %{F\\\#ffb27d12}
+template2 %{F\\\#ffbb2211}
+
+TEXT
+S\
+%{A:cpu:}CPU \
+${if_match ${acpitemp}<46}${template0}${else}\
+${if_match ${acpitemp}<56}${template1}${else}\
+${if_match ${acpitemp}>=56}${template2}${endif}${endif}${endif}\
+${acpitemp}°C%{F-} \
+${if_match ${cpu cpu0}<20}${template0}${else}\
+${if_match ${cpu cpu0}<60}${template1}${else}\
+${if_match ${cpu cpu0}<=100}${template2}${endif}${endif}${endif}\
+${cpu cpu0}%%%{F-}%{A} \
+%{A:mem:}MEM \
+${if_match ${memperc}<30}${template0}${else}\
+${if_match ${memperc}<70}${template1}${else}\
+${if_match ${memperc}>=70}${template2}${endif}${endif}${endif}\
+${mem}%{F-}%{A} \
+%{A:net:}NET \
+${if_existing /proc/net/route wlp3s0}\
+${template0}${wireless_essid wlp3s0}: ${wireless_link_qual_perc wlp3s0}%%%{F-}\
+${else}\
+${if_existing /proc/net/route eno1}\
+${template0}eno1%{F-}\
+${else}\
+${template2}n/a%{F-}\
+${endif}${endif}%{A} \
+%{A:disk:}DISK \
+${if_match ${fs_free_perc /}>=30}${template0}${else}\
+${if_match ${fs_free_perc /}<30}${template1}${else}\
+${if_match ${fs_free_perc /}<10}${template2}${endif}${endif}${endif}\
+/ ${fs_used_perc /}%%%{F-} \
+${if_match ${fs_free_perc /home}>=30}${template0}${else}\
+${if_match ${fs_free_perc /home}<30}${template1}${else}\
+${if_match ${fs_free_perc /home}<10}${template2}${endif}${endif}${endif}\
+/home ${fs_used_perc /home}%%%{F-}%{A} \
+%{A:bat:}BAT \
+${if_match ${battery_percent}<20}${template2}${else}\
+${if_match ${battery_percent}<60}${template1}${else}\
+${if_match ${battery_percent}>=60}${template0}${endif}${endif}${endif}\
+${battery_percent}%%%{F-}%{A} \
+VOL \
+${template0}${execi 1 amixer sget Master,0 | egrep -o '([0-9]+%|\[(on|off)\])' | sed 's/\%/\%\%/' | sed ':a;N;$!ba;s/\n/ /g'}%{F-} \

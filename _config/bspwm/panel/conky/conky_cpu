@@ -1,0 +1,35 @@
+out_to_x yes
+out_to_console no
+background yes
+
+own_window yes
+own_window_class conky_cpu
+own_window_type panel
+#own_window_argb_visual yes
+#own_window_argb_value 240
+double_buffer yes
+
+minimum_size 150 80
+alignment top_left
+gap_y 28
+
+#own_window_colour afaf87
+own_window_colour 2d2d2d
+default_color c5c8c6
+color1 5f87af
+
+#use_xft yes
+#xftfont Tewi:size=7
+draw_shades no
+
+update_interval 2
+
+TEXT
+Kernel:${alignr}${kernel}
+Uptime:${alignr}${uptime}
+${cpugraph cpu0 20,200 0088cc 0088cc}
+${top name 1}${alignr}${top pid 1}  ${alignr}${top cpu 1}%
+${top name 2}${alignr}${top pid 2}  ${alignr}${top cpu 2}%
+${top name 3}${alignr}${top pid 3}  ${alignr}${top cpu 3}%
+${top name 4}${alignr}${top pid 4}  ${alignr}${top cpu 4}%
+${top name 5}${alignr}${top pid 5}  ${alignr}${top cpu 5}%

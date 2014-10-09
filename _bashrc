@@ -4,14 +4,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-#
-# Run helper scripts to get aliases, functions, etc.
-#
-for file in ~/.bash/{path,prompt,vars,aliases,functions,colors,init.sh}; do
-    [ -r "$file" ] && [ -f "$file" ] && source "$file"
-done
-unset file
-
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
@@ -38,14 +30,26 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+#
+# Variables
+#
+export EDITOR=vim
+#export LESS="-R"
+
+#
+# Path additions
+#
+if [ -d $HOME/.bin ]; then
+    export PATH=$PATH:$HOME/.bin
 fi
 
-export LESS="-R"
+# Aliases and functions
+[ -f ~/.bash_additions ] && source ~/.bash_additions
 
+if [ -f ~/.bash_prompt ]; then
+    source ~/.bash_prompt
+else
+    export PS1='\[\e[0;34m\]\u\[\e[0;37m\] @ \[\e[0;35m\]\h\[\em\] \[\e[1;34m\]\w\[\e[m\] \[\e[0;37m\]\$\[\e[m\] \[\e[1;37m\]'
+fi

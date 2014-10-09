@@ -1,4 +1,4 @@
-#! /usr/bash
+#! /bin/bash
 #
 # Aliases
 #
@@ -20,10 +20,14 @@ alias aliases='vim ~/.bash/aliases'
 alias startup='vim ~/.bash/init.sh'
 alias paths='vim ~/.bash/path'
 alias vars='vim ~/.bash/vars'
+alias Xres='xrdb -merge ~/.Xresources'
+
+alias pg='ps -ef | grep -v grep | grep'
 
 alias brc='vim ~/.bashrc'
 alias bprof='vim ~/.bash_profile'
 alias vrc='vim ~/.vimrc'
+alias bundles='vim ~/.vimrc.bundles'
 alias tconf='vim ~/.tmux.conf'
 
 alias vimprof='vim --startuptime /dev/stdout +qall'
@@ -51,8 +55,8 @@ alias pac-recent="expac -l ',' -H M -t '%s %c' '(%N) [%G] %l\t%m\t%n\t' | grep '
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # View HTTP traffic
-alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i eth0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+#alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
+#alias httpdump="sudo tcpdump -i eth0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
 
 # Get week number
 alias week='date +%V'
@@ -60,3 +64,58 @@ alias week='date +%V'
 # ROT13-encode text. Works for decoding, too! ;)
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 
+#
+# Functions
+#
+
+cl()
+{
+    clear; cd $@; ls
+}
+
+# Determine size of a file or total size of a directory
+function fs() {
+    if du -b /dev/null > /dev/null 2>&1; then
+        local arg=-sbh
+    else
+        local arg=-sh
+    fi
+    if [[ -n "$@" ]]; then
+        du $arg -- "$@"
+    else
+        du $arg .[^.]* *
+    fi
+}
+
+shparproc()
+{
+    cat /proc/$PPID/status | head -1 | cut -f2
+}
+
+# change extensions for all files in the current directory
+# $1 = extension to be changed
+# $2 = new extension
+# NOTE: must include '.' in both $1 and $2
+chext()
+{
+    for f in *$1; do
+        name=`echo $f | cut -d . -f 1`
+        new=$name$2
+        mv -i $f $new
+    done
+}
+
+cmd-exists()
+{
+    type $1 &> /dev/null
+}
+
+gui2pid()
+{
+    xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps `cat`
+}
+
+i3-rename-ws()
+{
+    i3-msg "rename workspace '$1' to '$2'"
+}

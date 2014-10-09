@@ -2,14 +2,7 @@ set nocompatible            " be iMproved
 filetype off                " required!
 filetype plugin indent on   " required!
 
-"set t_Co=256                " let terminal vim use 256 colors
-
-if has("gui_running")
-    set guioptions=a
-    " https://github.com/Lokaltog/powerline-fonts
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 12
-    "set lines=999 columns=999
-endif
+set t_Co=256                " let terminal vim use 256 colors
 
 " ------------------------------------------
 " General options
@@ -57,7 +50,7 @@ set colorcolumn=120                 " highlight the prefered EOL column
 
 " buffers
 set encoding=utf-8                  " sensible default encoding
-"set hidden                          " dont delete buffers, just hide them, useful for revisiting files quickly
+set hidden                          " dont delete buffers, just hide them, useful for revisiting files quickly
 set undofile                        " save undo tree when file is closed
 set undodir=~/.vim/undo             " undo files should be kept out of the working dir
 set undolevels=1000                 " many many levels of undo
@@ -86,6 +79,13 @@ else
     colorscheme slate
 endif
 
+if has("gui_running")
+    set guioptions=a
+    " https://github.com/Lokaltog/powerline-fonts
+    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 11
+    colorscheme hybrid
+endif
+
 " ------------------------------------------
 " Mappings
 " ------------------------------------------
@@ -94,10 +94,10 @@ endif
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " for local replace
-nnoremap gr gdV][::s/<C-R>///gc<left><left><left>
+nnoremap gr gdV][::s/<C-R>///c<left><left><left>
 
 " for global replace
-nnoremap gR gD:%s/<C-R>///gc<left><left><left>
+nnoremap gR gD:%s/<C-R>///c<left><left><left>
 
 " typing jj in insert mode gets you out.
 inoremap jj <Esc>
@@ -117,12 +117,6 @@ map <up> <nop>
 map <down> <nop>
 map <left> <nop>
 map <right> <nop>
-
-" Home/End shortcuts
-"map <C-h> ^
-"imap <C-h> <Esc>^i
-"map <C-l> $
-"imap <C-l> <End>
 
 " fix direction keys for line wrap, otherwise they jump over wrapped lines
 nnoremap j gj
@@ -149,10 +143,11 @@ nnoremap Q <nop>
 
 map <leader>n :call NumberToggle()<CR>
 nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
-"nnoremap <A-.> :call MoveToNextTab()<CR>
-"nnoremap <A-,> :call MoveToPrevTab()<CR>
+
+" git/hg annotate
 vmap <Leader>Bg :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-vmap <Leader>Bh :<C-U>!hg blame -fu <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+vmap <Leader>Bh :<C-U>!hg blame -fud <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+
 " ------------------------------------------
 " Functions and autocmds
 " ------------------------------------------
@@ -160,7 +155,7 @@ vmap <Leader>Bh :<C-U>!hg blame -fu <C-R>=expand("%:p") <CR> \| sed -n <C-R>=lin
 " strip trailing whitespace prior to save
 autocmd BufWritePre * :%s/\s\+$//e
 
-autocmd Filetype lua setlocal ts=2 sw=2 expandtab
+autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 
 " uncomment to debug errors on Vim exit
 "autocmd VimLeave * :sleep 5
@@ -202,46 +197,3 @@ function! ShrinkMultipleNewlines()
     %s/\n\{2,\}$/\r/
 endfunction
 
-function! MoveToPrevTab()
-  "there is only one window
-  if tabpagenr('$') == 1 && winnr('$') == 1
-    return
-  endif
-  "preparing new window
-  let l:tab_nr = tabpagenr('$')
-  let l:cur_buf = bufnr('%')
-  if tabpagenr() != 1
-    close!
-    if l:tab_nr == tabpagenr('$')
-      tabprev
-    endif
-    vs
-  else
-    close!
-    exe "0tabnew"
-  endif
-  "opening current buffer in new window
-  exe "b".l:cur_buf
-endfunc
-
-function! MoveToNextTab()
-  "there is only one window
-  if tabpagenr('$') == 1 && winnr('$') == 1
-    return
-  endif
-  "preparing new window
-  let l:tab_nr = tabpagenr('$')
-  let l:cur_buf = bufnr('%')
-  if tabpagenr() < tab_nr
-    close!
-    if l:tab_nr == tabpagenr('$')
-      tabnext
-    endif
-    vs
-  else
-    close!
-    tabnew
-  endif
-  "opening current buffer in new window
-  exe "b".l:cur_buf
-endfunc

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+pkill -x dmenu
+
+#screen_width=$(xrandr | grep -o 'current [0-9]\+' | awk '{print $2}')
+#pos=$((screen_width - X))
+
+if [ $(pgrep -cf conky_$1) -gt 0 ]; then
+    if [ -n "$(xdotool search --onlyvisible --class conky_$1)" ]; then
+        xdotool search --class conky windowunmap %@
+    else
+        xdotool search --class conky windowunmap %@
+        xdotool search --class conky_$1 windowmap %1 windowraise
+    fi
+else
+    xdotool search --class conky windowunmap %@
+    # don't place calenday via mouse location
+    # so it's snug with the side of the screen
+    if [ $1 == 'cal' ]; then
+        #offset=$(xrandr | grep primary | awk '{ print $4 }' | cut -dx -f1)
+        #screen_width=$(xrandr | grep -o 'current [0-9]\+' | awk '{print $2}')
+        #pos=$((screen_width - offset))
+        #echo $pos
+        #conky -x "$pos" -c ~/.config/bspwm/panel/conky/conky_$1
+        #width=$(xrandr | grep -o 'current [0-9]\+' | cut -d' ' -f2)
+        #pos=$((width / 2))
+        conky -c ~/.config/bspwm/panel/conky/conky_$1
+    else
+        eval $(xdotool getmouselocation --shell)
+        conky -x "$X" -c ~/.config/bspwm/panel/conky/conky_$1
+    fi
+fi

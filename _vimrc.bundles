@@ -27,7 +27,7 @@ Plugin 'Lokaltog/vim-easymotion'
 
     " file tree
 Plugin 'scrooloose/nerdtree'
-"map <leader>f :NERDTreeFind<CR>
+nmap <leader>f :NERDTreeFind<CR>
 
     " NERDTree syncs and plays better across tabs
 "Plugin 'jistr/vim-nerdtree-tabs'
@@ -83,8 +83,7 @@ map <leader>a :A<CR>
 Plugin 'rking/ag.vim'
 let g:aghighlight = 1
 let g:agprg="ag --column --smart-case"
-nnoremap <leader>/ :call SearchCurrentWord() <Bar> tabnew <Bar> AgFromSearch<CR>
-"inoremap <leader>/ :call SearchCurrentWord() <Bar> tabnew <Bar> AgFromSearch<CR>
+nnoremap <leader>/ :call SearchCurrentWord() <Bar> AgFromSearch!<CR>
 
     " provides hg/git change status in the left gutter
 Plugin 'mhinz/vim-signify'
@@ -100,6 +99,7 @@ nnoremap <leader>i :IndentGuidesToggle<CR>
 
     " colorschemes
 Plugin 'w0ng/vim-hybrid'
+"Plugin 'guns/xterm-color-table.vim'
 "Plugin 'noah/vim256-color'
 "Plugin 'nanotech/jellybeans.vim'
 "Plugin 'flazz/vim-colorschemes'

@@ -1,0 +1,48 @@
+background yes
+out_to_console yes
+out_to_x no
+short_units yes
+update_interval 1
+#temperature_unit fahrenheit
+
+# BAR formatted colors
+#old red: ff802828
+template0 %{F\\\#ff0088cc}
+template1 %{F\\\#ffb27d12}
+template2 %{F\\\#ffbb2211}
+
+TEXT
+S\
+%{A:cpu:} \
+${if_match ${cpu cpu0}<20}${template0}${else}\
+${if_match ${cpu cpu0}<60}${template1}${else}\
+${if_match ${cpu cpu0}<=100}${template2}${endif}${endif}${endif}\
+${cpu cpu0}%%%{F-}  \
+${if_match ${acpitemp}<46}${template0}${else}\
+${if_match ${acpitemp}<56}${template1}${else}\
+${if_match ${acpitemp}>=56}${template2}${endif}${endif}${endif}\
+${acpitemp}°C%{F-}%{A} \
+%{A:mem:} \
+${if_match ${memperc}<30}${template0}${else}\
+${if_match ${memperc}<70}${template1}${else}\
+${if_match ${memperc}>=70}${template2}${endif}${endif}${endif}\
+${mem}%{F-}%{A} \
+%{A:net:}\
+${if_existing /proc/net/route wlp3s0}\
+${if_match ${wireless_link_qual_perc wlp3s0} > 70}${else}\
+${if_match ${wireless_link_qual_perc wlp3s0} > 30}${else}\
+${endif}${endif} \
+${template0}${wireless_essid wlp3s0}\
+${else} \
+${if_existing /proc/net/route eno1}\
+${template0}eno1\
+${else}\
+${template2}n/a\
+${endif}${endif}%{F-}%{A} \
+%{A:bat:}\
+${execi 30 ./scripts/battery.sh} \
+${if_match ${battery_percent}<20}${template2}${else}\
+${if_match ${battery_percent}<60}${template1}${else}\
+${if_match ${battery_percent}>=60}${template0}${endif}${endif}${endif}\
+${battery_percent}%%%{F-}%{A} \
+${execi 2 ./scripts/volume.sh}

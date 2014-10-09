@@ -1,0 +1,21 @@
+background yes
+out_to_console yes
+out_to_x no
+short_units yes
+update_interval 1
+temperature_unit fahrenheit
+
+# BAR formatted colors
+template0 %{F\\\#ff0088cc}
+template1 %{F\\\#ffb27d12}
+template2 %{F\\\#ffbb2211}
+
+#%, \
+#%{A:weather:}\
+#${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM temperature 10}°F \
+#${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM cloud_cover 10}%{A}\
+
+#T%{A:cal:}${time %b %d, %l:%M:%S %P}%{A}
+TEXT
+T\
+%{A:cal:}${time %b %e, %l:%M %P}%{A}
