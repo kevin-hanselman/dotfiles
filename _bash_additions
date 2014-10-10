@@ -15,20 +15,9 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
 alias src='source ~/.bash_profile'
-alias functions='vim ~/.bash/functions'
-alias aliases='vim ~/.bash/aliases'
-alias startup='vim ~/.bash/init.sh'
-alias paths='vim ~/.bash/path'
-alias vars='vim ~/.bash/vars'
 alias Xres='xrdb -merge ~/.Xresources'
 
 alias pg='ps -ef | grep -v grep | grep'
-
-alias brc='vim ~/.bashrc'
-alias bprof='vim ~/.bash_profile'
-alias vrc='vim ~/.vimrc'
-alias bundles='vim ~/.vimrc.bundles'
-alias tconf='vim ~/.tmux.conf'
 
 alias vimprof='vim --startuptime /dev/stdout +qall'
 
@@ -67,10 +56,33 @@ alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 #
 # Functions
 #
-
-cl()
-{
+cl() {
     clear; cd $@; ls
+}
+
+conf() {
+    case "$1" in
+        vim)
+            vim ~/.vimrc
+            ;;
+        plug*)
+            vim ~/.vimrc.plugins
+            ;;
+        bash)
+            vim ~/.bashrc
+            ;;
+        alias|func|add*)
+            vim ~/.bash_additions
+            ;;
+        X*)
+            vim ~/.Xresources
+            ;;
+        tmux)
+            vim ~/.tmux.conf
+            ;;
+        *)
+            echo "Unrecognized config command: '$1'" >&2
+    esac
 }
 
 # Determine size of a file or total size of a directory
@@ -87,8 +99,7 @@ function fs() {
     fi
 }
 
-shparproc()
-{
+shparproc() {
     cat /proc/$PPID/status | head -1 | cut -f2
 }
 
@@ -96,8 +107,7 @@ shparproc()
 # $1 = extension to be changed
 # $2 = new extension
 # NOTE: must include '.' in both $1 and $2
-chext()
-{
+chext() {
     for f in *$1; do
         name=`echo $f | cut -d . -f 1`
         new=$name$2
@@ -105,17 +115,14 @@ chext()
     done
 }
 
-cmd-exists()
-{
+cmd-exists() {
     type $1 &> /dev/null
 }
 
-gui2pid()
-{
+gui2pid() {
     xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps `cat`
 }
 
-i3-rename-ws()
-{
+i3-rename-ws() {
     i3-msg "rename workspace '$1' to '$2'"
 }
