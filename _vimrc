@@ -70,8 +70,8 @@ set tags=./.tags;$HOME              " search for a tag file named '.tags' up dir
 " ------------------------------------------
 " Bundles
 " ------------------------------------------
-if filereadable(expand("~/.vimrc.bundles"))
-    source ~/.vimrc.bundles
+if filereadable(expand("~/.vimrc.plugins"))
+    source ~/.vimrc.plugins
     "let g:hybrid_use_Xresources = 1
     colorscheme hybrid
     set noshowmode                  " airline shows me my editor mode
