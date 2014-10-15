@@ -3,11 +3,12 @@
 mkdir -p ~/.vim/undo
 mkdir ~/.vim/backup
 mkdir ~/.vim/tmp
-mkdir ~/.vim/bundle
+mkdir ~/.vim/plugins
 
 ./dotfiles.sh -y _vimrc*
 
-cd ~/.vim/bundle
-git clone https://github.com/gmarik/Vundle.vim.git
+mkdir -p ~/.vim/autoload
+curl -fLo ~/.vim/autoload/plug.vim \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-vim -c "PluginInstall"
+vim -c "PluginUpdate"
