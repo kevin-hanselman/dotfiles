@@ -2,8 +2,6 @@ set nocompatible            " be iMproved
 filetype off                " required!
 filetype plugin indent on   " required!
 
-set t_Co=256                " let terminal vim use 256 colors
-
 " ------------------------------------------
 " General options
 " ------------------------------------------
@@ -23,6 +21,7 @@ set list                            " show whitespace indicated by 'listchars'
 set listchars=tab:»\ ,trail:·,extends:…
 
 " UI
+set t_Co=256                        " let terminal vim use 256 colors
 syntax enable                       " syntax highlighting
 set mouse=a                         " allow for better mouse interaction
 set scrolloff=5                     " always show N lines veritcally
@@ -50,7 +49,7 @@ set colorcolumn=120                 " highlight the prefered EOL column
 
 " buffers
 set encoding=utf-8                  " sensible default encoding
-set hidden                          " dont delete buffers, just hide them, useful for revisiting files quickly
+set hidden                          " dont delete buffers, just hide them
 set undofile                        " save undo tree when file is closed
 set undodir=~/.vim/undo             " undo files should be kept out of the working dir
 set undolevels=1000                 " many many levels of undo
@@ -65,16 +64,17 @@ set gdefault                        " s///g is implied, explicitly adding g nega
 set incsearch                       " jump to the first instance as you type the search term
 set showmatch                       " always show matching ()'s
 set hlsearch                        " Highlight all of the search terms
-set tags=./.tags;$HOME              " search for a tag file named '.tags' up directories recursively, stopping at $HOME
+set tags=./.tags;$HOME              " search for a tag file named '.tags' upwards until $HOME
 
 " ------------------------------------------
-" Bundles
+" Plugins
 " ------------------------------------------
+
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
-    "let g:hybrid_use_Xresources = 1
-    colorscheme hybrid
     set noshowmode                  " airline shows me my editor mode
+    "let g:hybrid_use_Xresources = 1
+    colorscheme gotham-seti
 else
     colorscheme slate
 endif
@@ -82,8 +82,7 @@ endif
 if has("gui_running")
     set guioptions=a
     " https://github.com/Lokaltog/powerline-fonts
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 11
-    colorscheme hybrid
+    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
 endif
 
 " ------------------------------------------
@@ -144,9 +143,9 @@ nnoremap Q <nop>
 map <leader>n :call NumberToggle()<CR>
 nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 
-" git/hg annotate
+" git/hg blame (annotate)
 vmap <Leader>Bg :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-vmap <Leader>Bh :<C-U>!hg blame -fud <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+vmap <Leader>Bh :<C-U>!hg blame -nuc <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
 
 " ------------------------------------------
 " Functions and autocmds
@@ -196,4 +195,9 @@ endfunction
 function! ShrinkMultipleNewlines()
     %s/\n\{2,\}$/\r/
 endfunction
+
+" show highlight group(s) under cursor
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 

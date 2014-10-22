@@ -29,6 +29,7 @@ nmap <leader>f :NERDTreeFind<CR>
 "map <C-f> :NERDTreeMirrorToggle<CR>
 "let g:nerdtree_tabs_open_on_gui_startup=0
 
+    " streamlined access to file tree (netrw, NERDtree)
 Plug 'tpope/vim-vinegar'
 
     " syntax checking and reporting (YCM integration removed in Jan 2014)
@@ -36,7 +37,7 @@ Plug 'scrooloose/syntastic'
 "let g:syntastic_cpp_checkers = [ 'cpplint', 'gcc' ]
 
     " multi-cursors ala Sublime Text
-"Plug 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
 
     " syntax autocompletion and intellisense. requires llvm/clang for c/c++
 Plug 'Valloric/YouCompleteMe'
@@ -44,7 +45,6 @@ let g:ycm_enable_diagnostic_signs = 0
 let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-"let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
 let g:ycm_confirm_extra_conf = 0
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <leader>gd :YcmCompleter GoTo<CR>
@@ -67,7 +67,7 @@ if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-    " provides a method to switch between .h and .cpp
+    " switch between header and source
 Plug 'vim-scripts/a.vim'
 map <leader>a :A<CR>
 
@@ -83,7 +83,7 @@ Plug 'mhinz/vim-signify'
     " shows function/variable signature on mouse-hover when available
 "Plug 'vim-scripts/Tag-Signature-Balloons'
 
-    " shows indent levels, handy for python code
+    " show indent levels
 Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
@@ -91,12 +91,10 @@ nnoremap <leader>i :IndentGuidesToggle<CR>
 
     " colorschemes
 Plug 'w0ng/vim-hybrid'
+Plug 'whatyouhide/vim-gotham'
 
     " improved vim session management
 Plug 'tpope/vim-obsession'
-
-    " handy shortcuts, buffer movement
-"Plug 'tpope/vim-unimpaired'
 
     " browse and manage open buffers
 Plug 'jlanzarotta/bufexplorer'
@@ -104,11 +102,17 @@ Plug 'jlanzarotta/bufexplorer'
     " commands for modifying quotes, brackets, etc.
 Plug 'tpope/vim-surround'
 
+    " auto-spaces active window for 'optimal' visibility
 Plug 'roman/golden-ratio'
 let g:golden_ratio_wrap_ignored = 0
 
-"Plug 'tmhedberg/matchit'
-
+    " generates fancy, airline-style shell prompt
 Plug 'edkolev/promptline.vim'
+
+    " highlights all search matches, not just the first
+Plug 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 call plug#end()
