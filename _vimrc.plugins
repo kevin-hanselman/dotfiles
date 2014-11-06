@@ -1,6 +1,10 @@
 call plug#begin('~/.vim/plugins')
 
+let g:plug_window = "above new"
+
+"
 " General maps and functions
+"
 
 " play nice with Vim sessions: close all extraneous buffers before leaving vim
 autocmd VimLeavePre * :tabdo call CloseExtraBuffers()
@@ -10,7 +14,11 @@ function! CloseExtraBuffers()
     :GundoHide
 endfunction
 
-    " fancypants status line. note that the powerline patched fonts are installed and used above
+"
+" Plugins and related settings
+"
+
+    " fancypants status line. Powerline patched fonts require manual install
 Plug 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline_theme="base16"
@@ -34,7 +42,6 @@ Plug 'tpope/vim-vinegar'
 
     " syntax checking and reporting (YCM integration removed in Jan 2014)
 Plug 'scrooloose/syntastic'
-"let g:syntastic_cpp_checkers = [ 'cpplint', 'gcc' ]
 
     " multi-cursors ala Sublime Text
 Plug 'terryma/vim-multiple-cursors'
@@ -53,7 +60,7 @@ nnoremap <leader>gd :YcmCompleter GoTo<CR>
 Plug 'majutsushi/tagbar'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-map <leader>b :TagbarToggle<CR>
+map <leader>tb :TagbarToggle<CR>
 
     " visual undo tree. nice for when you need to go back to a branch
 Plug 'sjl/gundo.vim'
@@ -91,7 +98,7 @@ nnoremap <leader>i :IndentGuidesToggle<CR>
 
     " colorschemes
 Plug 'w0ng/vim-hybrid'
-Plug 'whatyouhide/vim-gotham'
+Plug 'chriskempson/base16-vim'
 
     " improved vim session management
 Plug 'tpope/vim-obsession'
@@ -102,10 +109,6 @@ Plug 'jlanzarotta/bufexplorer'
     " commands for modifying quotes, brackets, etc.
 Plug 'tpope/vim-surround'
 
-    " auto-spaces active window for 'optimal' visibility
-Plug 'roman/golden-ratio'
-let g:golden_ratio_wrap_ignored = 0
-
     " generates fancy, airline-style shell prompt
 Plug 'edkolev/promptline.vim'
 
@@ -114,5 +117,8 @@ Plug 'haya14busa/incsearch.vim'
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+
+    " fancy start menu when opening vim without a filename
+Plug 'mhinz/vim-startify'
 
 call plug#end()

@@ -53,7 +53,7 @@ set hidden                          " dont delete buffers, just hide them
 set undofile                        " save undo tree when file is closed
 set undodir=~/.vim/undo             " undo files should be kept out of the working dir
 set undolevels=1000                 " many many levels of undo
-set backup                          " use backup files?
+set backup                          " use backup files
 set backupdir=~/.vim/backup         " backup files should be kept out of the working dir
 set directory=~/.vim/tmp            " swapfiles should be kept out of the working dir
 
@@ -73,8 +73,7 @@ set tags=./.tags;$HOME              " search for a tag file named '.tags' upward
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
     set noshowmode                  " airline shows me my editor mode
-    "let g:hybrid_use_Xresources = 1
-    colorscheme gotham-seti
+    colorscheme hybrid
 else
     colorscheme slate
 endif
@@ -93,10 +92,10 @@ endif
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " for local replace
-nnoremap gr gdV][::s/<C-R>///c<left><left><left>
+nnoremap <leader>r gdV][::s/<C-R>///c<left><left>
 
 " for global replace
-nnoremap gR gD:%s/<C-R>///c<left><left><left>
+nnoremap <leader>R *N:%s/<C-R>///c<left><left>
 
 " typing jj in insert mode gets you out.
 inoremap jj <Esc>
@@ -130,6 +129,8 @@ nnoremap { {zz
 nnoremap } }zz
 nnoremap n nzz
 nnoremap N Nzz
+nmap <C-i> <C-i>zz
+nmap <C-o> <C-o>zz
 
 " clear search highlighting
 nnoremap c/ :silent! /qqq<CR>
