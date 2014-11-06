@@ -2,12 +2,12 @@
 
 # panel setup
 PANEL_HEIGHT=16
-PANEL_FONT_FAMILY="-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*"
+PANEL_FONT_FAMILY=
+PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*"
+PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-lemon-medium-*-*-*-10-*-*-*-*-*-*-*"
 PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
 #PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-tewi-medium-*-*-*-11-*-*-*-*-*-*-*"
-#PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-lemon-medium-*-*-*-11-*-*-*-*-*-*-*"
-#PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-benis-lemon-medium-r-normal-*-10-110-75-75-m-50-iso8859-1"
-#PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-benis-uushi-medium-r-normal--11-90-75-75-p-58-iso10646-1"
+#PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-uushi-medium-*-*-*-11-*-*-*-*-*-*-*"
 
 primary_mon=$(xrandr | grep primary)
 mon_dimensions=$(echo $primary_mon | awk '{ print $4 }')
