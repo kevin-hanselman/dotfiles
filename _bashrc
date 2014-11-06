@@ -48,6 +48,8 @@ fi
 # Aliases and functions
 [ -f ~/.bash_additions ] && source ~/.bash_additions
 
+[ -f /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
+
 if [ -f ~/.bash_prompt ]; then
     source ~/.bash_prompt
 else

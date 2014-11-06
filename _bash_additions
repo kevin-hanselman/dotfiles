@@ -60,6 +60,17 @@ cl() {
     clear; cd $@; ls
 }
 
+# move back directories
+b() {
+    back="cd .."
+    if [ -n "$1" ] && [ "$1" -gt 1 ]; then
+        for i in $(seq 2 $1); do
+            back="${back}/.."
+        done
+    fi
+    eval "$back"
+}
+
 conf() {
     case "$1" in
         vim)
@@ -123,6 +134,3 @@ gui2pid() {
     xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps `cat`
 }
 
-i3-rename-ws() {
-    i3-msg "rename workspace '$1' to '$2'"
-}
