@@ -53,5 +53,5 @@ fi
 if [ -f ~/.bash_prompt ]; then
     source ~/.bash_prompt
 else
-    export PS1='\[\e[0;34m\]\u\[\e[0;37m\] @ \[\e[0;35m\]\h\[\em\] \[\e[1;34m\]\w\[\e[m\] \[\e[0;37m\]\$\[\e[m\] \[\e[1;37m\]'
+    export PS1='\[\e[0;34m\]\u\[\e[0;37m\] @ \[\e[0;35m\]\h\[\em\]\[\e[0;37m\]: \[\e[1;34m\]\w\[\e[m\] \[\e[0;37m\]\n\$\[\e[m\] \[\e[1;37m\]'
 fi

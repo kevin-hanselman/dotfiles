@@ -64,7 +64,7 @@ map <leader>tb :TagbarToggle<CR>
 
     " visual undo tree. nice for when you need to go back to a branch
 Plug 'sjl/gundo.vim'
-map <leader>g :GundoToggle<CR>
+map <leader>u :GundoToggle<CR>
 
     " ctrl-p for go to anything
 Plug 'kien/ctrlp.vim'
