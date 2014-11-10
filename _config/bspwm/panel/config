@@ -9,11 +9,12 @@ PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-terminus-medium-r-normal-*-12-*-*-*-c-*
 #PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-tewi-medium-*-*-*-11-*-*-*-*-*-*-*"
 #PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-uushi-medium-*-*-*-11-*-*-*-*-*-*-*"
 
-primary_mon=$(xrandr | grep primary)
-mon_dimensions=$(echo $primary_mon | awk '{ print $4 }')
-PANEL_OFFSET=$(($(echo $mon_dimensions | cut -d+ -f2) + 8))
-PANEL_WIDTH=$(($(echo $mon_dimensions | cut -dx -f1) - PANEL_HEIGHT))
-PANEL_GEOMETRY="${PANEL_WIDTH}x${PANEL_HEIGHT}+${PANEL_OFFSET}+0"
+[ -f /tmp/xrandr.txt ] || xrandr > /tmp/xrandr.txt
+
+mon_dimensions=$(cat /tmp/xrandr.txt | grep primary | awk '{ print $4 }')
+mon_offset=$(echo $mon_dimensions | cut -d+ -f2)
+mon_width=$(echo $mon_dimensions | cut -dx -f1)
+PANEL_GEOMETRY="$((mon_width - 16))x${PANEL_HEIGHT}+$((mon_offset + 8))+0"
 #PANEL_GEOMETRY=$(xrandr | grep primary | awk '{print $4}' | sed 's/x[0-9]\+/x'$PANEL_HEIGHT'/')
 PANEL_FIFO=/tmp/panel-fifo
 

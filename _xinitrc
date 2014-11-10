@@ -18,6 +18,8 @@ fi
 if [[ "$1" == bspwm ]]; then
     sxhkd &
     xsetroot -cursor_name left_ptr
+    # store xrandr output for faster access
+    xrandr > /tmp/xrandr.txt
 fi
 
 xset +fp /usr/share/fonts/local

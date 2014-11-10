@@ -11,7 +11,7 @@ double_buffer yes
 short_units yes
 
 minimum_size 150 80
-alignment top_left
+alignment top_right
 gap_y 28
 
 #own_window_colour afaf87

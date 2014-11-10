@@ -9,7 +9,7 @@ own_window_type panel
 #own_window_argb_value 240
 double_buffer yes
 
-alignment top_left
+alignment top_right
 gap_y 28
 
 #own_window_colour afaf87
