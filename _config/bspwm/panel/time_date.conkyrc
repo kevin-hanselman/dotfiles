@@ -18,4 +18,8 @@ T\
 %{A:cal:}${time %b %e, %l:%M %P}%{A}, \
 %{A:weather:}\
 ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM temperature 10}°F \
-${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM cloud_cover 10}%{A}\
+${if_empty ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM weather 10}}\
+${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM cloud_cover 10}\
+${else}\
+${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM weather 10}\
+${endif}%{A}\
