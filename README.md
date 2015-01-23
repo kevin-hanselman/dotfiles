@@ -1,17 +1,13 @@
 dotfiles
 ========
 
-My contribution to the world of config file management repos.
+My dotfiles and a script to manage them.
 
 Features
 --------
-##### Multi-configuartion support
-* Use git branches to create configurations for different projects, platforms, etc.
-* Branches can be standalone, or they can inherit from each other; it's as complex as you choose.
-
-##### Flexible syncing
 * Sync one, some, or all of your config files with globs.
-* Dotfiles makes backups of local config files if you ever want to revert changes.
+* `dotfiles.sh` makes backups of local config files if you ever want to revert changes.
+* You can use git branches to create configurations for different projects, platforms, etc.
 
 Usage
 -----
@@ -32,11 +28,6 @@ Options:
   -y		don't ask for confirmation
   -q		quiet mode/suppress output
 ```
-
-Prerequisites
--------------
-* `bash`
-* `git`
 
 Thanks to
 ---------
