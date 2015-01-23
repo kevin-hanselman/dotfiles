@@ -7,7 +7,7 @@ filetype plugin indent on   " required!
 " ------------------------------------------
 " misc
 let mapleader=","                   " change the leader key to comma
-set clipboard=unnamed               " use OS clipboard as default yank buffer
+set clipboard=unnamedplus           " use OS clipboard as default yank buffer
 set history=1000                    " remember a ton of commands
 set backspace=indent,eol,start      " backspace over everything
 
@@ -36,13 +36,13 @@ set shortmess+=I                    " no message on empty vim startup
 set splitbelow                      " show splits to right or below, as you would read
 set splitright                      " ^
 set wildmenu                        " improve auto complete menu
-set wildmode=list:longest           " filename completion
+set wildmode=list:longest,full      " filename completion
 set ttyfast                         " faster, smoother redraw
 
 " line wrapping
 set textwidth=0                     " don't split lines (in the actual file) when they're too long
-set linebreak                       " wrap lines in the vim buffer, but not in the actual file
-set wrap                            " ^
+set wrap                            " wrap lines in the vim buffer, but not in the actual file
+set linebreak                       " ^^, and break on words
 set showbreak=\ \ …                 " prepend these chars to lines broken by linebreak
 set formatoptions+=rn1              " see :h fo-table
 set colorcolumn=120                 " highlight the prefered EOL column
@@ -73,6 +73,7 @@ set tags=./.tags;$HOME              " search for a tag file named '.tags' upward
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
     set noshowmode                  " airline shows me my editor mode
+    "let g:hybrid_use_Xresources = 1
     colorscheme hybrid
 else
     colorscheme slate
@@ -81,7 +82,9 @@ endif
 if has("gui_running")
     set guioptions=a
     " https://github.com/Lokaltog/powerline-fonts
-    set guifont=Droid\ Sans\ Mono\ for\ Powerline\ 10
+    "set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
+    " https://gist.github.com/imiric/9038570
+    set guifont=Envy\ Code\ R\ for\ Powerline\ 11
 endif
 
 " ------------------------------------------
@@ -89,7 +92,7 @@ endif
 " ------------------------------------------
 
 " reload this file
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+nnoremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " for local replace
 nnoremap <leader>r gdV][::s/<C-R>///c<left><left>
@@ -99,7 +102,6 @@ nnoremap <leader>R *N:%s/<C-R>///c<left><left>
 
 " typing jj in insert mode gets you out.
 inoremap jj <Esc>
-nnoremap JJJJ <Nop>
 
 " Y yanks to EOL (to match D and C)
 nnoremap Y y$
@@ -123,17 +125,17 @@ nnoremap k gk
 " keep cursor in middle of screen when jumping/scrolling
 nnoremap <C-j> 10jzz
 nnoremap <C-k> 10kzz
-nnoremap <C-D> <C-D>zz
-nnoremap <C-U> <C-U>zz
-nnoremap { {zz
-nnoremap } }zz
-nnoremap n nzz
-nnoremap N Nzz
-nmap <C-i> <C-i>zz
-nmap <C-o> <C-o>zz
+nmap <C-D> <C-D>zz
+nmap <C-U> <C-U>zz
+nmap { {zz
+nmap } }zz
+nmap n nzz
+nmap N Nzz
+nnoremap <C-i> <C-i>zz
+nnoremap <C-o> <C-o>zz
 
 " clear search highlighting
-nnoremap c/ :silent! /qqq<CR>
+nnoremap c/ :noh<CR>
 
 " remap f1. I'll type :help when I want it
 inoremap <F1> <nop>
@@ -141,21 +143,29 @@ nnoremap <F1> <nop>
 vnoremap <F1> <nop>
 nnoremap Q <nop>
 
-map <leader>n :call NumberToggle()<CR>
-nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+nnoremap <leader>n :call NumberToggle()<CR>
 
 " git/hg blame (annotate)
-vmap <Leader>Bg :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-vmap <Leader>Bh :<C-U>!hg blame -nuc <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+vnoremap <Leader>Bg :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+vnoremap <Leader>Bh :<C-U>!hg blame -nuc <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
+
+" quickly switch to last buffer
+nnoremap <leader>l :b#<CR>
+
+" show highlight group(s) under cursor
+nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " ------------------------------------------
 " Functions and autocmds
 " ------------------------------------------
 
 " strip trailing whitespace prior to save
-autocmd BufWritePre * :%s/\s\+$//e
+"autocmd BufWritePre * :call TrimTrailingWhitespace()
 
 autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
 
 " uncomment to debug errors on Vim exit
 "autocmd VimLeave * :sleep 5
@@ -169,36 +179,11 @@ function! NumberToggle()
     endif
 endfunc
 
-" highlight all instances of word under cursor, when idle.
-function! AutoHighlightToggle()
-    let @/ = ''
-    if exists('#auto_highlight')
-        au! auto_highlight
-        augroup! auto_highlight
-        setl updatetime=4000
-        echo 'Highlight current word: off'
-        return 0
-    else
-        augroup auto_highlight
-            au!
-            au CursorHold * call SearchCurrentWord()
-        augroup end
-        setl updatetime=500
-        echo 'Highlight current word: ON'
-        return 1
-    endif
-endfunction
-
-function! SearchCurrentWord()
-    let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
-endfunction
-
 function! ShrinkMultipleNewlines()
     %s/\n\{2,\}$/\r/
 endfunction
 
-" show highlight group(s) under cursor
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+function! TrimTrailingWhitespace()
+    %s/\s\+$//e
+endfunction
 

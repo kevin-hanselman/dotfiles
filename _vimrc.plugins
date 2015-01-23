@@ -25,22 +25,22 @@ let g:airline_theme="base16"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 
-    " nice motion plugin, relieves 'w' spam
+    " enhances vim's motion keys: <leader><leader>{w,b,e,f,t, etc}
 Plug 'Lokaltog/vim-easymotion'
+nmap s <Plug>(easymotion-s2)
+let g:EasyMotion_startofline = 0
 
     " file tree
 Plug 'scrooloose/nerdtree'
-nmap <leader>f :NERDTreeFind<CR>
+nnoremap <leader>f :NERDTreeFind<CR>
 
-    " NERDTree syncs and plays better across tabs
-"Plug 'jistr/vim-nerdtree-tabs'
-"map <C-f> :NERDTreeMirrorToggle<CR>
-"let g:nerdtree_tabs_open_on_gui_startup=0
+    " quickly (un)comment code <leader> c {space, i, c, ...}
+Plug 'scrooloose/nerdcommenter'
 
     " streamlined access to file tree (netrw, NERDtree)
 Plug 'tpope/vim-vinegar'
 
-    " syntax checking and reporting (YCM integration removed in Jan 2014)
+    " syntax checking and reporting
 Plug 'scrooloose/syntastic'
 
     " multi-cursors ala Sublime Text
@@ -48,53 +48,61 @@ Plug 'terryma/vim-multiple-cursors'
 
     " syntax autocompletion and intellisense. requires llvm/clang for c/c++
 Plug 'Valloric/YouCompleteMe'
-let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_enable_diagnostic_highlighting = 1
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
 nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+nnoremap <F6> :YcmDiags<CR>
 nnoremap <leader>gd :YcmCompleter GoTo<CR>
 
     " adds a window that shows all of the functions in the current file
 Plug 'majutsushi/tagbar'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-map <leader>tb :TagbarToggle<CR>
+nnoremap <leader>tb :TagbarToggle<CR>
 
     " visual undo tree. nice for when you need to go back to a branch
 Plug 'sjl/gundo.vim'
-map <leader>u :GundoToggle<CR>
+nnoremap <leader>u :GundoToggle<CR>
 
     " ctrl-p for go to anything
 Plug 'kien/ctrlp.vim'
-nnoremap <leader>p :CtrlPTag<CR>
-vnoremap <leader>p :CtrlPTag<CR>
+nnoremap <leader>pt :CtrlPTag<CR>
+nnoremap <leader>pb :CtrlPBuffer<CR>
+nnoremap <leader>pm :CtrlPMRUFiles<CR>
 if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
+    " ctrl-p for shells, managed by vim-plug for simplicity
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+    " align text easily
+Plug 'junegunn/vim-easy-align'
+    " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap <leader>A <Plug>(EasyAlign)
+
     " switch between header and source
 Plug 'vim-scripts/a.vim'
-map <leader>a :A<CR>
+nnoremap <leader>a :A<CR>
 
     " vim front end for 'the silver searcher'
 Plug 'rking/ag.vim'
 let g:aghighlight = 1
 let g:agprg="ag --column --smart-case"
-nnoremap <leader>/ :call SearchCurrentWord() <Bar> AgFromSearch!<CR>
+nnoremap <leader>/ * :AgFromSearch!<CR>
 
     " provides hg/git change status in the left gutter
 Plug 'mhinz/vim-signify'
-
-    " shows function/variable signature on mouse-hover when available
-"Plug 'vim-scripts/Tag-Signature-Balloons'
 
     " show indent levels
 Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
-nnoremap <leader>i :IndentGuidesToggle<CR>
 
     " colorschemes
 Plug 'w0ng/vim-hybrid'
@@ -109,9 +117,6 @@ Plug 'jlanzarotta/bufexplorer'
     " commands for modifying quotes, brackets, etc.
 Plug 'tpope/vim-surround'
 
-    " generates fancy, airline-style shell prompt
-Plug 'edkolev/promptline.vim'
-
     " highlights all search matches, not just the first
 Plug 'haya14busa/incsearch.vim'
 map /  <Plug>(incsearch-forward)
@@ -121,4 +126,35 @@ map g/ <Plug>(incsearch-stay)
     " fancy start menu when opening vim without a filename
 Plug 'mhinz/vim-startify'
 
+    " a better, asynchronous :make and other arbitrary commands
+Plug 'tpope/vim-dispatch'
+nnoremap <F9> :Dispatch<CR>
+nnoremap <F10> :Dispatch!<CR>
+nnoremap <F11> :FocusDispatch <C-r>=g:dispatch<CR>
+
+    " syntax highlighting, filetype detection, makeprg = plantuml
+Plug 'aklt/plantuml-syntax'
+    " below requires vim-dispatch
+autocmd BufWritePost *.uml :Dispatch! plantuml %
+
+    " a slightly less demanding 'hardmode'
+Plug 'takac/vim-hardtime'
+nnoremap <leader>h :HardTimeToggle<CR>
+autocmd VimEnter * silent! call HardTimeOn()
+let g:hardtime_allow_different_key = 1
+let g:hardtime_ignore_quickfix = 1
+let g:hardtime_maxcount = 3
+
+    " searches up directories for an '.lvimrc' file, sources it
+Plug 'embear/vim-localvimrc'
+let g:localvimrc_persistent = 1
+
+    " mercurial diff and blame
+Plug 'jlfwong/vim-mercenary'
+
+    " quickly google search from vim
+Plug 'szw/vim-g'
+nnoremap <leader>G yiw:Googlef <C-r>"<CR>
+
 call plug#end()
+
