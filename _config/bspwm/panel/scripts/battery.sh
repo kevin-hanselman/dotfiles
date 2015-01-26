@@ -5,20 +5,16 @@ BAT=$(acpi -b | awk '{gsub(/%,/,""); print $4}' | sed 's/%//g')
 STATUS=$(acpi -b | awk '{gsub(/,/,""); print $3}')
 
 # Set Icon
-icon=""
 if [ "$STATUS" != "Discharging" ]; then
-    icon=" "
-fi
-if [ "$STATUS" == "Full" ]; then
-    icon="${icon}"
+    icon=""
 elif [ "$BAT" -gt 70 ]; then
-    icon="${icon}"
+    icon=""
 elif [ "$BAT" -gt 30 ]; then
-    icon="${icon}"
+    icon=""
 elif [ "$BAT" -gt 10 ]; then
-    icon="${icon}"
+    icon=""
 else
-    icon="${icon}"
+    icon=""
 fi
 
 s="«"

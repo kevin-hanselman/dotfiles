@@ -1,3 +1,4 @@
+font -*-lemon-medium-*-*-*-10-*-*-*-*-*-*-*
 out_to_x yes
 out_to_console no
 background yes
@@ -15,7 +16,7 @@ alignment top_right
 gap_y 28
 
 #own_window_colour afaf87
-own_window_colour 2d2d2d
+own_window_colour 1d1f21
 default_color c5c8c6
 color1 5f87af
 

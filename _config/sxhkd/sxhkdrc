@@ -92,11 +92,23 @@ super + @button{1-3}
 super + Return
     urxvt
 
-super + g
+super + shift + g
     google-chrome-stable
 
+super + shift + f
+    firefox
+
+super + shift + v
+    gvim
+
+super + shift + s
+    ~/.bin/toggle_screenkey
+
+super + shift + space
+    dmenu_run -p '> ' -y 500 -nb '#1d1f21' -dim 0.5 -l 5
+
 super + space
-    dmenu_run -p '> ' -y 500 -nb '#2d2d2d' -dim 0.5 -l 5
+    synapse
 
 # make sxhkd reload its configuration files:
 super + Escape

@@ -1,6 +1,4 @@
 #! /bin/bash
-#
-# Example panel for LemonBoy's bar
 
 cd $(dirname $0)
 source ./config
@@ -11,11 +9,11 @@ while read -r line ; do
     case $line in
         S*)
             # conky output
-            sys_infos="%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG} ${line#?} %{B-}%{F-}"
+            sys_infos="${line#?} "
             ;;
         T*)
             # conky date/time output
-            title="%{F$COLOR_TITLE_FG}%{B$COLOR_TITLE_BG} ${line#?} %{B-}%{F-}"
+            title="${line#?}"
             ;;
         W*)
             # bspwm internal state
@@ -35,7 +33,6 @@ while read -r line ; do
                     M*)
                         # active monitor
                         if [ $num_mon -gt 1 ] ; then
-                            #wm_infos="$wm_infos %{F$COLOR_ACTIVE_MONITOR_FG}%{B$COLOR_ACTIVE_MONITOR_BG} ${name} %{B-}%{F-}  "
                             [ -n "$wm_infos" ] && wm_infos="$wm_infos    "
                             active_mon=$name
                         fi
@@ -43,69 +40,44 @@ while read -r line ; do
                     m*)
                         # inactive monitor
                         if [ $num_mon -gt 1 ] ; then
-                            #wm_infos="$wm_infos %{F$COLOR_INACTIVE_MONITOR_FG}%{B$COLOR_INACTIVE_MONITOR_BG} ${name} %{B-}%{F-}  "
                             [ -n "$wm_infos" ] && wm_infos="$wm_infos    "
                             active_mon=
                         fi
                         ;;
-                    O*)
+                    O*|F*|U*)
                         # focused occupied desktop
-                        #wm_infos="${wm_infos}%{F$COLOR_FOCUSED_OCCUPIED_FG}%{B$COLOR_FOCUSED_OCCUPIED_BG}%{U$COLOR_FOREGROUND}%{+u} ${name} %{-u}%{B-}%{F-}"
                         if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{F$COLOR_FOCUSED}%{B$COLOR_BACKGROUND}%{U$COLOR_FOCUSED}%{+u} ${name} %{-u}%{B-}%{F-}"
+                            wm_infos="${wm_infos}%{F$C_FOC}%{U$C_FOC}%{+u} ${name} %{-u}%{F-}"
                         else
-                            wm_infos="${wm_infos}%{F$COLOR_FOCUSED}%{B$COLOR_BACKGROUND} ${name} %{B-}%{F-}"
-                        fi
-                        ;;
-                    F*)
-                        # focused free desktop
-                        #wm_infos="${wm_infos}%{F$COLOR_FOCUSED_FREE_FG}%{B$COLOR_FOCUSED_FREE_BG}%{U$COLOR_FOREGROUND}%{+u} ${name} %{-u}%{B-}%{F-}"
-                        if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{F$COLOR_FOCUSED}%{B$COLOR_BACKGROUND}%{U$COLOR_FOCUSED}%{+u} ${name} %{-u}%{B-}%{F-}"
-                        else
-                            wm_infos="${wm_infos}%{F$COLOR_FOCUSED}%{B$COLOR_BACKGROUND} ${name} %{B-}%{F-}"
-                        fi
-                        ;;
-                    U*)
-                        # focused urgent desktop
-                        #wm_infos="${wm_infos}%{F$COLOR_FOCUSED_URGENT_FG}%{B$COLOR_FOCUSED_URGENT_BG}%{U$COLOR_FOREGROUND}%{+u} ${name} %{-u}%{B-}%{F-}"
-                        if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{F$COLOR_FOCUSED}%{B$COLOR_BACKGROUND}%{U$COLOR_FOCUSED}%{+u} ${name} %{-u}%{B-}%{F-}"
-                        else
-                            wm_infos="${wm_infos}%{F$COLOR_FOCUSED}%{B$COLOR_BACKGROUND} ${name} %{B-}%{F-}"
+                            wm_infos="${wm_infos}%{F$C_FOC} ${name} %{F-}"
                         fi
                         ;;
                     o*)
                         # occupied desktop
-                        #wm_infos="${wm_infos}%{F$COLOR_OCCUPIED_FG}%{B$COLOR_OCCUPIED_BG} ${name} %{B-}%{F-}"
                         if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{F$COLOR_FOREGROUND}%{B$COLOR_BACKGROUND}%{U$COLOR_FOCUSED}%{+u} ${name} %{-u}%{B-}%{F-}"
+                            wm_infos="${wm_infos}%{U$C_FOC}%{+u} ${name} %{-u}"
                         else
-                            wm_infos="${wm_infos}%{F$COLOR_FOREGROUND}%{B$COLOR_BACKGROUND} ${name} %{B-}%{F-}"
+                            wm_infos="${wm_infos} ${name} "
                         fi
                         ;;
                     f*)
                         # free desktop
-                        #wm_infos="${wm_infos}%{F$COLOR_FREE_FG}%{B$COLOR_FREE_BG} ${name} %{B-}%{F-}"
                         ;;
                     u*)
                         # urgent desktop
-                        #wm_infos="${wm_infos}%{F$COLOR_URGENT_FG}%{B$COLOR_URGENT_BG} ${name} %{B-}%{F-}"
                         if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{F$COLOR_URGENT}%{B$COLOR_BACKGROUND}%{U$COLOR_FOCUSED}%{+u} ${name} %{-u}%{B-}%{F-}"
+                            wm_infos="${wm_infos}%{F$C_BG}%{B$C_URG}%{U$C_FOC}%{+u} ${name} %{-u}%{B-}%{F-}"
                         else
-                            wm_infos="${wm_infos}%{F$COLOR_URGENT}%{B$COLOR_BACKGROUND} ${name} %{B-}%{F-}"
+                            wm_infos="${wm_infos}%{F$C_BG}%{B$C_URG} ${name} %{B-}%{F-}"
                         fi
                         ;;
                     L*)
                         # layout (Tiling/Monocle)
-                        #wm_infos="$wm_infos  %{F$COLOR_LAYOUT_FG}%{B$COLOR_LAYOUT_BG} ${name} %{B-}%{F-}"
                         ;;
                 esac
                 shift
             done
             ;;
     esac
-    #printf "%s\n" "%{l}${title}%{c}${wm_infos}%{r}${sys_infos}"
     printf "%s\n" "%{l}${wm_infos}%{c}${title}%{r}${sys_infos}"
 done

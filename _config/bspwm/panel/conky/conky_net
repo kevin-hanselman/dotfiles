@@ -1,3 +1,4 @@
+font -*-lemon-medium-*-*-*-10-*-*-*-*-*-*-*
 out_to_x yes
 out_to_console no
 background yes
@@ -15,7 +16,7 @@ alignment top_right
 gap_y 28
 
 #own_window_colour afaf87
-own_window_colour 2d2d2d
+own_window_colour 1d1f21
 default_color c5c8c6
 
 #use_xft yes
@@ -27,6 +28,7 @@ update_interval 2
 TEXT
 ${if_existing /proc/net/route eno1}\
 eno1${alignr}${addr eno1}
+${alignr}${execi 900 echo "$(curl -s ipecho.net/plain)"}
 
 DOWN${alignr}${downspeed eno1} / ${totaldown eno1}
 ${downspeedgraph eno1 20,150 0088cc 0088cc}
@@ -36,6 +38,7 @@ ${upspeedgraph eno1 20,150 0088cc 0088cc}\
 ${else}\
 ${if_existing /proc/net/route wlp3s0}\
 wlp3s0${alignr}${addr wlp3s0}
+${alignr}${execi 900 echo "$(curl -s ipecho.net/plain)"}
 ${wireless_essid wlp3s0}${alignr}${wireless_link_qual_perc wlp3s0}%
 
 DOWN${alignr}${downspeed wlp3s0} / ${totaldown wlp3s0}

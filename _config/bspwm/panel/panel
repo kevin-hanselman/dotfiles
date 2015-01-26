@@ -14,21 +14,20 @@ trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 mkfifo "$PANEL_FIFO"
 
 # make space for BAR on only the primary monitor
-bspc config -m "$(bspc query -M | head -n 1)" top_padding $PANEL_HEIGHT
+#bspc config -m "$(bspc query -M | head -n 1)" top_padding $PANEL_HEIGHT
+bspc config -m "$(bspc query -M | head -n 1)" top_padding $((PANEL_HEIGHT * 3 / 2))
 bspc control --subscribe > "$PANEL_FIFO" &
-#xtitle -sf 'T%s' > "$PANEL_FIFO" &
 conky -c ./time_date.conkyrc > "$PANEL_FIFO" &
 conky -c ./panel_icons.conkyrc > "$PANEL_FIFO" &
-#clock -sf 'S%a %H:%M' > "$PANEL_FIFO" &
 
 cat "$PANEL_FIFO" | \
-    ./panel_bar | \
-    bar \
-        -g "$PANEL_GEOMETRY" \
+    ./panel_bar   | \
+    bar             \
+        -g "$PANEL_GEOMETRY"    \
         -f "$PANEL_FONT_FAMILY" \
-        -F "$COLOR_FOREGROUND" \
-        -B "$COLOR_BACKGROUND" \
-        -u 2 | \
+        -F "$C_FG"  \
+        -B "$C_BG"  \
+        -u 2 |                  \
 while read line; do
     ~/.config/bspwm/panel/scripts/toggle_conky $line
 done &
