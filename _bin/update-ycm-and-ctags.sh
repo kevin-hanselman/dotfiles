@@ -33,7 +33,11 @@ if [ ! -f $ycmconf ]; then
         https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py
 fi
 
-find $basepath -type f -iname '*.h' -printf "'-I%h',\n" | uniq > $tmpfile
+# find directories named include, as well as...
+# find header files and print their directories
+find $basepath \
+    -type d -name 'include' -not -path '*.hg/*' -printf "'-I%p',\n" -or \
+    -type f -iname '*.h' -printf "'-I%h',\n" | sort | uniq > $tmpfile
 
 # delete the .pyc cache file, since we're overwriting the original
 [ -f "${ycmconf}c" ] && rm "${ycmconf}c"
@@ -46,8 +50,7 @@ fi
 lead="^'c++'"
 trail='^]'
 sed -i "/$lead/,/$trail/{ /$lead/{p; r $tmpfile
-        }; /$trail/p; d }" $ycmconf
-[ $? -eq 0 ] && rm $tmpfile
+        }; /$trail/p; d }" $ycmconf && rm $tmpfile
 
 ctags --help 2> /dev/null | grep -i 'exuberant' &> /dev/null || error 'Exuberant Ctags not found. Skipping tag file.'
 ctags -R -f $tags $basepath
