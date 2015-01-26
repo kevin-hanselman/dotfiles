@@ -29,7 +29,7 @@ cat "$PANEL_FIFO" | \
         -B "$C_BG"  \
         -u 2 |                  \
 while read line; do
-    ~/.config/bspwm/panel/scripts/toggle_conky $line
+    ~/.config/bspwm/panel/scripts/toggle_conky.sh $line
 done &
 
 wait
