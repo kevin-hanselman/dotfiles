@@ -1,4 +1,11 @@
 #! /bin/bash
+
+#
+# Environment variables
+#
+
+export EDITOR=vim
+
 #
 # Aliases
 #
@@ -8,40 +15,39 @@ alias ll='ls -Alh'
 
 alias cls='clear; ls'
 
-#alias tmux='tmux -2'
+alias tmux='tmux -2'
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias src='source ~/.bash_profile'
+alias bsrc='source ~/.bash_profile'
 alias Xres='xrdb -merge ~/.Xresources'
 
 alias pg='ps -ef | grep -v grep | grep'
 
 alias vimprof='vim --startuptime /dev/stdout +qall'
+alias vimmaps="vim -c 'redir > ~/vim-maps.txt' -c 'map' -c 'qa!'"
 
 alias bigfiles="find . -type f -print0 | xargs -0 du | sort -n | tail -30 | cut -f2 | xargs -I{} du -sh {} && echo total: $(du -sh . | awk '{print $1}')"
 
 # apt/dpkg
-alias pkg-stat='dpkg --get-selections | grep'
+alias apt-grep='dpkg --get-selections | grep'
 
 # pacman
 alias pac-junk='pacman -Qdtq'
 alias pac-aur='pacman -Qmq'
 alias pac-manual='comm -23 <(pacman -Qeq|sort) <(pacman -Qgq base base-devel|sort)'
 alias pac-standalone='comm -23 <(pacman -Qetq|sort) <(pacman -Qgq base base-devel|sort)'
-alias pac-log='less /var/log/pacman.log'
+alias pac-log='vim /var/log/pacman.log'
 alias pac-dated="expac -l ',' -H M -t '%s %c' '(%N) [%G] %l\t%m\t%n\t' | grep '()' | grep -v '\[base\|base-devel\]' | cut -d' ' -f3- | sort -n | cut -d' ' -f2-"
 alias pac-recent="expac -l ',' -H M -t '%s %c' '(%N) [%G] %l\t%m\t%n\t' | grep '()' | grep -v '\[base\|base-devel\]' | cut -d' ' -f3- | awk -v old=\$(date --date='2 weeks ago 00:00' +%s) '\$1>old' | sort -n | cut -d' ' -f2-"
 
 # IP addresses
-#alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
-#alias localip="ipconfig getifaddr en1"
-#alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias myip='echo "$(curl -s ipecho.net/plain)"'
 
 # URL-encode strings
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias urlencode='python2 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # View HTTP traffic
 #alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
@@ -61,7 +67,7 @@ cl() {
 }
 
 # move back directories
-b() {
+bk() {
     back="cd .."
     if [ -n "$1" ] && [ "$1" -gt 1 ]; then
         for i in $(seq 2 $1); do
@@ -73,31 +79,25 @@ b() {
 
 conf() {
     case "$1" in
-        vim)
-            vim ~/.vimrc
-            ;;
-        plug*)
-            vim ~/.vimrc.plugins
-            ;;
-        bash)
-            vim ~/.bashrc
-            ;;
-        alias|func|add*)
-            vim ~/.bash_additions
-            ;;
-        X*)
-            vim ~/.Xresources
-            ;;
-        tmux)
-            vim ~/.tmux.conf
-            ;;
+        vim)             $EDITOR ~/.vimrc ;;
+        plug*)           $EDITOR ~/.vimrc.plugins ;;
+        bash)            $EDITOR ~/.bashrc ;;
+        alias|func|add*) $EDITOR ~/.bash_additions ;;
+        X*)              $EDITOR ~/.Xresources ;;
+        tmux)            $EDITOR ~/.tmux.conf ;;
+        zsh*)            $EDITOR ~/.zshrc ;;
+        prez*)           $EDITOR ~/.zpreztorc ;;
+        prompt)          $EDITOR ~/.zprezto/modules/prompt/functions/prompt_subliminal_setup ;;
         *)
-            echo "Unrecognized config command: '$1'" >&2
+            awk '/conf\(\)/{p=1;print;next} p&&/ \*\)/{p=0};p' ~/.bash_additions | \
+                tail -n +3 | sed -e 's/^ *//g'
+            [ -n "$1" ] && echo "Unrecognized config command: '$1'" >&2
+            ;;
     esac
 }
 
 # Determine size of a file or total size of a directory
-function fs() {
+fs() {
     if du -b /dev/null > /dev/null 2>&1; then
         local arg=-sbh
     else
@@ -115,15 +115,25 @@ shparproc() {
 }
 
 # change extensions for all files in the current directory
-# $1 = extension to be changed
-# $2 = new extension
-# NOTE: must include '.' in both $1 and $2
 chext() {
-    for f in *$1; do
-        name=`echo $f | cut -d . -f 1`
-        new=$name$2
-        mv -i $f $new
-    done
+    if [[ "$*" == *-h* ]]; then
+        echo "chext '.old_ext' '.new_ext'"
+        echo 'Changes file extensions in the current directory'
+        echo 'NOTE: include the period in both extensions, as above'
+        return 0
+    fi
+    if [ -n "$1" ] && [ -n "$2" ]; then
+        for f in *$1; do
+            name=`echo $f | cut -d . -f 1`
+            new=$name$2
+            mv -iv $f $new
+        done
+    else
+        echo "chext '.old_ext' '.new_ext'"
+        echo 'Changes file extensions in the current directory'
+        echo 'NOTE: include the period in both extensions, as above'
+        return 1
+    fi
 }
 
 cmd-exists() {

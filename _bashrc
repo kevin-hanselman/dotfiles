@@ -33,19 +33,19 @@ shopt -s checkwinsize
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 #
-# Variables
-#
-export EDITOR=vim
-#export LESS="-R"
-
-#
 # Path additions
 #
 if [ -d $HOME/.bin ]; then
     export PATH=$PATH:$HOME/.bin
 fi
 
-# Aliases and functions
+#
+# Aliases, functions, and environment variables
+#
+
+# tmux expects screen-256color, doesn't seem to affect anything else
+export TERM=screen-256color
+
 [ -f ~/.bash_additions ] && source ~/.bash_additions
 
 [ -f /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
@@ -55,3 +55,4 @@ if [ -f ~/.bash_prompt ]; then
 else
     export PS1='\[\e[0;34m\]\u\[\e[0;37m\] @ \[\e[0;35m\]\h\[\em\]\[\e[0;37m\]: \[\e[1;34m\]\w\[\e[m\] \[\e[0;37m\]\n\$\[\e[m\] \[\e[1;37m\]'
 fi
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
