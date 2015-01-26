@@ -1,7 +1,6 @@
 URxvt.scrollBar: false
-URxvt.font: xft: Droid Sans Mono for Powerline:size=10
-!URxvt*font: -lucy-tewi-medium-r-normal--11-90-75-75-p-58-iso10646-1
-!URxvt*boldFont: -lucy-tewi-medium-r-normal--11-90-75-75-p-58-iso10646-1
+URxvt.font: xft: EnvyCodeR:size=11
+Xft.antialias: true
 
 *background: #1D1F21
 *foreground: #C5C8C6
@@ -30,9 +29,3 @@ URxvt.font: xft: Droid Sans Mono for Powerline:size=10
 *color7: #707880
 *color15: #C5C8C6
 
-!Xft.autohint: 0
-!Xft.lcdfilter:  lcddefault
-!Xft.hintstyle:  hintslight
-!Xft.hinting: 1
-Xft.antialias: 1
-!Xft.rgba: rgb

@@ -73,7 +73,7 @@ set tags=./.tags;$HOME              " search for a tag file named '.tags' upward
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
     set noshowmode                  " airline shows me my editor mode
-    "let g:hybrid_use_Xresources = 1
+    let g:hybrid_use_Xresources = 1
     colorscheme hybrid
 else
     colorscheme slate
@@ -81,10 +81,7 @@ endif
 
 if has("gui_running")
     set guioptions=a
-    " https://github.com/Lokaltog/powerline-fonts
-    "set guifont=Source\ Code\ Pro\ for\ Powerline\ 10
-    " https://gist.github.com/imiric/9038570
-    set guifont=Envy\ Code\ R\ for\ Powerline\ 11
+    set guifont=EnvyCodeR\ 11
 endif
 
 " ------------------------------------------

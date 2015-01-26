@@ -20,8 +20,11 @@ endfunction
 
     " fancypants status line. Powerline patched fonts require manual install
 Plug 'bling/vim-airline'
-let g:airline_powerline_fonts = 1
-let g:airline_theme="base16"
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_theme='lucius'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 
