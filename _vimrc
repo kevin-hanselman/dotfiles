@@ -6,7 +6,7 @@ filetype plugin indent on   " required!
 " General options
 " ------------------------------------------
 " misc
-let mapleader=","                   " change the leader key to comma
+let mapleader=' '                   " change the leader key
 set clipboard=unnamedplus           " use OS clipboard as default yank buffer
 set history=1000                    " remember a ton of commands
 set backspace=indent,eol,start      " backspace over everything
@@ -75,6 +75,9 @@ if filereadable(expand("~/.vimrc.plugins"))
     set noshowmode                  " airline shows me my editor mode
     let g:hybrid_use_Xresources = 1
     colorscheme hybrid
+    "set background=dark
+    "let base16colorspace=256
+    "colorscheme base16-pop
 else
     colorscheme slate
 endif
@@ -162,6 +165,7 @@ nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 "autocmd BufWritePre * :call TrimTrailingWhitespace()
 
 autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
 
 " uncomment to debug errors on Vim exit

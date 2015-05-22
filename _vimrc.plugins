@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugins')
 
-let g:plug_window = "above new"
+let g:plug_window = "below new"
 
 "
 " General maps and functions
@@ -20,6 +20,7 @@ endfunction
 
     " fancypants status line. Powerline patched fonts require manual install
 Plug 'bling/vim-airline'
+let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
@@ -39,9 +40,6 @@ nnoremap <leader>f :NERDTreeFind<CR>
 
     " quickly (un)comment code <leader> c {space, i, c, ...}
 Plug 'scrooloose/nerdcommenter'
-
-    " streamlined access to file tree (netrw, NERDtree)
-Plug 'tpope/vim-vinegar'
 
     " syntax checking and reporting
 Plug 'scrooloose/syntastic'
@@ -69,12 +67,17 @@ nnoremap <leader>tb :TagbarToggle<CR>
     " visual undo tree. nice for when you need to go back to a branch
 Plug 'sjl/gundo.vim'
 nnoremap <leader>u :GundoToggle<CR>
+let g:gundo_preview_bottom = 1
+"let g:gundo_width = 100
+"let g:gundo_preview_height = 40
 
     " ctrl-p for go to anything
 Plug 'kien/ctrlp.vim'
-nnoremap <leader>pt :CtrlPTag<CR>
+nnoremap <leader>pT :CtrlPTag<CR>
 nnoremap <leader>pb :CtrlPBuffer<CR>
 nnoremap <leader>pm :CtrlPMRUFiles<CR>
+nnoremap <leader>pc :CtrlPChange<CR>
+nnoremap <leader>pt :CtrlPBufTag<CR>
 if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
@@ -90,14 +93,15 @@ vmap <Enter> <Plug>(EasyAlign)
 nmap <leader>A <Plug>(EasyAlign)
 
     " switch between header and source
-Plug 'vim-scripts/a.vim'
-nnoremap <leader>a :A<CR>
+Plug 'derekwyatt/vim-fswitch'
+nnoremap <leader>a :FSHere<CR>
 
     " vim front end for 'the silver searcher'
 Plug 'rking/ag.vim'
 let g:aghighlight = 1
 let g:agprg="ag --column --smart-case"
-nnoremap <leader>/ * :AgFromSearch!<CR>
+nnoremap <leader>* * :AgFromSearch!<CR>
+nnoremap <leader>/ :Ag!<Space>
 
     " provides hg/git change status in the left gutter
 Plug 'mhinz/vim-signify'
@@ -110,6 +114,8 @@ let g:indent_guides_guide_size = 1
     " colorschemes
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
+Plug 'jaxbot/semantic-highlight.vim'
+Plug 'octol/vim-cpp-enhanced-highlight'
 
     " improved vim session management
 Plug 'tpope/vim-obsession'
@@ -117,14 +123,20 @@ Plug 'tpope/vim-obsession'
     " browse and manage open buffers
 Plug 'jlanzarotta/bufexplorer'
 
+    " :BOnly deletes all but the current buffer
+Plug 'vim-scripts/BufOnly.vim'
+
     " commands for modifying quotes, brackets, etc.
 Plug 'tpope/vim-surround'
 
     " highlights all search matches, not just the first
 Plug 'haya14busa/incsearch.vim'
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+nmap /  <Plug>(incsearch-forward)
+nmap ?  <Plug>(incsearch-backward)
+nmap g/ <Plug>(incsearch-stay)
+
+    " a new command line that highlights matches during s/// et. al.
+Plug 'osyo-manga/vim-over'
 
     " fancy start menu when opening vim without a filename
 Plug 'mhinz/vim-startify'
@@ -152,12 +164,27 @@ let g:hardtime_maxcount = 3
 Plug 'embear/vim-localvimrc'
 let g:localvimrc_persistent = 1
 
-    " mercurial diff and blame
-Plug 'jlfwong/vim-mercenary'
+    " the notorious git plugin
+Plug 'tpope/vim-fugitive'
+
+    " mercurial plugin similar to fugitive
+Plug 'ludovicchabant/vim-lawrencium'
+
+    " supercharged substitute (:S///)
+Plug 'tpope/vim-abolish'
 
     " quickly google search from vim
 Plug 'szw/vim-g'
-nnoremap <leader>G yiw:Googlef <C-r>"<CR>
+nnoremap <leader>G yiw:Googlef <C-r>"
+
+    " interface for making Web REST API calls
+Plug 'nicwest/QQ.vim'
+let g:QQ_python_executable = '/usr/bin/python2'
+
+    " hackernews interface in vim
+Plug 'ryanss/vim-hackernews'
+
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
