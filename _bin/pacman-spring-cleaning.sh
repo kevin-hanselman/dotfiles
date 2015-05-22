@@ -15,14 +15,20 @@ packages_to_file() {
 
 packages_file=~/.spring_current.txt
 previous_file=~/.spring_previous.txt
+ignore_file=~/.spring_ignore.txt
+[ -f "$ignore_file" ] || touch "$ignore_file"
 
 packages_to_file $packages_file
 
+echo -e "Total number of packages:  $(pacman -Qq  | wc -l)"
+echo -e "Official packages:         $(pacman -Qqn | wc -l)"
+echo -e "AUR/misc packages:         $(pacman -Qqm | wc -l)\n"
+
 if [ -f $previous_file ]; then
-    deleted=$(comm -13 $packages_file $previous_file)
+    deleted=$(comm -13 $packages_file <(cat $previous_file $ignore_file | sort -u))
     [ -n "$deleted" ] && echo -e "Packages deleted since last time:\n$deleted"
 
-    manual_packages=($(comm -23 $packages_file $previous_file))
+    manual_packages=($(comm -23 $packages_file <(cat $previous_file $ignore_file | sort -u)))
     [ -n "$manual_packages" ] && echo -e "\nPackages added since last time:" && printf "%s\n" ${manual_packages[@]}
 
     if [ -z "$deleted" ] && [ -z "$manual_packages" ]; then
@@ -31,7 +37,7 @@ if [ -f $previous_file ]; then
     fi
     echo && confirm || exit 0
 else
-    manual_packages=($(comm -23 <(pacman -Qeq|sort) <(pacman -Qgq base base-devel|sort)))
+    manual_packages=($(comm -23 <(pacman -Qeq | sort -u)  <(pacman -Qgq base base-devel | cat "$ignore_file" - | sort -u)))
 fi
 
 i=1
@@ -40,11 +46,11 @@ for p in "${manual_packages[@]}"; do
     echo -e "----- $i / ${#manual_packages[@]} -----"
     pacman -Qi $p | grep -E --color "$p|$"
 
-    read -r -p "[r]emove  -  mark as [d]ependency  -  [q]uit  -  do [n]othing (default) " response
+    read -r -p "[r]emove  .  [q]uit  .  always [i]gnore  .  ignore once (default) " response
     case $response in
         [rR]) sudo pacman -Rsn $p ;;
-        [dD]) confirm "Mark $p as a dependency install? [y/N]" && sudo pacman -D --asdeps $p ;;
-        [qQ]) break
+        [iI]) echo "$p" >> $ignore_file ;;
+        [qQ]) break ;;
     esac
     i=$((i + 1))
 done

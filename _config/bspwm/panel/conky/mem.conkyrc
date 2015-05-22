@@ -29,8 +29,8 @@ TEXT
 Memory${alignr}${mem} / ${memmax} (${memperc}%)
 Easy Free${alignr}${memeasyfree}
 ${memgraph 20,200 0088cc 0088cc}
-${top_mem name 1}${alignr}${top_mem pid 1}  ${alignr}${top_mem mem 1}%
-${top_mem name 2}${alignr}${top_mem pid 2}  ${alignr}${top_mem mem 2}%
-${top_mem name 3}${alignr}${top_mem pid 3}  ${alignr}${top_mem mem 3}%
-${top_mem name 4}${alignr}${top_mem pid 4}  ${alignr}${top_mem mem 4}%
-${top_mem name 5}${alignr}${top_mem pid 5}  ${alignr}${top_mem mem 5}%
+${top_mem name 1}${alignr}${top_mem pid 1}  ${alignr}${top_mem mem_res 1}
+${top_mem name 2}${alignr}${top_mem pid 2}  ${alignr}${top_mem mem_res 2}
+${top_mem name 3}${alignr}${top_mem pid 3}  ${alignr}${top_mem mem_res 3}
+${top_mem name 4}${alignr}${top_mem pid 4}  ${alignr}${top_mem mem_res 4}
+${top_mem name 5}${alignr}${top_mem pid 5}  ${alignr}${top_mem mem_res 5}

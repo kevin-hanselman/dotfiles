@@ -15,7 +15,7 @@ template2 %{F\\\#ffbb2211}
 
 TEXT
 T\
-%{A:cal:}${time %b %e, %l:%M %P}%{A}, \
+%{A:cal:}${time %b %e, %l:%M %P}%{A} | \
 %{A:weather:}\
 ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM temperature 10}°F \
 ${if_empty ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM weather 10}}\

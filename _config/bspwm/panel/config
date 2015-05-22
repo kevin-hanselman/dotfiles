@@ -4,10 +4,8 @@
 PANEL_HEIGHT=18
 PANEL_FONT_FAMILY=
 PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*"
-PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-lemon-medium-*-*-*-10-*-*-*-*-*-*-*"
-PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
-#PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-tewi-medium-*-*-*-11-*-*-*-*-*-*-*"
-#PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-uushi-medium-*-*-*-11-*-*-*-*-*-*-*"
+PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-lemon-*-*-*-*-10-*-*-*-*-*-*-*"
+#PANEL_FONT_FAMILY="$PANEL_FONT_FAMILY,-*-proggytiny-*-*-*-*-*-*-*-*-*-*-*-*"
 
 [ -f /tmp/xrandr.txt ] || xrandr > /tmp/xrandr.txt
 
@@ -23,5 +21,7 @@ PANEL_FIFO=/tmp/panel-fifo
 # colors
 C_FG="#FF$(grep '*foreground:' ~/.Xresources | cut -d# -f2)"
 C_BG="#FF$(grep '*background:' ~/.Xresources | cut -d# -f2)"
+#C_FOC="#FF$(grep '*color2:' ~/.Xresources   | cut -d# -f2)"
+C_URG="#FF$(grep '*color1:' ~/.Xresources   | cut -d# -f2)"
 C_FOC='#FF0088CC'
-C_URG='#FF992211'
+#C_URG='#FF992211'

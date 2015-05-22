@@ -5,6 +5,7 @@
 #
 
 export EDITOR=vim
+export SUDO_EDITOR=vim
 
 #
 # Aliases
@@ -25,6 +26,7 @@ alias bsrc='source ~/.bash_profile'
 alias Xres='xrdb -merge ~/.Xresources'
 
 alias pg='ps -ef | grep -v grep | grep'
+alias ff='find . -type f -iname'
 
 alias vimprof='vim --startuptime /dev/stdout +qall'
 alias vimmaps="vim -c 'redir > ~/vim-maps.txt' -c 'map' -c 'qa!'"

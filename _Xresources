@@ -1,5 +1,5 @@
 URxvt.scrollBar: false
-URxvt.font: xft: EnvyCodeR:size=11
+URxvt.font: xft: Envy Code R for Powerline:size=11
 Xft.antialias: true
 
 *background: #1D1F21
