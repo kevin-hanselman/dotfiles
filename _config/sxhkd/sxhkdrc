@@ -101,9 +101,6 @@ super + shift + f
 super + shift + v
     gvim
 
-super + shift + t
-    thunderbird
-
 super + shift + s
     ~/.bin/toggle_screenkey
 
