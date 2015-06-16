@@ -1,6 +1,6 @@
 gtk-theme-name = "Numix"
 gtk-icon-theme-name = "Numix-Circle"
-gtk-font-name = "Envy Code R 10"
+gtk-font-name = "Envy Code R 8"
 
 # color the right and bottom edges of maximized gvim windows
 style "default" {

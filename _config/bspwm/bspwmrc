@@ -15,14 +15,11 @@ bspc config focused_border_color "#0088cc"
 
 for monitor in $(bspc query -M); do
     case $monitor in
-        LVDS-1)
-            num=1
-            ;;
-        DP-1)
+        LVDS-0)
             num=2
             ;;
-        DP-3)
-            num=3
+        DP-5)
+            num=1
             ;;
         *)
             num=
