@@ -84,7 +84,7 @@ endif
 
 if has("gui_running")
     set guioptions=a
-    set guifont=EnvyCodeR\ 11
+    set guifont=Envy\ Code\ R\ for\ Powerline\ 10
 endif
 
 " ------------------------------------------
@@ -123,12 +123,10 @@ nnoremap j gj
 nnoremap k gk
 
 " keep cursor in middle of screen when jumping/scrolling
-nnoremap <C-j> 10jzz
-nnoremap <C-k> 10kzz
+nnoremap <C-j> 10j
+nnoremap <C-k> 10k
 nmap <C-D> <C-D>zz
 nmap <C-U> <C-U>zz
-nmap { {zz
-nmap } }zz
 nmap n nzz
 nmap N Nzz
 nnoremap <C-i> <C-i>zz
@@ -141,16 +139,14 @@ nnoremap c/ :noh<CR>
 inoremap <F1> <nop>
 nnoremap <F1> <nop>
 vnoremap <F1> <nop>
+
+" no ex-mode
 nnoremap Q <nop>
 
 nnoremap <leader>n :call NumberToggle()<CR>
 
-" git/hg blame (annotate)
-vnoremap <Leader>Bg :<C-U>!git blame <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-vnoremap <Leader>Bh :<C-U>!hg blame -nuc <C-R>=expand("%:p") <CR> \| sed -n <C-R>=line("'<") <CR>,<C-R>=line("'>") <CR>p <CR>
-
 " quickly switch to last buffer
-nnoremap <leader>l :b#<CR>
+nnoremap <leader>b :b#<CR>
 
 " show highlight group(s) under cursor
 nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
@@ -164,8 +160,9 @@ nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " strip trailing whitespace prior to save
 "autocmd BufWritePre * :call TrimTrailingWhitespace()
 
-autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
 
 " uncomment to debug errors on Vim exit

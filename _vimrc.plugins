@@ -58,6 +58,10 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <F6> :YcmDiags<CR>
 nnoremap <leader>gd :YcmCompleter GoTo<CR>
 
+Plug 'brookhong/cscope.vim'
+nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
+nnoremap <leader>l :call ToggleLocationList()<CR>
+
     " adds a window that shows all of the functions in the current file
 Plug 'majutsushi/tagbar'
 let g:tagbar_autoclose = 1
@@ -184,6 +188,7 @@ let g:QQ_python_executable = '/usr/bin/python2'
     " hackernews interface in vim
 Plug 'ryanss/vim-hackernews'
 
+    " rust filetype detection and syntax highlighting
 Plug 'rust-lang/rust.vim'
 
 call plug#end()
