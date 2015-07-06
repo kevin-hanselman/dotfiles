@@ -19,9 +19,9 @@ PANEL_GEOMETRY="$((mon_width - 18))x${PANEL_HEIGHT}+$((mon_offset + 9))+9"
 PANEL_FIFO=/tmp/panel-fifo
 
 # colors
-C_FG="#FF$(grep '*foreground:' ~/.Xresources | cut -d# -f2)"
-C_BG="#FF$(grep '*background:' ~/.Xresources | cut -d# -f2)"
-#C_FOC="#FF$(grep '*color2:' ~/.Xresources   | cut -d# -f2)"
-C_URG="#FF$(grep '*color1:' ~/.Xresources   | cut -d# -f2)"
+C_FG="#FF$(grep '*foreground:' ~/.Xresources | cut -d'#' -f2)"
+C_BG="#FF$(grep '*background:' ~/.Xresources | cut -d'#' -f2)"
+#C_FOC="#FF$(grep '*color2:' ~/.Xresources   | cut -d'#' -f2)"
+C_URG="#FF$(grep '*color1:' ~/.Xresources   | cut -d'#' -f2)"
 C_FOC='#FF0088CC'
 #C_URG='#FF992211'
