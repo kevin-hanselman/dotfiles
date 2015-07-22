@@ -1,5 +1,6 @@
 #!/bin/bash
-source $(dirname $0)/../config
+
+set -euo pipefail
 
 BAT=$(acpi -b | awk '{gsub(/%,/,""); print $4}' | sed 's/%//g')
 STATUS=$(acpi -b | awk '{gsub(/,/,""); print $3}')
@@ -19,7 +20,7 @@ fi
 
 s="«"
 bar=""
-case $BAT in
+case "$BAT" in
     100)
         bar=""
         ;;

@@ -1,12 +1,14 @@
 #! /bin/sh
 
-if [ $(pgrep -cx panel) -gt 1 ] ; then
+prog=$(basename "$0")
+
+if [ $(pgrep -cx "$prog") -gt 1 ] ; then
     printf "%s\n" "The panel is already running." >&2
     exit 1
 fi
 
 cd $(dirname $0)
-source ./config
+source ./vars.sh
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
@@ -20,9 +22,9 @@ bspc control --subscribe > "$PANEL_FIFO" &
 conky -c ./time_date.conkyrc > "$PANEL_FIFO" &
 conky -c ./panel_icons.conkyrc > "$PANEL_FIFO" &
 
-cat "$PANEL_FIFO" | \
-    ./panel_bar   | \
-    lemonbar        \
+cat "$PANEL_FIFO"           |   \
+    ./fifo_parser.sh        |   \
+    lemonbar                    \
         -g "$PANEL_GEOMETRY"    \
         -f "$FONT_ONE"          \
         -f "$FONT_TWO"          \

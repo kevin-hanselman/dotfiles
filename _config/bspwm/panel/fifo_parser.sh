@@ -1,12 +1,12 @@
 #! /bin/bash
 
 cd $(dirname $0)
-source ./config
+source ./vars.sh
 
 num_mon=$(bspc query -M | wc -l)
 
 while read -r line ; do
-    case $line in
+    case "$line" in
         S*)
             # conky output
             sys_infos="${line#?} "
@@ -19,7 +19,7 @@ while read -r line ; do
             # bspwm internal state
             wm_infos=""
             IFS=
-            sorted=$(echo ${line#?} | grep -io 'm[a-ln-z\:0-9\/]\+' | sed -e 's/:$//g' | sort -f | tr '\n' ':' | sed -e 's/:$//')
+            sorted=$(echo "${line#?}" | grep -io 'm[a-ln-z\:0-9\/]\+' | sed -e 's/:$//g' | sort -f | tr '\n' ':' | sed -e 's/:$//')
             IFS=':'
             #set -- ${line#?}
             set -- $sorted
@@ -29,17 +29,17 @@ while read -r line ; do
                 name=${item#?[0-9]?}
                 # e.g.
                 # WM2:O1:o2:f3:f4:f5:LT:m1:F1:f2:f3:f4:f5:LT:m3:O1:f2:f3:f4:f5:LT
-                case $item in
+                case "$item" in
                     M*)
                         # active monitor
-                        if [ $num_mon -gt 1 ] ; then
+                        if [ "$num_mon" -gt 1 ] ; then
                             [ -n "$wm_infos" ] && wm_infos="$wm_infos    "
                             active_mon=$name
                         fi
                         ;;
                     m*)
                         # inactive monitor
-                        if [ $num_mon -gt 1 ] ; then
+                        if [ "$num_mon" -gt 1 ] ; then
                             [ -n "$wm_infos" ] && wm_infos="$wm_infos    "
                             active_mon=
                         fi
