@@ -6,15 +6,15 @@ STATUS=$(acpi -b | awk '{gsub(/,/,""); print $3}')
 
 # Set Icon
 if [ "$STATUS" != "Discharging" ]; then
-    icon=''
+    icon=''
 elif [ "$BAT" -gt 75 ]; then
-    icon=''
+    icon=''
 elif [ "$BAT" -gt 50 ]; then
-    icon=''
+    icon=''
 elif [ "$BAT" -gt 25 ]; then
-    icon=''
+    icon=''
 else
-    icon=''
+    icon=''
 fi
 
 s="«"

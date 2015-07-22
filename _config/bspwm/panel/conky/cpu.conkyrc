@@ -1,33 +1,53 @@
-font -*-lemon-medium-*-*-*-10-*-*-*-*-*-*-*
-out_to_x yes
-out_to_console no
-background yes
+-- vim: set ft=lua:
 
-own_window yes
-own_window_class conky_cpu
-own_window_type panel
-#own_window_argb_visual yes
-#own_window_argb_value 240
-double_buffer yes
+function run_cmd(cmd, raw)
+  local f = assert(io.popen(cmd, 'r'))
+  local s = assert(f:read('*a'))
+  f:close()
+  if raw then return s end
+  s = string.gsub(s, '^%s+', '')
+  s = string.gsub(s, '%s+$', '')
+  s = string.gsub(s, '[\n\r]+', ' ')
+  return s
+end
 
-minimum_size 150 80
-alignment top_right
-gap_y 28
+local xrandr = run_cmd('cat /tmp/xrandr.txt')
+local screen_width = string.match(xrandr, 'current (%d+)')
+local mon_width  = ''
+local mon_offset = ''
+mon_width, mon_offset = string.match(xrandr, 'primary (%d+)x%d+%+(%d+)')
+local xpos=(screen_width - (mon_width + mon_offset - 14))
+print(screen_width, mon_width, mon_offset, xpos)
 
-own_window_colour 1d1f21
-default_color c5c8c6
-color1 5f87af
+conky.config = {
+    font = 'Envy Code R:size=8',
+    use_xft = true,
+    out_to_x = true,
+    out_to_console = false,
+    background = true,
+    own_window = true,
+    own_window_class = 'conky_cpu',
+    own_window_type = 'panel',
+    double_buffer = true,
+    own_window_colour = '1d1f21',
+    default_color = 'c5c8c6',
+    color1 = '0088cc',
+    draw_shades = false,
+    update_interval = 3,
+    top_name_width = 40,
+    minimum_width = 400,
+    alignment = 'top_right',
+    gap_x = xpos,
+    gap_y = 32,
+}
 
-draw_shades no
-
-update_interval 2
-
-TEXT
+conky.text = [[
 Kernel:${alignr}${kernel}
 Uptime:${alignr}${uptime}
-${cpugraph cpu0 20,200 0088cc 0088cc}
+${cpugraph cpu0 0088cc 0088cc}
 ${top name 1}${alignr}${top pid 1}  ${alignr}${top cpu 1}%
 ${top name 2}${alignr}${top pid 2}  ${alignr}${top cpu 2}%
 ${top name 3}${alignr}${top pid 3}  ${alignr}${top cpu 3}%
 ${top name 4}${alignr}${top pid 4}  ${alignr}${top cpu 4}%
-${top name 5}${alignr}${top pid 5}  ${alignr}${top cpu 5}%
+${top name 5}${alignr}${top pid 5}  ${alignr}${top cpu 5}%]]
+

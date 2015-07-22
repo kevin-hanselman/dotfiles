@@ -1,21 +1,18 @@
-background yes
-out_to_console yes
-out_to_x no
-short_units yes
-update_interval 1
-temperature_unit fahrenheit
+-- vim: set ft=lua:
+conky.config = {
+    background = true,
+    out_to_console = true,
+    out_to_x = false,
+    short_units = true,
+    update_interval = 1,
+    temperature_unit  = 'fahrenheit'
+}
 
-# BAR formatted colors
-template0 %{F\\\#ff0088cc}
-template1 %{F\\\#ffb27d12}
-template2 %{F\\\#ffbb2211}
+-- TODO: match weather/cloud_cover and print matching icons
 
-# lemon weather icons
-#⮾ ⮿ ⯀ ⯁ ⯂ ⯃ ⯄ ⯅ ⯆ ⯇ ⯈
-
-TEXT
+conky.text = [[
 T\
-%{A:cal:}${time %b %e, %l:%M %P}%{A} | \
+%{A:cal:}${time %b %e, %l:%M %P}%{A} - \
 %{A:weather:}\
 ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM temperature 10}°F \
 ${if_empty ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM weather 10}}\
@@ -23,3 +20,4 @@ ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM clo
 ${else}\
 ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM weather 10}\
 ${endif}%{A}\
+]]

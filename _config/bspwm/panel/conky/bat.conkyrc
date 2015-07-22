@@ -1,29 +1,44 @@
-font -*-lemon-medium-*-*-*-10-*-*-*-*-*-*-*
-out_to_x yes
-out_to_console no
-background yes
+-- vim: set ft=lua:
 
-own_window yes
-own_window_class conky_bat
-own_window_type panel
-#own_window_argb_visual yes
-#own_window_argb_value 240
-double_buffer yes
+function run_cmd(cmd, raw)
+  local f = assert(io.popen(cmd, 'r'))
+  local s = assert(f:read('*a'))
+  f:close()
+  if raw then return s end
+  s = string.gsub(s, '^%s+', '')
+  s = string.gsub(s, '%s+$', '')
+  s = string.gsub(s, '[\n\r]+', ' ')
+  return s
+end
 
-alignment top_right
-gap_y 28
+local xrandr = run_cmd('cat /tmp/xrandr.txt')
+local screen_width = string.match(xrandr, 'current (%d+)')
+local mon_width  = ''
+local mon_offset = ''
+mon_width, mon_offset = string.match(xrandr, 'primary (%d+)x%d+%+(%d+)')
+local xpos=(screen_width - (mon_width + mon_offset - 14))
+print(screen_width, mon_width, mon_offset, xpos)
 
-#own_window_colour afaf87
-own_window_colour 1d1f21
-default_color c5c8c6
-color1 5f87af
+conky.config = {
+    font = 'Envy Code R:size=8',
+    use_xft = true,
+    out_to_x = true,
+    out_to_console = false,
+    background = true,
+    own_window = true,
+    own_window_class = 'conky_cpu',
+    own_window_type = 'panel',
+    double_buffer = true,
+    own_window_colour = '1d1f21',
+    default_color = 'c5c8c6',
+    color1 = '0088cc',
+    draw_shades = false,
+    update_interval = 5,
+    alignment = 'top_right',
+    gap_x = xpos,
+    gap_y = 32,
+}
 
-#use_xft yes
-#xftfont Tewi:size=7
-draw_shades no
-
-update_interval 5
-
-TEXT
-${battery}
-${battery_time}
+conky.text = [[
+Battery:   ${alignr}${battery}
+${alignr}${battery_time}]]

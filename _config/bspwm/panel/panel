@@ -22,14 +22,15 @@ conky -c ./panel_icons.conkyrc > "$PANEL_FIFO" &
 
 cat "$PANEL_FIFO" | \
     ./panel_bar   | \
-    bar             \
+    lemonbar        \
         -g "$PANEL_GEOMETRY"    \
-        -f "$PANEL_FONT_FAMILY" \
-        -F "$C_FG"  \
-        -B "$C_BG"  \
+        -f "$FONT_ONE"          \
+        -f "$FONT_TWO"          \
+        -F "$C_FG"              \
+        -B "$C_BG"              \
         -u 2 |                  \
 while read line; do
-    ~/.config/bspwm/panel/scripts/toggle_conky.sh $line
+    ~/.config/bspwm/panel/scripts/toggle_conky.sh "$line"
 done &
 
 wait

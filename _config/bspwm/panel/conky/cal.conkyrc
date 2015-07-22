@@ -1,29 +1,45 @@
-font -*-lemon-medium-*-*-*-10-*-*-*-*-*-*-*
-out_to_x yes
-out_to_console no
-background yes
+-- vim: set ft=lua:
 
-own_window yes
-own_window_class conky_cal
-own_window_type panel
-#own_window_argb_visual yes
-#own_window_argb_value 240
-double_buffer yes
+function run_cmd(cmd, raw)
+  local f = assert(io.popen(cmd, 'r'))
+  local s = assert(f:read('*a'))
+  f:close()
+  if raw then return s end
+  s = string.gsub(s, '^%s+', '')
+  s = string.gsub(s, '%s+$', '')
+  s = string.gsub(s, '[\n\r]+', ' ')
+  return s
+end
 
-#minimum_size 125 60
-alignment top_middle
-gap_y 28
+local xrandr = run_cmd('cat /tmp/xrandr.txt')
+local screen_width = string.match(xrandr, 'current (%d+)')
+local mon_width  = ''
+local mon_offset = ''
+mon_width, mon_offset = string.match(xrandr, 'primary (%d+)x%d+%+(%d+)')
+local xpos=(mon_offset + (mon_width - screen_width) / 2) * -1
+print(screen_width, mon_width, mon_offset, xpos)
 
-#own_window_colour afaf87
-own_window_colour 1d1f21
-default_color c5c8c6
-color1 0088cc
+conky.config = {
+    font = 'Envy Code R:size=8',
+    use_xft = true,
+    out_to_x = true,
+    out_to_console = false,
+    background = true,
+    own_window = true,
+    own_window_class = 'conky_cal',
+    own_window_type = 'panel',
+    double_buffer = true,
+    own_window_colour = '1d1f21',
+    default_color = 'c5c8c6',
+    color1 = '0088cc',
+    draw_shades = false,
+    update_interval = 1,
+    alignment = 'top_middle',
+    gap_x = xpos,
+    gap_y = 32,
+}
 
-draw_shades no
-
-update_interval 5
-
-#TEXT
-#${execpi 60 cal --color=always | sed -e 's/\x1B\[7m/\$\{color1\}/' -e 's/\x1B\[27m/\$\{color\}/' -e '/^\s*$/d' -e 's/\s*$//g' -e 's/^/\$\{goto 10\}/g'}
-TEXT
-${execpi 60 DJS=`date +%_d`; cal --color=always | sed s/"\(^\|[^0-9]\)$DJS"'\b'/'\1${color1}'"$DJS"'$color'/}
+--${execpi 60 cal --color=always | sed -e 's/\x1B\[7m/\$\{color1\}/' -e 's/\x1B\[27m/\$\{color\}/' -e '/^\s*$/d' -e 's/\s*$//g' -e 's/^/\$\{goto 10\}/g'}
+conky.text = [[
+${execpi 60 DJS=`date +%_d`; cal --color=always | sed s/"\(^\|[^0-9]\)$DJS"'\b'/'\1${color1}'"$DJS"'$color'/}\
+]]

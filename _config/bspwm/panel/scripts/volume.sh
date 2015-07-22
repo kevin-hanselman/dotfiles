@@ -5,11 +5,11 @@ n=$(echo $vol | cut -d% -f1)
 stat=$(echo $vol | cut -d% -f2)
 
 if [ "$stat" == off ]; then
-    echo 
+    echo 
 elif [ "$n" -gt 70 ]; then
-    echo 
-elif [ "$n" -gt 40 ]; then
-    echo 
+    echo 
+elif [ "$n" -gt 20 ]; then
+    echo 
 else
-    echo 
+    echo 
 fi
