@@ -30,7 +30,7 @@ cat "$PANEL_FIFO"           |   \
         -f "$FONT_TWO"          \
         -F "$C_FG"              \
         -B "$C_BG"              \
-        -u 2 |                  \
+        -u 1 |                  \
 while read line; do
     ~/.config/bspwm/panel/scripts/toggle_conky.sh "$line"
 done &
