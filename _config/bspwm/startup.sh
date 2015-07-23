@@ -8,7 +8,7 @@
 
 xsetroot -cursor_name left_ptr
 
-[ $(pgrep -cx panel) -eq 0 ] && ~/.config/bspwm/panel/start_panel.sh &
+[ $(pgrep -cx start_panel.sh) -eq 0 ] && ~/.config/bspwm/panel/start_panel.sh &
 
 [ $(pgrep -cx light-locker) -eq 0 ] && light-locker --lock-after-screensaver=5 &
 

@@ -39,7 +39,6 @@ conky.config = {
     gap_y = 32,
 }
 
---${execpi 60 cal --color=always | sed -e 's/\x1B\[7m/\$\{color1\}/' -e 's/\x1B\[27m/\$\{color\}/' -e '/^\s*$/d' -e 's/\s*$//g' -e 's/^/\$\{goto 10\}/g'}
 conky.text = [[
-${execpi 60 DJS=`date +%_d`; cal --color=always | sed s/"\(^\|[^0-9]\)$DJS"'\b'/'\1${color1}'"$DJS"'$color'/}\
-]]
+${execpi 60 cal --color=never | sed -e "s,\b\($(date +%d)\)\b",'${color1}\1$color,'}]]
+
