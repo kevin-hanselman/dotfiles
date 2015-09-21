@@ -74,10 +74,7 @@ if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
     set noshowmode                  " airline shows me my editor mode
     let g:hybrid_use_Xresources = 1
-    colorscheme hybrid
-    "set background=dark
-    "let base16colorspace=256
-    "colorscheme base16-pop
+    colorscheme hybrid-arc
 else
     colorscheme slate
 endif
@@ -111,6 +108,12 @@ nnoremap Y y$
 "map <M-j> <C-w>j
 "map <M-k> <C-w>k
 "map <M-l> <C-w>l
+
+" grow and shrink windows
+map <M-=> 10<C-w>+
+map <M--> 10<C-w>-
+map <M-<> 10<C-w><
+map <M->> 10<C-w>>
 
 " vim training wheels: don't allow arrow keys!
 map <up> <nop>
@@ -146,7 +149,7 @@ nnoremap Q <nop>
 nnoremap <leader>n :call NumberToggle()<CR>
 
 " quickly switch to last buffer
-nnoremap <leader>b :b#<CR>
+nnoremap <leader>bb :b#<CR>
 
 " show highlight group(s) under cursor
 nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'

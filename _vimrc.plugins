@@ -62,7 +62,7 @@ Plug 'brookhong/cscope.vim'
 nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
 nnoremap <leader>l :call ToggleLocationList()<CR>
 
-    " adds a window that shows all of the functions in the current file
+    " sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
@@ -106,6 +106,8 @@ let g:aghighlight = 1
 let g:agprg="ag --column --smart-case"
 nnoremap <leader>* * :AgFromSearch!<CR>
 nnoremap <leader>/ :Ag!<Space>
+    " a rough search for the definition of a function
+nnoremap <leader><leader>d yiw:Ag! 'function.*<c-r>"'<cr>
 
     " provides hg/git change status in the left gutter
 Plug 'mhinz/vim-signify'
@@ -188,8 +190,12 @@ let g:QQ_python_executable = '/usr/bin/python2'
     " hackernews interface in vim
 Plug 'ryanss/vim-hackernews'
 
-    " rust filetype detection and syntax highlighting
+    " filetype detection and syntax highlighting
 Plug 'rust-lang/rust.vim'
+Plug 'elixir-lang/vim-elixir'
+
+    " <leader>ww, select window to swap, <leader>ww again to swap
+Plug 'wesQ3/vim-windowswap'
 
 call plug#end()
 
