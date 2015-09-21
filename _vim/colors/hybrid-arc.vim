@@ -1,11 +1,14 @@
-" File:       hybrid.vim
-" Maintainer: Andrew Wong (w0ng)
-" URL:        https://github.com/w0ng/vim-hybrid
-" Modified:   27 Jan 2013 07:33 AM AEST
+" File:       hybrid-arc.vim
 " License:    MIT
 
 " Description:"{{{
 " ----------------------------------------------------------------------------
+" This colorscheme is based on 'hybrid', by Andrew Wong. It's main difference
+" is that the background/supporting colors more closely match the Arc GTK
+" theme.
+"
+" As Andrew Wong writes:
+"
 " The RGB colour palette is taken from Tomorrow-Night.vim:
 " https://github.com/chriskempson/vim-tomorrow-theme
 "
