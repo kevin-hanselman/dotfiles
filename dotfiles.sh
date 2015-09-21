@@ -1,22 +1,20 @@
 #!/usr/bin/env bash
-#
-#   dotfiles.sh
-#   http://www.github.com/kevlar1818/dotfiles
-#
-#   Copyright 2013 Kevin Hanselman
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-#
+
+usage() {
+    echo -e "usage: `basename $0` [options] [file ... ]\n"
+    echo -e "Configuration file manager | www.github.com/kevlar1818/dotfiles"
+    echo -e "\nCopyright 2013 Kevin Hanselman (See LICENSE or source)"
+    echo -e "\nArguments:"
+    echo -e "  file(s)\tattempts to link only the glob/file(s)"
+    echo -e "  \t\t (defaults to all files matching the glob '_*')"
+    echo -e "\nOptions:"
+    echo -e "  -h\t\tshow this help text and exit"
+    echo -e "  -r\t\tremove symlinks and restore backups if present"
+    echo -e "  -x\t\tact on all files excluding '[file] ...'"
+    echo -e "  -y\t\tdon't ask for confirmation"
+    echo -e "  -q\t\tquiet mode/suppress output"
+}
+
 confirm() {
     # call with a prompt string or use a default
     read -r -p "${1:-Continue? [y/N]} " response
@@ -60,21 +58,6 @@ unlink_file() {
     fi
 }
 
-usage() {
-    echo -e "usage: `basename $0` [options] [file ... ]\n"
-    echo -e "Configuration file manager | www.github.com/kevlar1818/dotfiles"
-    echo -e "\nCopyright 2013 Kevin Hanselman (See LICENSE or source)"
-    echo -e "\nArguments:"
-    echo -e "  file(s)\tattempts to link only the glob/file(s)"
-    echo -e "  \t\t (defaults to all files matching the glob '_*')"
-    echo -e "\nOptions:"
-    echo -e "  -h\t\tshow this help text and exit"
-    echo -e "  -r\t\tremove symlinks and restore backups if present"
-    echo -e "  -x\t\tact on all files excluding '[file] ...'"
-    echo -e "  -y\t\tdon't ask for confirmation"
-    echo -e "  -q\t\tquiet mode/suppress output"
-}
-
 # get path to this script and cd quietly
 dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 pushd "$dir" > /dev/null
@@ -111,7 +94,7 @@ while getopts ":h :y :x :r :q" opt; do
     esac
 done
 
-branch=`basename \`git symbolic-ref HEAD\``
+branch=$( basename "$(git symbolic-ref HEAD)" )
 echo "Using the '$branch' configuration."
 if [ -z "$ask" ]; then
     confirm=`confirm`
@@ -138,7 +121,7 @@ for i in $files; do
     if [ -d "$i" ]; then    # if a directory, link it's files
         newdir="${HOME}/${i/_/.}"
         mkdir -p "$verbose" "$newdir" # create the directory if needed
-        for f in `basename $i`/*; do
+        for f in "$(basename "$i")"/*; do
             if [ -n "$restore" ]; then
                 unlink_file "$f" "$verbose"
             else

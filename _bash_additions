@@ -6,6 +6,7 @@
 
 export EDITOR=vim
 export SUDO_EDITOR=vim
+export RANGER_LOAD_DEFAULT_RC=FALSE
 
 #
 # Aliases
@@ -90,6 +91,8 @@ conf() {
         zsh*)            $EDITOR ~/.zshrc ;;
         prez*)           $EDITOR ~/.zpreztorc ;;
         prompt)          $EDITOR ~/.zprezto/modules/prompt/functions/prompt_subliminal_setup ;;
+        gtk2)            $EDITOR ~/.gtkrc-2.0 ;;
+        gtk3)            $EDITOR ~/.config/gtk-3.0/settings.ini ;;
         *)
             awk '/conf\(\)/{p=1;print;next} p&&/ \*\)/{p=0};p' ~/.bash_additions | \
                 tail -n +3 | sed -e 's/^ *//g'
