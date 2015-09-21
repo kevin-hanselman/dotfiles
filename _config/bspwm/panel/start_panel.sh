@@ -20,7 +20,7 @@ mkfifo "$PANEL_FIFO"
 bspc config -m "$(bspc query -M | head -n 1)" top_padding $((PANEL_HEIGHT * 3 / 2))
 bspc control --subscribe > "$PANEL_FIFO" &
 conky -c ./time_date.conkyrc > "$PANEL_FIFO" &
-conky -c ./panel_icons.conkyrc > "$PANEL_FIFO" &
+conky -c ./panel.conkyrc > "$PANEL_FIFO" &
 
 cat "$PANEL_FIFO"           |   \
     ./fifo_parser.sh        |   \
@@ -28,6 +28,7 @@ cat "$PANEL_FIFO"           |   \
         -g "$PANEL_GEOMETRY"    \
         -f "$FONT_ONE"          \
         -f "$FONT_TWO"          \
+        -f "$FONT_THREE"        \
         -F "$C_FG"              \
         -B "$C_BG"              \
         -u 1 |                  \

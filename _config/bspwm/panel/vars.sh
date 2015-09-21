@@ -2,8 +2,9 @@
 
 # panel setup
 PANEL_HEIGHT=18
-FONT_ONE='Envy Code R-8'
+FONT_ONE='EnvyCodeR-8'
 FONT_TWO='Ionicons-12'
+FONT_THREE='icomoon-12'
 
 [ -f /tmp/xrandr.txt ] || xrandr > /tmp/xrandr.txt
 

@@ -8,8 +8,8 @@ conky.config = {
     temperature_unit  = 'fahrenheit'
 }
 
--- TODO: match weather/cloud_cover and print matching icons
-
+-- using conky's built-in weather object
+--[[
 conky.text = [[
 T\
 %{A:cal:}${time %b %e, %l:%M %P}%{A} - \
@@ -21,3 +21,10 @@ ${else}\
 ${weather http://weather.noaa.gov/pub/data/observations/metar/stations/ KPWM weather 10}\
 ${endif}%{A}\
 ]]
+
+conky.text = [[
+T\
+%{A:cal:}${time %b %e, %l:%M %P}%{A} - \
+%{A:weather:}\
+${execpi 600 ~/.config/bspwm/panel/scripts/weather.sh simple}\
+%{A}]]
