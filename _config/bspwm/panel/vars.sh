@@ -2,9 +2,7 @@
 
 # panel setup
 PANEL_HEIGHT=18
-FONT_ONE='EnvyCodeR-8'
-FONT_TWO='Ionicons-12'
-FONT_THREE='icomoon-12'
+FONT_ONE='Envy Code R-8'
 
 [ -f /tmp/xrandr.txt ] || xrandr > /tmp/xrandr.txt
 
@@ -20,7 +18,6 @@ PANEL_FIFO=/tmp/panel-fifo
 # colors
 C_FG="#FF$(grep '*foreground:' ~/.Xresources | cut -d'#' -f2)"
 C_BG="#FF$(grep '*background:' ~/.Xresources | cut -d'#' -f2)"
-#C_FOC="#FF$(grep '*color2:' ~/.Xresources   | cut -d'#' -f2)"
-C_URG="#FF$(grep '*color1:' ~/.Xresources    | cut -d'#' -f2)"
-C_FOC='#FF0088CC'
-#C_URG='#FF992211'
+C_UNFOC="#FF$(grep '*color7:' ~/.Xresources | cut -d'#' -f2)"
+C_URG="#FF$(grep '*color1:' ~/.Xresources | cut -d'#' -f2)"
+

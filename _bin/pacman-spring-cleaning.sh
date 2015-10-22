@@ -40,16 +40,19 @@ else
     manual_packages=($(comm -23 <(pacman -Qeq | sort -u)  <(pacman -Qgq base base-devel | cat "$ignore_file" - | sort -u)))
 fi
 
-i=1
-for p in "${manual_packages[@]}"; do
+i=0
+while [ $i -lt ${#manual_packages[@]} ]; do
+    p="${manual_packages[$i]}"
     clear
     echo -e "----- $i / ${#manual_packages[@]} -----"
     pacman -Qi $p | grep -E --color "$p|$"
 
-    read -r -p "[r]emove  .  [q]uit  .  always [i]gnore  .  ignore once (default) " response
+    echo -e '  [r]emove\n  [b]ack\n  [q]uit\n  always [i]gnore\n  ignore once (default)\n'
+    read -r -p '  Enter choice: ' response
     case $response in
         [rR]) sudo pacman -Rsn $p ;;
         [iI]) echo "$p" >> $ignore_file ;;
+        [bB]) i=$((i-2)) ;;
         [qQ]) break ;;
     esac
     i=$((i + 1))

@@ -1,4 +1,6 @@
 URxvt.scrollBar: false
+URxvt.visualBell: false
+
 URxvt.font: xft: Envy Code R for Powerline:size=10
 Xft.antialias: true
 

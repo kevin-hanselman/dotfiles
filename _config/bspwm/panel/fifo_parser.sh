@@ -47,26 +47,27 @@ while read -r line ; do
                     O*|F*|U*)
                         # focused occupied desktop
                         if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{F$C_FOC}%{U$C_FOC}%{+u} ${name} %{-u}%{F-}"
+                            wm_infos="${wm_infos}%{+u} ${name} %{-u}"
                         else
-                            wm_infos="${wm_infos}%{F$C_FOC} ${name} %{F-}"
+                            wm_infos="${wm_infos} ${name} "
                         fi
                         ;;
                     o*)
                         # occupied desktop
                         if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{U$C_FOC}%{+u} ${name} %{-u}"
+                            wm_infos="${wm_infos}%{F$C_UNFOC}%{+u} ${name} %{-u}%{F-}"
                         else
-                            wm_infos="${wm_infos} ${name} "
+                            wm_infos="${wm_infos}%{F$C_UNFOC} ${name} %{F-}"
                         fi
                         ;;
                     f*)
                         # free desktop
+                        # exclude from bar
                         ;;
                     u*)
                         # urgent desktop
                         if [ -n "$active_mon" ]; then
-                            wm_infos="${wm_infos}%{F$C_BG}%{B$C_URG}%{U$C_FOC}%{+u} ${name} %{-u}%{B-}%{F-}"
+                            wm_infos="${wm_infos}%{F$C_BG}%{B$C_URG}%{+u} ${name} %{-u}%{B-}%{F-}"
                         else
                             wm_infos="${wm_infos}%{F$C_BG}%{B$C_URG} ${name} %{B-}%{F-}"
                         fi

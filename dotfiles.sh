@@ -114,10 +114,11 @@ else # default to all files matching glob _*
     files=_*
 fi
 for i in $files; do
-    if [ -n "$exclude" ] && [[ $* == *"$i"* ]]; then
+    if [ -n "$exclude" ] && [[ "$*" == *"$i"* ]]; then
         [ -n "$verbose" ] && echo "skipping '$i'"
         continue
     fi
+    # TODO: this should be recursive, so that nested directories don't produce symlink loops
     if [ -d "$i" ]; then    # if a directory, link it's files
         newdir="${HOME}/${i/_/.}"
         mkdir -p "$verbose" "$newdir" # create the directory if needed

@@ -59,10 +59,10 @@ super + ctrl + {_,shift + }space
     bspc {window -p cancel,desktop -c}
 
 super + alt + {h,j,k,l}
-    bspc window -e {left -25,down +25,up -25,right +25}
+    bspc window -e {left -100,down +100,up -100,right +100}
 
 super + alt + shift + {h,j,k,l}
-    bspc window -e {right -25,up +25,down -25,left +25}
+    bspc window -e {right -100,up +100,down -100,left +100}
 
 super + ctrl + {1-9}
     bspc window -r 0.{1-9}
@@ -104,8 +104,8 @@ super + shift + v
 super + shift + s
     ~/.bin/toggle_screenkey
 
-super + shift + d
-    xfce4-display-settings
+super + shift + x
+    xfce4-settings-manager
 
 super + shift + space
     dmenu_run -p '> ' -y 500 -nb '#1d1f21' -dim 0.5 -l 5

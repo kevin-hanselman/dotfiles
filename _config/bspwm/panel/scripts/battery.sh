@@ -2,17 +2,17 @@
 
 set -euo pipefail
 
-BAT=$(acpi -b | awk '{gsub(/%,/,""); print $4}' | sed 's/%//g')
-STATUS=$(acpi -b | awk '{gsub(/,/,""); print $3}')
+percent=$(acpi -b | awk '{gsub(/%,/,""); print $4}' | sed 's/%//g')
+stat=$(acpi -b | awk '{gsub(/,/,""); print $3}')
 
 # Set Icon
-if [ "$STATUS" != "Discharging" ]; then
+if [ "$stat" != "Discharging" ]; then
     icon=''
-elif [ "$BAT" -gt 75 ]; then
+elif [ "$percent" -gt 75 ]; then
     icon=''
-elif [ "$BAT" -gt 50 ]; then
+elif [ "$percent" -gt 50 ]; then
     icon=''
-elif [ "$BAT" -gt 25 ]; then
+elif [ "$percent" -gt 25 ]; then
     icon=''
 else
     icon=''
@@ -20,7 +20,7 @@ fi
 
 s="«"
 bar=""
-case "$BAT" in
+case "$percent" in
     100)
         bar=""
         ;;

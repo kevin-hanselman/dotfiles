@@ -27,8 +27,6 @@ cat "$PANEL_FIFO"           |   \
     lemonbar                    \
         -g "$PANEL_GEOMETRY"    \
         -f "$FONT_ONE"          \
-        -f "$FONT_TWO"          \
-        -f "$FONT_THREE"        \
         -F "$C_FG"              \
         -B "$C_BG"              \
         -u 1 |                  \

@@ -17,7 +17,7 @@ if [ $(cat /tmp/xrandr.txt | grep DP-5 | awk '{ print $2 }') == 'connected' ]; t
 elif [ $(cat /tmp/xrandr.txt | grep VGA-0 | awk '{ print $2 }') == 'connected' ]; then
     echo 'Found VGA'
     xrandr --output VGA-0 --auto \
-           --output LVDS-0 --same-as VGA-0 --primary \
+           --output LVDS-0 --right-of VGA-0 --primary \
            --output DP-0 --off \
            --output DP-1 --off \
            --output DP-2 --off \

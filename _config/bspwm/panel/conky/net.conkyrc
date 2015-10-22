@@ -41,15 +41,6 @@ conky.config = {
 }
 
 conky.text = [[
-${if_existing /proc/net/route eno1}\
-eno1${alignr}${addr eno1}
-
-DOWN${alignr}${downspeed eno1} / ${totaldown eno1}
-${downspeedgraph eno1 20 0088cc 0088cc}
-
-UP${alignr}${upspeed eno1} / ${totalup eno1}
-${upspeedgraph eno1 20 0088cc 0088cc}\
-${else}\
 ${if_existing /proc/net/route wlp3s0}\
 wlp3s0${alignr}${addr wlp3s0}
 ${wireless_essid wlp3s0}${alignr}${wireless_link_qual_perc wlp3s0}%
@@ -60,6 +51,14 @@ ${downspeedgraph wlp3s0 20 0088cc 0088cc}
 UP${alignr}${upspeed wlp3s0} / ${totalup wlp3s0}
 ${upspeedgraph wlp3s0 20 0088cc 0088cc}\
 ${else}\
+${if_existing /proc/net/route eno1}\
+eno1${alignr}${addr eno1}
+
+DOWN${alignr}${downspeed eno1} / ${totaldown eno1}
+${downspeedgraph eno1 20 0088cc 0088cc}
+
+UP${alignr}${upspeed eno1} / ${totalup eno1}
+${upspeedgraph eno1 20 0088cc 0088cc}\
 ${endif}${endif}
 
 Dropbox:
