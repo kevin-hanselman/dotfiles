@@ -10,7 +10,15 @@ xsetroot -cursor_name left_ptr
 
 [ $(pgrep -cx start_panel.sh) -eq 0 ] && ~/.config/bspwm/panel/start_panel.sh &
 
-[ $(pgrep -cx light-locker) -eq 0 ] && light-locker --lock-after-screensaver=5 &
+if [ $(pgrep -cf gnome-keyring-daemon) -eq 0 ]; then
+    eval $(gnome-keyring-daemon --start)
+    export SSH_AUTH_SOCK
+fi
+
+if [ $(pgrep -cx xautolock) -eq 0 ]; then
+    xautolock -time 3 \
+        -locker "sxlock -f '-*-envy code r-medium-r-*-*-*-*-*-*-*-*-*-*'" &
+fi
 
 [ $(pgrep -cf xfce4-power-manager) -eq 0 ] && xfce4-power-manager
 

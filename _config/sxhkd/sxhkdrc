@@ -79,9 +79,6 @@ super + {_,shift + }{1-9,0}
 super + button{1-3}
     bspc pointer -g {move,resize_side,resize_corner}
 
-super + !button{1-3}
-    bspc pointer -t %i %i
-
 super + @button{1-3}
     bspc pointer -u
 
@@ -107,11 +104,11 @@ super + shift + s
 super + shift + x
     xfce4-settings-manager
 
-super + shift + space
-    dmenu_run -p '> ' -y 500 -nb '#1d1f21' -dim 0.5 -l 5
-
 super + space
-    synapse
+    rofi -show run
+
+alt + Tab
+    rofi -show window
 
 # make sxhkd reload its configuration files:
 super + Escape

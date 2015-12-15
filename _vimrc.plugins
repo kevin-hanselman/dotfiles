@@ -58,10 +58,6 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <F6> :YcmDiags<CR>
 nnoremap <leader>gd :YcmCompleter GoTo<CR>
 
-Plug 'brookhong/cscope.vim'
-nnoremap <leader>fa :call CscopeFindInteractive(expand('<cword>'))<CR>
-nnoremap <leader>l :call ToggleLocationList()<CR>
-
     " sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'
 let g:tagbar_autoclose = 1
@@ -102,8 +98,8 @@ nnoremap <leader>a :FSHere<CR>
 
     " vim front end for 'the silver searcher'
 Plug 'rking/ag.vim'
-let g:aghighlight = 1
-let g:agprg="ag --column --smart-case"
+let g:ag_highlight = 1
+let g:ag_prg="ag --column --smart-case"
 nnoremap <leader>* * :AgFromSearch!<CR>
 nnoremap <leader>/ :Ag!<Space>
     " a rough search for the definition of a function
@@ -122,6 +118,7 @@ Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'morhetz/gruvbox'
 
     " improved vim session management
 Plug 'tpope/vim-obsession'
