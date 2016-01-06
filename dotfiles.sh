@@ -33,9 +33,7 @@ link_file() {
     link_file="${HOME}/$(echo "${source_file}" | sed 's/^_/./')"
     link_dir="$(dirname "${link_file}")"
 
-    if [[ ! -d "${link_dir}" ]]; then
-        mkdir -p "${link_dir}"
-    fi
+    mkdir -p "${link_dir}"
 
     if [ ! -e "$source_file" ]; then
         echo "File '$source_file' not found." >&2
@@ -119,21 +117,21 @@ else # default to all files matching glob _*
     files=_*
 fi
 for i in $files; do
-    if [ -n "$exclude" ] && [[ "$*" == *"$i"* ]]; then
+    if [ -n "$exclude" ] && [ "$*" == *"$i"* ]; then
         [ -n "$verbose" ] && echo "skipping '$i'"
         continue
     fi
-    if [[ -d "${i}" ]]; then
+    if [ -d "${i}" ]; then
         dir_files=$(find "${i}" -type f)
         for f in ${dir_files} ; do
-            if [[ -n "$restore" ]]; then
+            if [ -n "$restore" ]; then
                 unlink_file "${f}" "$verbose"
             else
                 link_file "${f}" "$verbose"
             fi
         done
-    elif [[ -f "${i}" ]]; then
-        if [[ -n "$restore" ]]; then
+    elif [ -f "${i}" ]]; then
+        if [ -n "$restore" ]; then
             unlink_file "${i}" "$verbose"
         else
             link_file "${i}" "$verbose"
