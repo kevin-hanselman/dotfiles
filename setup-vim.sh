@@ -5,7 +5,7 @@ mkdir ~/.vim/backup
 mkdir ~/.vim/tmp
 mkdir ~/.vim/plugins
 
-./dotfiles.sh -y _vim*
+./dotfiles.sh _vim*
 
 mkdir -p ~/.vim/autoload
 curl -fLo ~/.vim/autoload/plug.vim \
