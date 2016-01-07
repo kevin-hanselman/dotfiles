@@ -29,20 +29,23 @@ confirm() {
 }
 
 link_file() {
-    source="${PWD}/$1"
-    target="${HOME}/${1/_/.}"
+    source_file="${1}"
+    link_file="${HOME}/$(echo "${source_file}" | sed 's/^_/./')"
+    link_dir="$(dirname "${link_file}")"
 
-    if [ ! -e "$source" ]; then
-        echo "File '$source' not found." >&2
+    mkdir -p "${link_dir}"
+
+    if [ ! -e "$source_file" ]; then
+        echo "File '$source_file' not found." >&2
         exit 1
     fi
 
-    if [ -e "$target" ] && [ ! -L "$target" ]; then
-        [ -n "$2" ] && echo "Backing up $target"
-        mv $target $target.df.bak
+    if [ -e "${link_file}" ] && [ ! -L "${link_file}" ]; then
+        [ -n "$2" ] && echo "Backing up ${link_file}"
+        mv "${link_file}" "${link_file}.df.bak"
     fi
 
-    ln -sf $2 $source $target
+    ln -sf "$(readlink -e "${source_file}")" "${link_file}"
 }
 
 unlink_file() {
@@ -114,25 +117,25 @@ else # default to all files matching glob _*
     files=_*
 fi
 for i in $files; do
-    if [ -n "$exclude" ] && [[ "$*" == *"$i"* ]]; then
+    if [ -n "$exclude" ] && [ "$*" == *"$i"* ]; then
         [ -n "$verbose" ] && echo "skipping '$i'"
         continue
     fi
-    # TODO: this should be recursive, so that nested directories don't produce symlink loops
-    if [ -d "$i" ]; then    # if a directory, link it's files
-        newdir="${HOME}/${i/_/.}"
-        mkdir -p "$verbose" "$newdir" # create the directory if needed
-        for f in "$(basename "$i")"/*; do
+    if [ -d "${i}" ]; then
+        dir_files=$(find "${i}" -type f)
+        for f in ${dir_files} ; do
             if [ -n "$restore" ]; then
-                unlink_file "$f" "$verbose"
+                unlink_file "${f}" "$verbose"
             else
-                link_file "$f" "$verbose"
+                link_file "${f}" "$verbose"
             fi
         done
-    elif [ -n "$restore" ]; then
-        unlink_file "$i" "$verbose"
-    else
-        link_file "$i" "$verbose"
+    elif [ -f "${i}" ]]; then
+        if [ -n "$restore" ]; then
+            unlink_file "${i}" "$verbose"
+        else
+            link_file "${i}" "$verbose"
+        fi
     fi
 done
 popd > /dev/null
