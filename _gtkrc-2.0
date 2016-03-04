@@ -1,9 +1,0 @@
-gtk-theme-name = "Arc-Darker"
-gtk-icon-theme-name = "Numix-Circle"
-gtk-font-name = "Envy Code R 8"
-
-# color the right and bottom edges of maximized gvim windows
-style "gvimfix" {
-    bg[NORMAL] = "#32383F"
-}
-widget "vim-main-window.*GtkForm" style "gvimfix"

@@ -1,8 +1,12 @@
 #! /bin/bash
 
-cd $(dirname $0)
+set -euo pipefail
+
+cd "$(dirname "$0")"
 source ./vars.sh
 
+title=
+sys_infos=
 num_mon=$(bspc query -M | wc -l)
 
 while read -r line ; do
@@ -19,9 +23,14 @@ while read -r line ; do
             # bspwm internal state
             wm_infos=""
             IFS=
-            sorted=$(echo "${line#?}" | grep -io 'm[a-ln-z\:0-9\/]\+' | sed -e 's/:$//g' | sort -f | tr '\n' ':' | sed -e 's/:$//')
+            sorted=$(echo "${line#?}" | \
+                     grep -io 'm[a-ln-z\:0-9\/]\+' | \
+                     sed -e 's/:$//g' | \
+                     sort -f | \
+                     tr '\n' ':' | \
+                     sed -e 's/:$//')
             IFS=':'
-            #set -- ${line#?}
+            # shellcheck disable=SC2086
             set -- $sorted
             while [ $# -gt 0 ] ; do
                 item=$1
@@ -80,5 +89,6 @@ while read -r line ; do
             done
             ;;
     esac
-    printf "%s\n" "%{l}${wm_infos}%{c}${title}%{r}${sys_infos}"
+    space_for_sys_tray='           '
+    printf "%s\n" "%{l}${wm_infos}%{c}${title}%{r}${sys_infos}${space_for_sys_tray}"
 done

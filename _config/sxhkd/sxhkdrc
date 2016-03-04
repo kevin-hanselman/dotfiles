@@ -105,7 +105,7 @@ super + shift + x
     xfce4-settings-manager
 
 super + space
-    rofi -show run
+    rofi -show drun -modi drun
 
 alt + Tab
     rofi -show window
