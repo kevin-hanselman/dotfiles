@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-prog=$(basename $0)
+prog=$(basename "$0")
 
 usage() {
     echo "usage: $prog [options] [file ... ]"
@@ -88,15 +88,15 @@ while getopts ":h :x :r :q" opt; do
     esac
 done
 
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
-files=_*
+files="_*"
 if [ -n "$*" ] && [ -z "$exclude" ]; then # if we passed args to this script
-    files=$@
+    files=$*
 fi
 
 for path in $files; do
-    if [ -n "$exclude" ] && [ "$*" == *"$path"* ]; then
+    if [ -n "$exclude" ] && [[ "$*" == *"$path"* ]]; then
         [ -n "$verbose" ] && echo "skipping '$path'"
         continue
     fi
