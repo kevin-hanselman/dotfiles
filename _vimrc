@@ -146,22 +146,17 @@ vnoremap <F1> <nop>
 " no ex-mode
 nnoremap Q <nop>
 
-nnoremap <leader>n :call NumberToggle()<CR>
-
-" quickly switch to last buffer
-nnoremap <leader>bb :b#<CR>
-
 " show highlight group(s) under cursor
 nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " ------------------------------------------
-" Functions and autocmds
+" Functions, commands, and autocmds
 " ------------------------------------------
 
 " strip trailing whitespace prior to save
-"autocmd BufWritePre * :call TrimTrailingWhitespace()
+"autocmd BufWritePre * :TrimTrailingWhitespace
 
 autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
@@ -179,12 +174,8 @@ function! NumberToggle()
         set relativenumber
     endif
 endfunc
+nnoremap <leader>n :call NumberToggle()<CR>
 
-function! ShrinkMultipleNewlines()
-    %s/\n\{2,\}$/\r/
-endfunction
+command! ShrinkMultipleNewlines %s/\n\{2,\}$/\r/
 
-function! TrimTrailingWhitespace()
-    %s/\s\+$//e
-endfunction
-
+command! TrimTrailingWhitespace %s/\s\+$//e

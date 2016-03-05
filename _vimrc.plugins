@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugins')
 
-let g:plug_window = "below new"
+let g:plug_window = "above new"
 
 "
 " General maps and functions
@@ -19,14 +19,15 @@ endfunction
 "
 
     " fancypants status line. Powerline patched fonts require manual install
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-let g:airline_theme='lucius'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='distinguished'
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#show_buffers = 0
 
     " enhances vim's motion keys: <leader><leader>{w,b,e,f,t, etc}
@@ -43,6 +44,8 @@ Plug 'scrooloose/nerdcommenter'
 
     " syntax checking and reporting
 Plug 'scrooloose/syntastic'
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
     " multi-cursors ala Sublime Text
 Plug 'terryma/vim-multiple-cursors'
@@ -103,7 +106,11 @@ let g:ag_prg="ag --column --smart-case"
 nnoremap <leader>* * :AgFromSearch!<CR>
 nnoremap <leader>/ :Ag!<Space>
     " a rough search for the definition of a function
-nnoremap <leader><leader>d yiw:Ag! 'function.*<c-r>"'<cr>
+nnoremap <leader><leader>ld yiw:Ag! 'function.*<c-r>"\b' -Glua<CR>
+
+    " like :bufdo, but for files listed in the quickfix window
+    " use with :Ag for multi-file s///
+Plug 'karlbright/qfdo.vim'
 
     " provides hg/git change status in the left gutter
 Plug 'mhinz/vim-signify'
@@ -123,14 +130,20 @@ Plug 'morhetz/gruvbox'
     " improved vim session management
 Plug 'tpope/vim-obsession'
 
+    " commands for modifying quotes, brackets, etc.
+Plug 'tpope/vim-surround'
+
+    " supercharged substitute (:S///)
+Plug 'tpope/vim-abolish'
+
+    " automatically discover buffer tabs/spacing
+Plug 'tpope/vim-sleuth'
+
     " browse and manage open buffers
 Plug 'jlanzarotta/bufexplorer'
 
     " :BOnly deletes all but the current buffer
 Plug 'vim-scripts/BufOnly.vim'
-
-    " commands for modifying quotes, brackets, etc.
-Plug 'tpope/vim-surround'
 
     " highlights all search matches, not just the first
 Plug 'haya14busa/incsearch.vim'
@@ -157,11 +170,10 @@ autocmd BufWritePost *.uml :Dispatch! plantuml %
 
     " a slightly less demanding 'hardmode'
 Plug 'takac/vim-hardtime'
-nnoremap <leader>h :HardTimeToggle<CR>
 autocmd VimEnter * silent! call HardTimeOn()
 let g:hardtime_allow_different_key = 1
 let g:hardtime_ignore_quickfix = 1
-let g:hardtime_maxcount = 3
+let g:hardtime_maxcount = 5
 
     " searches up directories for an '.lvimrc' file, sources it
 Plug 'embear/vim-localvimrc'
@@ -172,9 +184,6 @@ Plug 'tpope/vim-fugitive'
 
     " mercurial plugin similar to fugitive
 Plug 'ludovicchabant/vim-lawrencium'
-
-    " supercharged substitute (:S///)
-Plug 'tpope/vim-abolish'
 
     " quickly google search from vim
 Plug 'szw/vim-g'
