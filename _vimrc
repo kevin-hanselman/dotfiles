@@ -10,6 +10,8 @@ let mapleader=' '                   " change the leader key
 set clipboard=unnamedplus           " use OS clipboard as default yank buffer
 set history=1000                    " remember a ton of commands
 set backspace=indent,eol,start      " backspace over everything
+set encoding=utf-8                  " sensible default encoding
+                                    " (utf-8 now so listchars and showbreak work)
 
 " whitespace and indentation
 set tabstop=4                       " a tab is four spaces.
@@ -48,7 +50,6 @@ set formatoptions+=rn1              " see :h fo-table
 set colorcolumn=120                 " highlight the prefered EOL column
 
 " buffers
-set encoding=utf-8                  " sensible default encoding
 set hidden                          " dont delete buffers, just hide them
 set undofile                        " save undo tree when file is closed
 set undodir=~/.vim/undo             " undo files should be kept out of the working dir
