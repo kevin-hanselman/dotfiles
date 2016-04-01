@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 set -euo pipefail
 
@@ -7,7 +7,7 @@ prog=$(basename "$0")
 usage() {
     echo "usage: $prog [options] [file ... ]"
     echo
-    echo "Configuration file manager | www.github.com/kevlar1818/dotfiles"
+    echo "Configuration file manager | github.com/kevlar1818/dotfiles"
     echo
     echo "Copyright 2015 Kevin Hanselman (See LICENSE or source)"
     echo
@@ -32,7 +32,7 @@ link_file() {
     source_file="$1"
     [ -e "$source_file" ] || error "File '$source_file' does not exist."
 
-    target_file="${HOME}/$(echo "$source_file" | sed 's/^_/./')"
+    target_file="${HOME}/${source_file/_/.}"
 
     mkdir -p "$(dirname "$target_file")"
 
@@ -101,7 +101,7 @@ for path in $files; do
         continue
     fi
     if [ -d "$path" ]; then
-        for file in $(find "$path" -type f); do
+        find "$path" -type f | while read -r file; do
             if [ -n "$restore" ]; then
                 unlink_file "$file"
             else

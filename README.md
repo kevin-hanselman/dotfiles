@@ -13,7 +13,7 @@ Usage
 ```
 usage: dotfiles.sh [options] [file ... ]
 
-Configuration file manager | www.github.com/kevlar1818/dotfiles
+Configuration file manager | github.com/kevlar1818/dotfiles
 
 Copyright 2015 Kevin Hanselman (See LICENSE or source)
 

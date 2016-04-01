@@ -20,7 +20,8 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 #
 
 alias ls='ls --color=auto'
-alias ll='ls -Alh'
+alias ll='ls -lh'
+alias la='ll -A'
 
 alias cls='clear; ls'
 

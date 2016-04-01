@@ -9,6 +9,7 @@ fi
 
 setopt HIST_IGNORE_SPACE
 
+[ -f ~/.bash_env ] && source ~/.bash_env
 [ -f /etc/profile.d/autojump.zsh ] && source /etc/profile.d/autojump.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
