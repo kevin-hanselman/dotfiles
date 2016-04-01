@@ -1,4 +1,11 @@
 #! /bin/bash
+#
+# Path additions
+#
+
+if [ -d "$HOME/.bin" ]; then
+    export PATH=$PATH:$HOME/.bin
+fi
 
 #
 # Environment variables
@@ -67,7 +74,7 @@ alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 # Functions
 #
 cl() {
-    clear; cd $@; ls
+    clear; cd "$@" && ls
 }
 
 # move back directories
@@ -83,19 +90,20 @@ bk() {
 
 conf() {
     case "$1" in
-        vim)             $EDITOR ~/.vimrc ;;
-        plug*)           $EDITOR ~/.vimrc.plugins ;;
-        bash)            $EDITOR ~/.bashrc ;;
-        alias|func|add*) $EDITOR ~/.bash_additions ;;
-        X*)              $EDITOR ~/.Xresources ;;
-        tmux)            $EDITOR ~/.tmux.conf ;;
-        zsh*)            $EDITOR ~/.zshrc ;;
-        prez*)           $EDITOR ~/.zpreztorc ;;
-        prompt)          $EDITOR ~/.zprezto/modules/prompt/functions/prompt_subliminal_setup ;;
-        gtk2)            $EDITOR ~/.gtkrc-2.0 ;;
-        gtk3)            $EDITOR ~/.config/gtk-3.0/settings.ini ;;
+        vim)                  $EDITOR ~/.vimrc ;;
+        plug*)                $EDITOR ~/.vimrc.plugins ;;
+        bash)                 $EDITOR ~/.bashrc ;;
+        conf|alias|func|env*) $EDITOR ~/.bash_env ;;
+        X*)                   $EDITOR ~/.Xresources ;;
+        tmux)                 $EDITOR ~/.tmux.conf ;;
+        zsh*)                 $EDITOR ~/.zshrc ;;
+        prez*)                $EDITOR ~/.zpreztorc ;;
+        prompt)               $EDITOR ~/.zprezto/modules/prompt/functions/prompt_subliminal_setup ;;
+        gtk2)                 $EDITOR ~/.gtkrc-2.0 ;;
+        gtk3)                 $EDITOR ~/.config/gtk-3.0/settings.ini ;;
+        sxh*)                 $EDITOR ~/.config/sxhkd/sxhkdrc ;;
         *)
-            awk '/conf\(\)/{p=1;print;next} p&&/ \*\)/{p=0};p' ~/.bash_additions | \
+            awk '/conf\(\)/{p=1;print;next} p&&/ \*\)/{p=0};p' ~/.bash_env | \
                 tail -n +3 | sed -e 's/^ *//g'
             [ -n "$1" ] && echo "Unrecognized config command: '$1'" >&2
             ;;
@@ -148,5 +156,13 @@ cmd-exists() {
 
 gui2pid() {
     xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps `cat`
+}
+
+what_to_include_for() {
+    curl -sL "http://en.cppreference.com/mwiki/index.php?search=$1" \
+        | grep -i 'defined in header' \
+        | grep -o '&lt;.*&gt;' \
+        | sed 's/&lt;/</' \
+        | sed 's/&gt;/>/'
 }
 

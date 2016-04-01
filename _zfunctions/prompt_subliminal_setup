@@ -1,0 +1,86 @@
+#!/bin/bash
+# vim: set ft=sh:
+#
+# Author: Kevin Hanselman
+#
+# Based on the 'minimal' theme by:
+#   Brian Tse <briankftse@gmail.com>
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+
+function +vi-git_status {
+    # Check for untracked files or updated submodules since vcs_info does not.
+    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+        hook_com[unstaged]='%F{red}●%f'
+    fi
+}
+
+function +vi-hg_status {
+    # Check for untracked files or updated submodules since vcs_info does not.
+    if hg status | grep -q '^?'; then
+        hook_com[unstaged]='%F{red}●%f'
+    fi
+}
+
+function prompt_subliminal_precmd {
+    vcs_info
+}
+
+function prompt_subliminal_setup {
+    setopt LOCAL_OPTIONS
+    unsetopt XTRACE KSH_ARRAYS
+    prompt_opts=(cr percent subst)
+
+    # Load required functions.
+    autoload -Uz add-zsh-hook
+    autoload -Uz vcs_info
+
+    # Add hook for calling vcs_info before each command.
+    add-zsh-hook precmd prompt_subliminal_precmd
+
+    # Set vcs_info parameters.
+    zstyle ':vcs_info:*' enable hg git
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' get-revision true          # needed for mercurial
+    zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
+    zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
+
+    # %c staged
+    # %u unstaged
+    # %s hg,git,etc.
+    # %b branch
+    # %a action (merge, rebase, etc.)
+    # %r revision for rev/branch format, root dir for format
+    zstyle ':vcs_info:*' formats '%c%u%s:%b'
+    zstyle ':vcs_info:*' actionformats "%c%u%s:%b|%F{cyan}%a%f"
+
+    # specific VCS fixes
+    zstyle ':vcs_info:hg:*' hgrevformat "%r" # hg: only show rev num, not hash
+    zstyle ':vcs_info:git:*' formats '%c%u%s:%b|%F{cyan}%.5i%f' # git: doesn't honor branchformat...
+    zstyle ':vcs_info:(sv[nk]|bzr|hg):*' branchformat '%b|%F{cyan}%r%f'
+
+    # check for untracked files
+    zstyle ':vcs_info:git*+set-message:*' hooks git_status
+    zstyle ':vcs_info:hg*+set-message:*' hooks hg_status
+
+    # show vi mode
+    zstyle ':prezto:module:editor:info:keymap:alternate' format '%K{yellow}%F{black} NORMAL %f%k'
+    zstyle ':prezto:module:editor:info:keymap:primary' format '%K{white}%F{black} INSERT %f%k'
+
+    local max_path_depth=6
+    local current_path="%F{blue}%($((max_path_depth+1))~.…/.)%${max_path_depth}~%f"
+    local num_jobs='%1(j.%F{yellow}%j job(s)%f .)'
+    local cmd_return_val='%(?..%F{red}%?%f )'
+    local prompt_char='%(?.%F{white}.%F{red})$%f'
+
+    # these should not be evaluated here, hence the single quotes
+    # shellcheck disable=SC2016
+    local vcs_info='${vcs_info_msg_0_} '
+    # shellcheck disable=SC2016
+    local editor_mode='${editor_info[keymap]}'
+
+    PROMPT="${current_path}
+${prompt_char} "
+    RPROMPT="${num_jobs}${cmd_return_val}${vcs_info}${editor_mode}"
+}
+
+prompt_subliminal_setup "$@"

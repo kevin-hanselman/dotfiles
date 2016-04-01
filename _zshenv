@@ -1,0 +1,3 @@
+fpath=(${fpath[@]} ${ZDOTDIR:-$HOME}/.zfunctions)
+
+[ -f ~/.bash_env ] && source ~/.bash_env

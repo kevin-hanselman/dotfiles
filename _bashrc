@@ -35,21 +35,10 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-#
-# Path additions
-#
-if [ -d $HOME/.bin ]; then
-    export PATH=$PATH:$HOME/.bin
-fi
-
-#
-# Aliases, functions, and environment variables
-#
-
 # tmux expects screen-256color, doesn't seem to affect anything else
-export TERM=screen-256color
+export TERM=xterm-256color
 
-[ -f ~/.bash_additions ] && source ~/.bash_additions
+[ -f ~/.bash_env ] && source ~/.bash_env
 
 [ -f /etc/profile.d/autojump.bash ] && source /etc/profile.d/autojump.bash
 
