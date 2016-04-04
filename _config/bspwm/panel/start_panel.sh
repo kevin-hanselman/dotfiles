@@ -26,22 +26,25 @@ conky -c ./panel.conkyrc > "$PANEL_FIFO" &
 
 nm-applet &
 
-cat "$PANEL_FIFO"           |   \
-    ./fifo_parser.sh        |   \
-    lemonbar                    \
-        -g "$PANEL_GEOMETRY"    \
-        -f "$FONT_ONE"          \
-        -F "$C_FG"              \
-        -B "$C_BG"              \
-        -u 1 |                  \
+./fifo_parser.sh < "$PANEL_FIFO" |  \
+    lemonbar                        \
+        -g "$PANEL_GEOMETRY"        \
+        -f "$FONT_ONE"              \
+        -F "$C_FG"                  \
+        -B "$C_BG"                  \
+        -u 1 |                      \
 while read -r line; do
     ~/.config/bspwm/panel/scripts/toggle_conky.sh "$line"
 done &
 
-# sleep to prevent stalonetray starting faster and end up getting drawn behind lemonbar
+# sleep to prevent stalonetray starting faster and ending up getting drawn behind lemonbar
 sleep 1
-stalonetray -i 16 --geometry "1x1+$((MON_WIDTH - PANEL_GAP * 3))+$((PANEL_GAP + 1))" \
+geometry="1x1+$((MON_WIDTH + MON_OFFSET - PANEL_GAP * 3))+$((PANEL_GAP + 1))"
+stalonetray \
+    --geometry "$geometry" \
+    --max-geometry '4x1' \
     --grow-gravity 'NE' --icon-gravity 'NE' \
+    --icon-size 16 \
     --background "$COLOR_BG" &
 
 wait

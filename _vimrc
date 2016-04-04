@@ -74,8 +74,17 @@ set tags=./.tags;$HOME              " search for a tag file named '.tags' upward
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
     set noshowmode                  " airline shows me my editor mode
-    let g:hybrid_use_Xresources = 1
-    colorscheme hybrid-arc
+
+    " Use (customized) hybrd colorscheme
+    "let g:hybrid_use_Xresources = 1
+    "colorscheme hybrid-arc
+
+    " Use a base16 colorscheme
+    " NOTE: Make sure you source the base16 shell script
+    "       for proper colors in terminal vim
+    set background=dark
+    let base16colorspace=256
+    colorscheme base16-ocean
 else
     colorscheme slate
 endif
@@ -83,6 +92,15 @@ endif
 if has("gui_running")
     set guioptions=a
     set guifont=Envy\ Code\ R\ for\ Powerline\ 10
+endif
+
+" neovim terminal mappings
+if has("nvim")
+    tnoremap <Esc> <C-\><C-n>
+    tnoremap <C-w>h <C-\><C-n><C-w>h
+    tnoremap <C-w>j <C-\><C-n><C-w>j
+    tnoremap <C-w>k <C-\><C-n><C-w>k
+    tnoremap <C-w>l <C-\><C-n><C-w>l
 endif
 
 " ------------------------------------------
@@ -180,3 +198,6 @@ nnoremap <leader>n :call NumberToggle()<CR>
 command! ShrinkMultipleNewlines %s/\n\{2,\}$/\r/
 
 command! TrimTrailingWhitespace %s/\s\+$//e
+
+" When you forget to run sudoedit
+command! SudoWrite :execute ':silent w !sudo tee % > /dev/null' | :edit!

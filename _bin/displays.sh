@@ -6,13 +6,13 @@ xrandr --dpi 96
 
 if [ $(cat /tmp/xrandr.txt | grep DP-5 | awk '{ print $2 }') == 'connected' ]; then
     echo 'Found Display Port(s)'
-    xrandr --output LVDS-0 --mode 1920x1080 \
-           --output DP-5 --mode 2560x1440 --primary --left-of LVDS-0 \
+    xrandr --output LVDS-0 --auto \
+           --output DP-3 --mode 2560x1440 --primary --right-of LVDS-0 \
+           --output DP-5 --auto --right-of DP-3 --rotate left \
            --output VGA-0 --off \
            --output DP-0 --off \
            --output DP-1 --off \
            --output DP-2 --off \
-           --output DP-3 --off \
            --output DP-4 --off
 
 elif [ $(cat /tmp/xrandr.txt | grep VGA-0 | awk '{ print $2 }') == 'connected' ]; then

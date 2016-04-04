@@ -26,7 +26,8 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-let g:airline_theme='distinguished'
+"let g:airline_theme='distinguished'
+let g:airline_theme='base16'
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#show_buffers = 0
 
@@ -46,6 +47,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/syntastic'
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+nnoremap <leader>S :Errors<CR>
 
     " multi-cursors ala Sublime Text
 Plug 'terryma/vim-multiple-cursors'
@@ -82,7 +84,7 @@ nnoremap <leader>pm :CtrlPMRUFiles<CR>
 nnoremap <leader>pc :CtrlPChange<CR>
 nnoremap <leader>pt :CtrlPBufTag<CR>
 if executable('ag')
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_user_command = 'ag %s -f -l --nocolor -g ""'
 endif
 
     " ctrl-p for shells, managed by vim-plug for simplicity
@@ -137,7 +139,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 
     " automatically discover buffer tabs/spacing
-Plug 'tpope/vim-sleuth'
+"Plug 'tpope/vim-sleuth'
 
     " browse and manage open buffers
 Plug 'jlanzarotta/bufexplorer'

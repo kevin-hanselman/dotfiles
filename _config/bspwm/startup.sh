@@ -2,11 +2,10 @@
 
 # bspwm startup programs
 
-[ "$(pgrep -cx compton)" -eq 0 ] && compton -b
-
+# TODO: if these doesn't make sxhkd faster, put sxhkd and compton at the end?
 [ "$(pgrep -cx sxhkd)" -eq 0 ] && sxhkd &
 
-xsetroot -cursor_name left_ptr
+[ "$(pgrep -cx compton)" -eq 0 ] && compton &
 
 [ "$(pgrep -cx start_panel.sh)" -eq 0 ] && ~/.config/bspwm/panel/start_panel.sh &
 
@@ -26,4 +25,3 @@ fi
 [ "$(pgrep -cf xfce4-volumed)" -eq 0 ] && xfce4-volumed
 
 [ "$(pgrep -cx dropbox)" -eq 0 ] && dropbox
-

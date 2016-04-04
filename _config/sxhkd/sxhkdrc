@@ -2,6 +2,10 @@
 # bspwm hotkeys
 #
 
+# make sxhkd reload its configuration files:
+super + Escape
+    pkill -USR1 -x sxhkd
+
 super + alt + Escape
     pkill -x start_panel.sh; bspc quit
 
@@ -89,9 +93,6 @@ super + @button{1-3}
 super + Return
     urxvt
 
-super + shift + g
-    google-chrome-stable
-
 super + shift + f
     firefox
 
@@ -107,9 +108,11 @@ super + shift + x
 super + space
     rofi -show drun -modi drun
 
+super + alt + space
+    rofi -show run
+
 alt + Tab
     rofi -show window
 
-# make sxhkd reload its configuration files:
-super + Escape
-    pkill -USR1 -x sxhkd
+super + shift + Escape
+    xautolock -locknow
