@@ -19,8 +19,8 @@ mkfifo "$PANEL_FIFO"
 
 # make space for BAR on only the primary monitor
 #bspc config -m "$(bspc query -M | head -n 1)" top_padding $PANEL_HEIGHT
-bspc config -m "$(bspc query -M | head -n 1)" top_padding $((PANEL_GAP * 3))
-bspc control --subscribe > "$PANEL_FIFO" &
+bspc config -m primary top_padding $((PANEL_GAP * 3))
+bspc subscribe report > "$PANEL_FIFO" &
 conky -c ./time_date.conkyrc > "$PANEL_FIFO" &
 conky -c ./panel.conkyrc > "$PANEL_FIFO" &
 

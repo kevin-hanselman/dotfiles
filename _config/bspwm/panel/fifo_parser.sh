@@ -8,6 +8,7 @@ source ./vars.sh
 title=
 sys_infos=
 active_mon=
+wm_infos=
 num_mon=$(bspc query -M | wc -l)
 
 while read -r line ; do

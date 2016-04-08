@@ -25,3 +25,11 @@ fi
 [ "$(pgrep -cf xfce4-volumed)" -eq 0 ] && xfce4-volumed
 
 [ "$(pgrep -cx dropbox)" -eq 0 ] && dropbox
+
+BSPWM_STATE='/tmp/bspwm-state.json'
+
+if [ -e "$BSPWM_STATE" ] ; then
+    bspc wm -l "$BSPWM_STATE"
+    rm "$BSPWM_STATE"
+fi
+
