@@ -73,11 +73,9 @@ nnoremap <leader>tb :TagbarToggle<CR>
 Plug 'sjl/gundo.vim'
 nnoremap <leader>u :GundoToggle<CR>
 let g:gundo_preview_bottom = 1
-"let g:gundo_width = 100
-"let g:gundo_preview_height = 40
 
     " ctrl-p for go to anything
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 nnoremap <leader>pT :CtrlPTag<CR>
 nnoremap <leader>pb :CtrlPBuffer<CR>
 nnoremap <leader>pm :CtrlPMRUFiles<CR>
@@ -123,6 +121,7 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 
     " colorschemes
+"Plug 'flazz/vim-colorschemes'
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
 Plug 'jaxbot/semantic-highlight.vim'
@@ -137,9 +136,6 @@ Plug 'tpope/vim-surround'
 
     " supercharged substitute (:S///)
 Plug 'tpope/vim-abolish'
-
-    " automatically discover buffer tabs/spacing
-"Plug 'tpope/vim-sleuth'
 
     " browse and manage open buffers
 Plug 'jlanzarotta/bufexplorer'
@@ -204,6 +200,13 @@ Plug 'elixir-lang/vim-elixir'
 
     " <leader>ww, select window to swap, <leader>ww again to swap
 Plug 'wesQ3/vim-windowswap'
+
+    " only used for AccordionStop, which evenly spaces current splits
+Plug 'mattboehm/vim-accordion'
+nnoremap <leader>B :AccordionStop<CR>
+
+    " :DetectIndent tries to match vim whitespace settings to the given file
+Plug 'ciaranm/detectindent'
 
 call plug#end()
 
