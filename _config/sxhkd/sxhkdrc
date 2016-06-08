@@ -43,7 +43,7 @@ super + ctrl + {x,y,z}
 #
 
 # focus nodes
-# If no window exists, target monitor instead
+# If no window exists, target monitor instead (thanks to Michael Carlberg, github.com/jaagr)
 super + k
     bspc node -f north || bspc monitor -f north
 super + j
@@ -54,7 +54,7 @@ super + l
     bspc node -f east || bspc monitor -f east || bspc monitor -f next
 
 # swap nodes
-# If no node exists, send node to monitor instead
+# If no node exists, send node to monitor instead (thanks to Michael Carlberg, github.com/jaagr)
 super + shift + h
   bspc node -s west.local || (bspc node -m west && bspc node "$(bspc query -N -n last)" -f)
 super + shift + l
