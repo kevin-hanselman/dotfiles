@@ -92,6 +92,19 @@ endif
 if has("gui_running")
     set guioptions=a
     set guifont=Envy\ Code\ R\ for\ Powerline\ 10
+
+    " set normal, visual, selection cursor to an underline N% of the
+    " character height
+    set guicursor+=n-v-c:hor10-Cursor
+
+    command! SetFont set guifont=*
+else
+    " for VTE compatible terms, change insert mode cursor to a vertical bar
+    " see: http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
+    if &term =~ 'xterm.*\|rxvt.*\|gnome-terminal\|st'
+        let &t_SI = "\<Esc>[6 q"
+        let &t_EI = "\<Esc>[4 q"
+    endif
 endif
 
 " neovim terminal mappings
@@ -195,7 +208,7 @@ function! NumberToggle()
 endfunc
 nnoremap <leader>n :call NumberToggle()<CR>
 
-command! ShrinkMultipleNewlines %s/\n\{2,\}$/\r/
+command! ShrinkMultipleNewlines %s/\n\{2,\}$/\r/e
 
 command! TrimTrailingWhitespace %s/\s\+$//e
 
