@@ -7,38 +7,21 @@ bspc config split_ratio 0.50
 bspc config borderless_monocle true
 bspc config focus_by_distance true
 bspc config focus_follows_pointer true
-#bspc config pointer_follows_focus true
 bspc config pointer_follows_monitor true
+bspc config remove_unplugged_monitors true
 
-bspc config focused_border_color "#0088cc"
+bspc config focused_border_color "$(xrdb -query | grep foreground | awk '{ print $2 }')"
 bspc config normal_border_color "$(xrdb -query | grep background | awk '{ print $2 }')"
 
 for monitor in $(bspc query -M); do
-    case "$monitor" in
-        LVDS-0)
-            num=1
-            ;;
-        DP-3)
-            num=2
-            ;;
-        DP-5)
-            num=3
-            ;;
-        *)
-            num=
-    esac
-    if [ -n "$num" ]; then
-        bspc monitor "$monitor" -n "$num" -d "$num"/{1,2,3,4,5}
-    else
-        bspc monitor "$monitor" -d {1,2,3,4,5}
-    fi
+    bspc monitor "$monitor" -d {1,2,3,4,5}
 done
 
-bspc rule -a Gimp follow=on floating=on
-bspc rule -a Screenkey manage=off
-bspc rule -a Synapse manage=off
+bspc config -m primary top_padding 27
 
-[ -f ~/.fehbg ] && source ~/.fehbg
+bspc rule -a Gimp follow=on floating=on
+
 xsetroot -cursor_name left_ptr
+[ -f ~/.fehbg ] && source ~/.fehbg
 [ -f ~/.config/bspwm/startup.sh ] && ~/.config/bspwm/startup.sh
 

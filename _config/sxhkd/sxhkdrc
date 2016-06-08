@@ -42,9 +42,32 @@ super + ctrl + {x,y,z}
 # focus/swap
 #
 
-# focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
-    bspc node -{f,s} {west,south,north,east}
+# focus nodes
+# If no window exists, target monitor instead
+super + k
+    bspc node -f north || bspc monitor -f north
+super + j
+    bspc node -f south || bspc monitor -f south
+super + h
+    bspc node -f west || bspc monitor -f west || bspc monitor -f prev
+super + l
+    bspc node -f east || bspc monitor -f east || bspc monitor -f next
+
+# swap nodes
+# If no node exists, send node to monitor instead
+super + shift + h
+  bspc node -s west.local || (bspc node -m west && bspc node "$(bspc query -N -n last)" -f)
+super + shift + l
+  bspc node -s east.local || (bspc node -m east && bspc node "$(bspc query -N -n last)" -f)
+super + shift + k
+  bspc node -s north.local || (bspc node -m north && bspc node "$(bspc query -N -n last)" -f)
+super + shift + j
+  bspc node -s south.local || (bspc node -m south && bspc node "$(bspc query -N -n last)" -f)
+
+# focus/send-to a desktop of the focused monitor
+# (this assumes each monitor has desktops named 1-5)
+super + {_,shift + }{1-5}
+    bspc {desktop -f,node -d} focused:^{1-5}
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -70,12 +93,6 @@ super + {o,i}
     bspc wm -h off; \
     bspc node {older,newer} -f; \
     bspc wm -h on
-
-# focus or send to the given desktop
-super + {_,shift + }{1-9,0}
-    bspc {desktop -f,node -d} $(bspc query -M -m)/{1,2,3,4,5}
-#super + {_,shift + }{1-9,0}
-    #bspc {desktop -f,node -d} '^{1-9,10}'
 
 #
 # preselect
@@ -112,6 +129,16 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
     bspc node -v {-100 0,0 100,0 -100,100 0}
+
+# focus on click (redundant when focus_follows_pointer is set)
+#~button1
+#    bspc node -f pointed
+
+super + button{1-3}
+    bspc pointer -g {move,resize_side,resize_corner}
+
+super + @button{1-3}
+    bspc pointer -u
 
 #
 # wm independent hotkeys
