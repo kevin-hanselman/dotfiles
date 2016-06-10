@@ -5,21 +5,20 @@ set -euo pipefail
 prog=$(basename "$0")
 
 usage() {
-    echo "usage: $prog [options] [file ... ]"
+    echo "usage: $prog [options] [subdirectory ... ]"
     echo
     echo "Configuration file manager | github.com/kevlar1818/dotfiles"
     echo
-    echo "Copyright 2015 Kevin Hanselman (See LICENSE or source)"
+    echo "Copyright 2014-2016 Kevin Hanselman (See LICENSE or source)"
     echo
     echo "Arguments:"
-    echo "  file(s)         attempts to link only the glob/file(s)"
-    echo "                  (defaults to all files matching the glob '_*')"
+    echo "  subdirectory    symlinks all files in the given subdirectory"
+    echo "                  (defaults to all subdirectories)"
     echo
     echo "Options:"
-    echo "  -h              show this help text and exit"
     echo "  -r              remove symlinks and restore backups if present"
-    echo "  -x              act on all files excluding '[file] ...'"
-    echo "  -q              quiet mode/suppress output"
+    echo "  -n              show what would be done, but take no other action"
+    echo "  -h              show this help text and exit"
 }
 
 error() {
@@ -28,92 +27,104 @@ error() {
 }
 
 link_file() {
-    # NOTE: source_file must be passed-in as a path relative to this script's directory
-    source_file="$1"
-    [ -e "$source_file" ] || error "File '$source_file' does not exist."
+    # subdir is the sub-directory where the config files are stored
+    local subdir="$1"
+    [ -d "$subdir" ] || error "Directory '$subdir' does not exist."
 
-    target_file="${HOME}/${source_file/_/.}"
+    # relpath_source_file is a relative path starting inside a dotfiles sub-dir
+    local relpath_source_file="$2"
+    local fullpath_source_file
+    fullpath_source_file=$(readlink -m "${subdir}/${relpath_source_file}")
+
+    [ -f "$fullpath_source_file" ] || error "File '$fullpath_source_file' does not exist."
+
+    # trim duplicate forward slashes
+    local target_file="${HOME%/}/${relpath_source_file}"
+
+    local backup_file="${target_file}.df.bak"
 
     mkdir -p "$(dirname "$target_file")"
 
-    if [ -e "$target_file" ] && [ ! -L "$target_file" ]; then
-        [ -n "$verbose" ] && echo ":: Backing up $target_file"
-        mv "$verbose" "$target_file" "$target_file.df.bak"
+    if [ -f "$target_file" ] && [ ! -L "$target_file" ]; then
+        echo "backup '$target_file' to '$backup_file'"
+        [ -n "$noaction" ] || cp "$target_file" "$backup_file"
     fi
 
-    ln "$verbose" -sf "$(readlink -e "$source_file")" "$target_file"
+    echo "symlink '$fullpath_source_file' to '$target_file'"
+    [ -n "$noaction" ] || ln -sf "$fullpath_source_file" "$target_file"
 }
 
 unlink_file() {
-    target_file="${HOME}/${1/_/.}"
+    # subdir is the sub-directory where the config files are stored
+    local subdir="$1"
+    [ -d "$subdir" ] || error "Directory '$subdir' does not exist."
 
-    if [ -L "$target_file" ]; then
-        rm "$verbose" "$target_file"
-        if [ -e "$target_file.df.bak" ]; then
-            [ -n "$verbose" ] && echo ":: Restoring from '$target_file.df.bak'"
-            mv "$verbose" "$target_file.df.bak" "$target_file"
-        fi
+    # relpath_source_file is a relative path starting inside a dotfiles sub-dir
+    local relpath_source_file="$2"
+
+    # trim duplicate forward slashes
+    local target_file="${HOME%/}/${relpath_source_file}"
+
+    [ -f "$target_file" ] || error "File '$target_file' does not exist."
+    [ -L "$target_file" ] || error "File '$target_file' is not a link."
+
+    local backup_file="${target_file}.df.bak"
+
+    if [ -f "$backup_file" ]; then
+        echo "restore backup of '$target_file' from '$backup_file'"
+        [ -n "$noaction" ] || mv "$backup_file" "$target_file"
+    else
+        echo "remove '$target_file'"
+        [ -n "$noaction" ] || rm "$target_file"
     fi
 }
 
 # cd to this script's directory
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
-verbose='-v'
-exclude=
 restore=
-while getopts ":h :x :r :q" opt; do
+noaction=
+while getopts ":h :r :n" opt; do
     case $opt in
         h)
             usage
             exit 0
             ;;
-        x)
-            exclude=yes
-            ;;
-        r)
-            restore=yes
-            ;;
-        q)
-            verbose=
-            ;;
+        r) restore=yes ;;
+        n) noaction=yes ;;
         \?)
             usage
             error "Invalid option: -$OPTARG"
             ;;
         :)
             usage
-            error "Option -$OPTARG requires an argument.\n"
+            error "Option -$OPTARG requires an argument."
             ;;
     esac
 done
+if [ -n "$noaction" ]; then
+    echo '===> Dry-run only: not modifying filesystem <==='
+fi
 
 shift $((OPTIND-1))
 
-files="_*"
-if [ -n "$*" ] && [ -z "$exclude" ]; then # if we passed args to this script
+if [ -n "$*" ]; then
     files=$*
+else
+    files=$(find . -maxdepth 1 -type d -printf '%P\n' | sed '/^$/d' | sed '/^.git$/d')
 fi
 
 for path in $files; do
-    if [ -n "$exclude" ] && [[ "$*" == *"$path"* ]]; then
-        [ -n "$verbose" ] && echo "skipping '$path'"
-        continue
-    fi
     if [ -d "$path" ]; then
-        find "$path" -type f | while read -r file; do
+        find "$path" -type f -printf '%P\n' | while read -r file; do
             if [ -n "$restore" ]; then
-                unlink_file "$file"
+                unlink_file "$path" "$file"
             else
-                link_file "$file"
+                link_file "$path" "$file"
             fi
         done
-    elif [ -f "$path" ]; then
-        if [ -n "$restore" ]; then
-            unlink_file "$path"
-        else
-            link_file "$path"
-        fi
+    else
+        error "'$path' is not a directory."
     fi
 done
 

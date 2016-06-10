@@ -3,34 +3,36 @@ dotfiles
 
 My dotfiles and a script to manage them.
 
-Features
+Overview
 --------
-* Sync one, some, or all of your config files with globs.
-* `dotfiles.sh` makes backups of local config files if you ever want to revert changes.
+`dotfiles.sh` was written to act much like [GNU Stow](https://www.gnu.org/software/stow/stow.html), only with dotfiles in mind from the start. The main differences are:
+* `dotfiles.sh` always targets the user's home directory (i.e. `stow -t $HOME`).
+* `dotfiles.sh` never symlinks directories, only files (i.e. ` stow --no-folding`).
+* `dotfiles.sh` makes backups of local config files and restores them if you ever remove your symlinked version.
 
 Usage
 -----
 ```
-usage: dotfiles.sh [options] [file ... ]
+usage: dotfiles.sh [options] [subdirectory ... ]
 
 Configuration file manager | github.com/kevlar1818/dotfiles
 
-Copyright 2015 Kevin Hanselman (See LICENSE or source)
+Copyright 2014-2016 Kevin Hanselman (See LICENSE or source)
 
 Arguments:
-  file(s)         attempts to link only the glob/file(s)
-                  (defaults to all files matching the glob '_*')
+  subdirectory    symlinks all files in the given subdirectory
+                  (defaults to all subdirectories)
 
 Options:
-  -h              show this help text and exit
   -r              remove symlinks and restore backups if present
-  -x              act on all files excluding '[file] ...'
-  -q              quiet mode/suppress output
+  -n              show what would be done, but take no other action
+  -h              show this help text and exit
 ```
 
-Thanks to
----------
-[John Anderson's dotfiles](https://github.com/sontek/dotfiles)
+For example, to install vim and bash RCs:
 
-[Mathias Bynens's dotfiles](https://github.com/mathiasbynens/dotfiles)
+```
+./dotfiles.sh vim bash
+```
+
 
