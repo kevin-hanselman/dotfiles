@@ -71,6 +71,8 @@ function prompt_subliminal_setup {
     local num_jobs='%1(j.%F{yellow}%j job(s)%f .)'
     local cmd_return_val='%(?..%F{red}%?%f )'
     local prompt_char='%(?.%F{white}.%F{red})$%f'
+    local user='%F{green}%n%f'
+    local host='%F{green}@%M%f'
 
     # these should not be evaluated here, hence the single quotes
     # shellcheck disable=SC2016
@@ -78,7 +80,7 @@ function prompt_subliminal_setup {
     # shellcheck disable=SC2016
     local editor_mode='${editor_info[keymap]}'
 
-    PROMPT="${current_path}
+    PROMPT="${user}${host} ${current_path}
 ${prompt_char} "
     RPROMPT="${num_jobs}${cmd_return_val}${vcs_info}${editor_mode}"
 }
