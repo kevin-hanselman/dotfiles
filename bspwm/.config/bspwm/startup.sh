@@ -8,7 +8,11 @@
 
 [ "$(pgrep -cx xfce4-panel)" -eq 0 ] && xfce4-panel -d &
 
+[ "$(pgrep -cx bspc_notify_xfce_genmon.sh)" -eq 0 ] && ./bspc_notify_xfce_genmon.sh &
+
 [ "$(pgrep -cx nm-applet)" -eq 0 ] && nm-applet &
+
+#[ "$(pgrep -cx lemonbuddy_wrapper )" -eq 0 ] && lemonbuddy_wrapper example &
 
 if [ "$(pgrep -cx xautolock)" -eq 0 ]; then
     xautolock -time 3 \
