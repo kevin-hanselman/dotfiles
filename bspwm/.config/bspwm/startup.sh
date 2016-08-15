@@ -2,27 +2,41 @@
 
 # bspwm startup programs
 
-[ "$(pgrep -cx sxhkd)" -eq 0 ] && sxhkd &
+process_not_running() {
+    test "$(pgrep -cf "$1")" -eq 0
+}
 
-[ "$(pgrep -cx compton)" -eq 0 ] && compton &
+run_detached() {
+    cmd_name="$1"
+    if process_not_running "$cmd_name"; then
+        echo "Starting command '$*'"
+        nohup "$@" 2>&1 >/dev/null </dev/null &
+    fi
+}
 
-[ "$(pgrep -cx xfce4-panel)" -eq 0 ] && xfce4-panel -d &
+run_daemon() {
+    cmd_name="$1"
+    if process_not_running "$cmd_name"; then
+        echo "Starting daemon '$*'"
+        "$@"
+    fi
+}
 
-[ "$(pgrep -cx bspc_notify_xfce_genmon.sh)" -eq 0 ] && ./bspc_notify_xfce_genmon.sh &
+run_detached sxhkd
+run_detached compton
+run_detached xfce4-panel
+run_detached nm-applet
 
-[ "$(pgrep -cx nm-applet)" -eq 0 ] && nm-applet &
+run_detached xautolock -time 3 \
+    -locker "sxlock -f '-*-envy code r-medium-r-*-*-*-*-*-*-*-*-*-*'" \
+    -corners -000
 
-#[ "$(pgrep -cx lemonbuddy_wrapper )" -eq 0 ] && lemonbuddy_wrapper example &
+run_daemon xfce4-power-manager
 
-if [ "$(pgrep -cx xautolock)" -eq 0 ]; then
-    xautolock -time 3 \
-        -locker "sxlock -f '-*-envy code r-medium-r-*-*-*-*-*-*-*-*-*-*'" \
-        -corners -000 &
-fi
+run_daemon xfce4-volumed
 
-[ "$(pgrep -cf xfce4-power-manager)" -eq 0 ] && xfce4-power-manager
+run_daemon dropbox
 
-[ "$(pgrep -cf xfce4-volumed)" -eq 0 ] && xfce4-volumed
+run_detached ~/.config/bspwm/bspc_notify_xfce_genmon.sh
 
-[ "$(pgrep -cx dropbox)" -eq 0 ] && dropbox
-
+run_detached ~/.config/bspwm/bspc_monitor_event_listener.sh

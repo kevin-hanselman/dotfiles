@@ -49,16 +49,16 @@ while [ $# -gt 0 ] ; do
             fi
             ;;
         O*|F*) # focused occupied desktop
-            append="${append}<span fgcolor='$fgcolor'> ${value}</span>"
+            append="${append}<span bgcolor='$fgcolor' fgcolor='$bgcolor'> ${value} </span>"
             ;;
         o*) # occupied desktop
-            append="${append} ${value}"
+            append="${append} ${value} "
             ;;
         f*) # free desktop
             # exclude from bar
             ;;
         u*|U*) # urgent desktop
-            append="${append}<span fgcolor='$red'> ${value}</span>"
+            append="${append}<span fgcolor='$red'> ${value} </span>"
             ;;
         L*) # layout (Tiling/Monocle)
             ;;
@@ -70,4 +70,4 @@ if [ -n "$active_mon" ]; then
     output="${output}${end_active_mon}"
 fi
 
-echo "<txt><span fgcolor='$dimcolor'>$output</span></txt>"
+echo "<txt><span fgcolor='$fgcolor'>$output</span></txt>"

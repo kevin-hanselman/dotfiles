@@ -3,25 +3,23 @@
 bspc config border_width    2
 bspc config window_gap      9
 
-bspc config split_ratio 0.50
-bspc config borderless_monocle true
-bspc config focus_by_distance true
-bspc config focus_follows_pointer true
-bspc config pointer_follows_monitor true
-bspc config remove_unplugged_monitors true
+bspc config split_ratio                0.50
+bspc config borderless_monocle         true
+bspc config focus_follows_pointer      true
+bspc config pointer_follows_monitor    true
+bspc config remove_unplugged_monitors  true
+bspc config remove_disabled_monitors   true
+bspc config remove_unplugged_monitors  true
+bspc config merge_overlapping_monitors true
 
 bspc config focused_border_color "$(xrdb -query | grep foreground | awk '{ print $2 }')"
-bspc config normal_border_color "$(xrdb -query | grep background | awk '{ print $2 }')"
+bspc config normal_border_color  "$(xrdb -query | grep background | awk '{ print $2 }')"
 
-for monitor in $(bspc query -M); do
-    bspc monitor "$monitor" -d {1,2,3,4,5}
-done
+xrandr --output eDP-1 --primary
 
-bspc config -m primary top_padding 27
+[ -f ~/.config/bspwm/bspc_setup_monitors.sh ] && ~/.config/bspwm/bspc_setup_monitors.sh
 
 bspc rule -a Gimp follow=on floating=on
 
 xsetroot -cursor_name left_ptr
-[ -f ~/.fehbg ] && source ~/.fehbg
 [ -f ~/.config/bspwm/startup.sh ] && ~/.config/bspwm/startup.sh
-

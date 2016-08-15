@@ -127,6 +127,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'morhetz/gruvbox'
+Plug 'joshdick/onedark.vim'
 
     " improved vim session management
 Plug 'tpope/vim-obsession'
@@ -195,8 +196,7 @@ let g:QQ_python_executable = '/usr/bin/python2'
 Plug 'ryanss/vim-hackernews'
 
     " filetype detection and syntax highlighting
-Plug 'rust-lang/rust.vim'
-Plug 'elixir-lang/vim-elixir'
+Plug 'sheerun/vim-polyglot'
 
     " <leader>ww, select window to swap, <leader>ww again to swap
 Plug 'wesQ3/vim-windowswap'
