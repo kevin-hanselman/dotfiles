@@ -84,14 +84,15 @@ if filereadable(expand("~/.vimrc.plugins"))
     "       for proper colors in terminal vim
     set background=dark
     let base16colorspace=256
-    colorscheme base16-ocean
+    colorscheme base16-solar-flare
 else
     colorscheme slate
 endif
 
 if has("gui_running")
     set guioptions=a
-    set guifont=Envy\ Code\ R\ for\ Powerline\ 10
+    set guifont="Envy Code R 10"
+    "set guifont="Roboto Mono Light for Powerline 10"
 
     " set normal, visual, selection cursor to an underline N% of the
     " character height

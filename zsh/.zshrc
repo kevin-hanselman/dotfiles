@@ -18,5 +18,5 @@ setopt HIST_IGNORE_SPACE
 export KEYTIMEOUT=1
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-builder/output/shell/base16-ocean.dark.sh"
+BASE16_SHELL="$HOME/.config/base16-builder/output/shell/base16-solarflare.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
