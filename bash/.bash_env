@@ -40,10 +40,10 @@ alias ff='find . -type f -iname'
 alias vimprof='vim --startuptime /dev/stdout +qall'
 alias vimmaps="vim -c 'redir > ~/vim-maps.txt' -c 'map' -c 'qa!'"
 
-alias bigfiles="find . -type f -print0 | xargs -0 du | sort -n | tail -30 | cut -f2 | xargs -I{} du -sh {} && echo total: $(du -sh . | awk '{print $1}')"
-
 # apt/dpkg
 alias apt-grep='dpkg --get-selections | grep'
+
+alias games='pacman -Qlq bsd-games | grep -P "bin/.+" | xargs -n1 basename'
 
 # pacman
 alias pac-junk='pacman -Qdtq'
@@ -110,22 +110,8 @@ conf() {
     esac
 }
 
-# Determine size of a file or total size of a directory
-fs() {
-    if du -b /dev/null > /dev/null 2>&1; then
-        local arg=-sbh
-    else
-        local arg=-sh
-    fi
-    if [[ -n "$@" ]]; then
-        du $arg -- "$@"
-    else
-        du $arg .[^.]* *
-    fi
-}
-
 shparproc() {
-    cat /proc/$PPID/status | head -1 | cut -f2
+    head -1 "/proc/$PPID/status" | cut -f2
 }
 
 # change extensions for all files in the current directory
@@ -138,9 +124,9 @@ chext() {
     fi
     if [ -n "$1" ] && [ -n "$2" ]; then
         for f in *$1; do
-            name=`echo $f | cut -d . -f 1`
+            name=$(echo "$f" | cut -d . -f 1)
             new=$name$2
-            mv -iv $f $new
+            mv -iv "$f" "$new"
         done
     else
         echo "chext '.old_ext' '.new_ext'"
@@ -151,11 +137,11 @@ chext() {
 }
 
 cmd-exists() {
-    type $1 &> /dev/null
+    type "$1" &> /dev/null
 }
 
 gui2pid() {
-    xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps `cat`
+    xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps "$(cat)"
 }
 
 what_to_include_for() {
@@ -166,3 +152,11 @@ what_to_include_for() {
         | sed 's/&gt;/>/'
 }
 
+ping-avg() {
+    if [ -n "$2" ]; then
+        count="$2"
+    else
+        count=20
+    fi
+    ping "$1" -c "$count" -A -q | tail -1 | cut -d'/' -f5
+}

@@ -63,6 +63,9 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 nnoremap <F6> :YcmDiags<CR>
 nnoremap <leader>gd :YcmCompleter GoTo<CR>
 
+"Plug 'ajh17/VimCompletesMe'
+"let b:vcm_tab_complete = 'tags'
+
     " sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'
 let g:tagbar_autoclose = 1
@@ -125,9 +128,10 @@ let g:indent_guides_guide_size = 1
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
 Plug 'jaxbot/semantic-highlight.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
+
+Plug 'sheerun/vim-polyglot'
 
     " improved vim session management
 Plug 'tpope/vim-obsession'
@@ -207,6 +211,8 @@ nnoremap <leader>B :AccordionStop<CR>
 
     " :DetectIndent tries to match vim whitespace settings to the given file
 Plug 'ciaranm/detectindent'
+
+Plug 'FredKSchott/CoVim'
 
 call plug#end()
 

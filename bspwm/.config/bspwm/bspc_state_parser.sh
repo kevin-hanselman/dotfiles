@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-num_mon=$(bspc query -M | wc -l)
-active_mon=
-
 fgcolor=$(xrdb -query | grep 'foreground' | awk '{ print $2 }')
 dimcolor=$(xrdb -query | grep 'color8' | awk '{ print $2 }')
 bgcolor=$(xrdb -query | grep 'background' | awk '{ print $2 }')
@@ -13,6 +10,8 @@ red=$(xrdb -query | grep 'color14' | awk '{ print $2 }')
 start_active_mon="<span fgcolor='$fgcolor'>[</span>"
 end_active_mon="<span fgcolor='$fgcolor'>]</span>"
 
+num_mon=$(bspc query -M | wc -l)
+active_mon=
 output=
 
 IFS=':'
