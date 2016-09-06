@@ -111,20 +111,18 @@ shift $((OPTIND-1))
 if [ -n "$*" ]; then
     files=$*
 else
-    files=$(find . -maxdepth 1 -type d -printf '%P\n' | sed '/^$/d' | sed '/^.git$/d')
+    # act on all directories which are siblings to this script
+    files=$(find . -maxdepth 1 -type d -not -path './.git' -not -path '.' -printf '%P\n')
 fi
 
 for path in $files; do
-    if [ -d "$path" ]; then
-        find "$path" -type f -printf '%P\n' | while read -r file; do
-            if [ -n "$restore" ]; then
-                unlink_file "$path" "$file"
-            else
-                link_file "$path" "$file"
-            fi
-        done
-    else
-        error "'$path' is not a directory."
-    fi
+    [ -d "$path" ] || error "'$path' is not a directory."
+    find "$path" -type f -printf '%P\n' | while read -r file; do
+        if [ -n "$restore" ]; then
+            unlink_file "$path" "$file"
+        else
+            link_file "$path" "$file"
+        fi
+    done
 done
 
