@@ -35,8 +35,8 @@ run_daemon xfce4-power-manager
 
 run_daemon xfce4-volumed
 
-run_daemon dropbox
-
 run_detached ~/.config/bspwm/bspc_notify_xfce_genmon.sh
 
 run_detached ~/.config/bspwm/bspc_monitor_event_listener.sh
+
+run_daemon dropbox
