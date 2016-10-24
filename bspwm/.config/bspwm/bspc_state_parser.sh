@@ -5,10 +5,9 @@ set -euo pipefail
 fgcolor=$(xrdb -query | grep 'foreground' | awk '{ print $2 }')
 dimcolor=$(xrdb -query | grep 'color8' | awk '{ print $2 }')
 bgcolor=$(xrdb -query | grep 'background' | awk '{ print $2 }')
-red=$(xrdb -query | grep 'color14' | awk '{ print $2 }')
 
-start_active_mon="<span fgcolor='$fgcolor'>[</span>"
-end_active_mon="<span fgcolor='$fgcolor'>]</span>"
+start_active_mon="<span fgcolor='$fgcolor'>(</span>"
+end_active_mon="<span fgcolor='$fgcolor'>)</span>"
 
 num_mon=$(bspc query -M | wc -l)
 active_mon=
@@ -48,16 +47,16 @@ while [ $# -gt 0 ] ; do
             fi
             ;;
         O*|F*) # focused occupied desktop
-            append="${append}<span bgcolor='$fgcolor' fgcolor='$bgcolor'> ${value} </span>"
+            append="${append}<span weight='Bold'> ${value}</span>"
             ;;
         o*) # occupied desktop
-            append="${append} ${value} "
+            append="${append}<span fgcolor='$dimcolor'> ${value}</span>"
             ;;
         f*) # free desktop
             # exclude from bar
             ;;
         u*|U*) # urgent desktop
-            append="${append}<span fgcolor='$red'> ${value} </span>"
+            append="${append}<span fgcolor='Red'> ${value}</span>"
             ;;
         L*) # layout (Tiling/Monocle)
             ;;
