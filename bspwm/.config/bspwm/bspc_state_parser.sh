@@ -1,5 +1,7 @@
 #! /bin/bash
 
+txt="$1"
+
 set -euo pipefail
 
 fgcolor=$(xrdb -query | grep 'foreground' | awk '{ print $2 }')
@@ -68,4 +70,8 @@ if [ -n "$active_mon" ]; then
     output="${output}${end_active_mon}"
 fi
 
-echo "<txt><span fgcolor='$fgcolor'>$output</span></txt>"
+if [ -n "$txt" ]; then
+    echo "<txt><span fgcolor='$fgcolor'>$output</span></txt>"
+else
+    echo "<span fgcolor='$fgcolor'>$output</span>"
+fi

@@ -37,11 +37,8 @@ alias Xres='xrdb -merge ~/.Xresources'
 alias pg='ps -ef | grep -v grep | grep'
 alias ff='find . -type f -iname'
 
-alias vimprof='vim --startuptime /dev/stdout +qall'
-alias vimmaps="vim -c 'redir > ~/vim-maps.txt' -c 'map' -c 'qa!'"
-
-# apt/dpkg
-alias apt-grep='dpkg --get-selections | grep'
+alias vim-prof='vim --startuptime /dev/stdout +qall'
+alias vim-maps="vim -c 'redir > ~/vim-maps.txt' -c 'map' -c 'qa!'"
 
 alias games='pacman -Qlq bsd-games | grep -P "bin/.+" | xargs -n1 basename'
 
@@ -51,22 +48,16 @@ alias pac-aur='pacman -Qmq'
 alias pac-manual='comm -23 <(pacman -Qeq|sort) <(pacman -Qgq base base-devel|sort)'
 alias pac-standalone='comm -23 <(pacman -Qetq|sort) <(pacman -Qgq base base-devel|sort)'
 alias pac-log='vim /var/log/pacman.log'
-alias pac-dated="expac -l ',' -H M -t '%s %c' '(%N) [%G] %l\t%m\t%n\t' | grep '()' | grep -v '\[base\|base-devel\]' | cut -d' ' -f3- | sort -n | cut -d' ' -f2-"
-alias pac-recent="expac -l ',' -H M -t '%s %c' '(%N) [%G] %l\t%m\t%n\t' | grep '()' | grep -v '\[base\|base-devel\]' | cut -d' ' -f3- | awk -v old=\$(date --date='2 weeks ago 00:00' +%s) '\$1>old' | sort -n | cut -d' ' -f2-"
 alias pac-big="pacgraph -c | grep --color=never -P 'GB|[0-9]{2,}MB|[0-9]{5,}kB'"
+
+# bspwm
+alias mon-geo="bspc wm -d | jq -r -c '.focusedMonitorId as \$monid | .monitors[] | select(.id == \$monid) .rectangle | [.width, .height] | \"\\(.[0])x\\(.[1])\"'"
 
 # IP addresses
 alias myip='echo "$(curl -s ipecho.net/plain)"'
 
 # URL-encode strings
 alias urlencode='python2 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
-
-# View HTTP traffic
-#alias sniff="sudo ngrep -d 'eth0' -t '^(GET|POST) ' 'tcp and port 80'"
-#alias httpdump="sudo tcpdump -i eth0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-
-# Get week number
-alias week='date +%V'
 
 # ROT13-encode text. Works for decoding, too! ;)
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
@@ -142,14 +133,6 @@ cmd-exists() {
 
 gui2pid() {
     xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps "$(cat)"
-}
-
-what_to_include_for() {
-    curl -sL "http://en.cppreference.com/mwiki/index.php?search=$1" \
-        | grep -i 'defined in header' \
-        | grep -o '&lt;.*&gt;' \
-        | sed 's/&lt;/</' \
-        | sed 's/&gt;/>/'
 }
 
 ping-avg() {

@@ -18,14 +18,6 @@ super + {_,shift + }w
 super + m
     bspc desktop -l next
 
-# if the current node is automatic, send it to the last manual, otherwise pull the last leaf
-super + y
-    bspc query -N -n focused.automatic && bspc node -n last.!automatic || bspc node last.leaf -n focused
-
-# swap the current node and the biggest node
-super + g
-    bspc node -s biggest
-
 #
 # state/flags
 #
@@ -56,37 +48,26 @@ super + l
 # swap nodes
 # If no node exists, send node to monitor instead (thanks to Michael Carlberg, github.com/jaagr)
 super + shift + h
-  bspc node -s west.local || (bspc node -m west && bspc node "$(bspc query -N -n last)" -f)
+    bspc node -s west.local || (bspc node -m west && bspc node "$(bspc query -N -n last)" -f)
 super + shift + l
-  bspc node -s east.local || (bspc node -m east && bspc node "$(bspc query -N -n last)" -f)
+    bspc node -s east.local || (bspc node -m east && bspc node "$(bspc query -N -n last)" -f)
 super + shift + k
-  bspc node -s north.local || (bspc node -m north && bspc node "$(bspc query -N -n last)" -f)
+    bspc node -s north.local || (bspc node -m north && bspc node "$(bspc query -N -n last)" -f)
 super + shift + j
-  bspc node -s south.local || (bspc node -m south && bspc node "$(bspc query -N -n last)" -f)
+    bspc node -s south.local || (bspc node -m south && bspc node "$(bspc query -N -n last)" -f)
 
 # focus/send-to a desktop of the focused monitor
 # (this assumes each monitor has desktops named 1-5)
 super + {_,shift + }{1-5}
     bspc {desktop -f,node -d} focused:^{1-5}
 
-# focus the node for the given path jump
-super + {p,b,comma,period}
-    bspc node -f @{parent,brother,first,second}
-
-# focus the next/previous node
-super + {_,shift + }c
-    bspc node -f {next,prev}
-
 # focus on monitor, move window to monitor
 super + {_,shift + }bracket{left,right}
     bspc {monitor -f, node -m} {prev,next}
 
+# rotate nodes CW/CCW
 super + {_,shift +}r
     bspc node @/ -R {90, 270}
-
-# focus the last node/desktop
-super + {grave,Tab}
-    bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
 super + {o,i}
@@ -118,27 +99,17 @@ super + ctrl + shift + space
 # move/resize
 #
 
-# expand a window by moving one of its side outward
+# expand a window by moving one of its sides outward
 super + alt + {h,j,k,l}
     bspc node -z {left -100 0,bottom 0 100,top 0 -100,right 100 0}
 
-# contract a window by moving one of its side inward
+# contract a window by moving one of its sides inward
 super + alt + shift + {h,j,k,l}
     bspc node -z {right -100 0,top 0 100,bottom 0 -100,left 100 0}
 
 # move a floating window
 super + {Left,Down,Up,Right}
     bspc node -v {-100 0,0 100,0 -100,100 0}
-
-# focus on click (redundant when focus_follows_pointer is set)
-#~button1
-#    bspc node -f pointed
-
-super + button{1-3}
-    bspc pointer -g {move,resize_side,resize_corner}
-
-super + @button{1-3}
-    bspc pointer -u
 
 #
 # wm independent hotkeys
@@ -152,9 +123,6 @@ super + shift + f
 
 super + shift + v
     gvim
-
-super + shift + s
-    ~/.bin/toggle_screenkey
 
 super + shift + x
     xfce4-settings-manager

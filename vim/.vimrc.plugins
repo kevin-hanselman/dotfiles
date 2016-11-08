@@ -98,6 +98,15 @@ vmap <Enter> <Plug>(EasyAlign)
     " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap <leader>A <Plug>(EasyAlign)
 
+    " automatically clears search, doesn't move *-search cursor
+Plug 'junegunn/vim-slash'
+
+    " highlights all search matches, not just the first
+Plug 'haya14busa/incsearch.vim'
+nmap /  <Plug>(incsearch-forward)
+nmap ?  <Plug>(incsearch-backward)
+nmap g/ <Plug>(incsearch-stay)
+
     " switch between header and source
 Plug 'derekwyatt/vim-fswitch'
 nnoremap <leader>a :FSHere<CR>
@@ -110,10 +119,6 @@ nnoremap <leader>* * :AgFromSearch!<CR>
 nnoremap <leader>/ :Ag!<Space>
     " a rough search for the definition of a function
 nnoremap <leader><leader>ld yiw:Ag! 'function.*<c-r>"\b' -Glua<CR>
-
-    " like :bufdo, but for files listed in the quickfix window
-    " use with :Ag for multi-file s///
-Plug 'karlbright/qfdo.vim'
 
     " provides hg/git change status in the left gutter
 Plug 'mhinz/vim-signify'
@@ -131,6 +136,7 @@ Plug 'jaxbot/semantic-highlight.vim'
 Plug 'morhetz/gruvbox'
 Plug 'joshdick/onedark.vim'
 
+    " syntax highlighting for a ton of languages
 Plug 'sheerun/vim-polyglot'
 
     " improved vim session management
@@ -147,12 +153,6 @@ Plug 'jlanzarotta/bufexplorer'
 
     " :BOnly deletes all but the current buffer
 Plug 'vim-scripts/BufOnly.vim'
-
-    " highlights all search matches, not just the first
-Plug 'haya14busa/incsearch.vim'
-nmap /  <Plug>(incsearch-forward)
-nmap ?  <Plug>(incsearch-backward)
-nmap g/ <Plug>(incsearch-stay)
 
     " a new command line that highlights matches during s/// et. al.
 Plug 'osyo-manga/vim-over'
@@ -199,9 +199,6 @@ let g:QQ_python_executable = '/usr/bin/python2'
     " hackernews interface in vim
 Plug 'ryanss/vim-hackernews'
 
-    " filetype detection and syntax highlighting
-Plug 'sheerun/vim-polyglot'
-
     " <leader>ww, select window to swap, <leader>ww again to swap
 Plug 'wesQ3/vim-windowswap'
 
@@ -211,8 +208,6 @@ nnoremap <leader>B :AccordionStop<CR>
 
     " :DetectIndent tries to match vim whitespace settings to the given file
 Plug 'ciaranm/detectindent'
-
-Plug 'FredKSchott/CoVim'
 
 call plug#end()
 
