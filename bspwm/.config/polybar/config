@@ -1,3 +1,13 @@
+[global/wm]
+; Adjust the _NET_WM_STRUT_PARTIAL top value
+;   Used for top aligned bars
+margin-top = 20
+
+; Adjust the _NET_WM_STRUT_PARTIAL bottom value
+;   Used for bottom aligned bars
+margin-bottom = 0
+
+
 [bar/top]
 monitor = ${env:MONITOR:LVDS-0}
 
@@ -20,7 +30,7 @@ module-margin-left = 2
 module-margin-right = 2
 
 font-0 = EnvyCodeR:size=10
-font-1 = FontAwesome:style=Regular
+font-1 = FontAwesome:size=10
 ; for CPU bars and other stuff EnvyCodeR doesn't have:
 font-2 = RobotoRegular:size=10
 
@@ -30,7 +40,7 @@ foreground = ${xrdb:foreground}
 
 modules-left = bspwm
 modules-center = date
-modules-right = cpu temperature memory volume battery
+modules-right = cpu temperature memory packages volume battery
 separator = |
 
 tray-position = right
@@ -169,5 +179,15 @@ label-volume = "%percentage%  "
 ramp-volume-0 = 
 ramp-volume-1 = 
 ramp-volume-2 = 
+
+
+[module/packages]
+type = custom/script
+
+exec = ~/.config/bspwm/package_update_checker.sh lemonbar
+
+label =  %output%
+
+interval = 300
 
 ; vim: set ft=dosini:
