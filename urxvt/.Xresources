@@ -2,7 +2,6 @@ URxvt.scrollBar: false
 URxvt.visualBell: false
 URxvt.cursorUnderline: true
 
-!URxvt.font: xft: Roboto Mono Light for Powerline:size=10
 URxvt.font: xft: Envy Code R:size=10
 Xft.antialias: true
 

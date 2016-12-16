@@ -19,6 +19,8 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 # Aliases
 #
 
+alias vim=nvim
+
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ll -A'
@@ -125,10 +127,6 @@ chext() {
         echo 'NOTE: include the period in both extensions, as above'
         return 1
     fi
-}
-
-cmd-exists() {
-    type "$1" &> /dev/null
 }
 
 gui2pid() {

@@ -1,0 +1,173 @@
+[bar/top]
+monitor = ${env:MONITOR:LVDS-0}
+
+width = 100%
+height = 22
+
+offset-x = 0
+offset-y = 0
+
+border-left = 8
+border-right = 8
+;border-top = 4
+border-color = #0000
+
+padding-left = 0
+; leave room for detached tray
+padding-right = 15
+
+module-margin-left = 2
+module-margin-right = 2
+
+font-0 = EnvyCodeR:size=10
+font-1 = FontAwesome:style=Regular
+; for CPU bars and other stuff EnvyCodeR doesn't have:
+font-2 = RobotoRegular:size=10
+
+;background = #0000
+background = ${xrdb:background}
+foreground = ${xrdb:foreground}
+
+modules-left = bspwm
+modules-center = date
+modules-right = cpu temperature memory volume battery
+separator = |
+
+tray-position = right
+tray-padding = 5
+tray-detached = true
+
+underline-size = 2
+underline-color = ${xrdb:foreground}
+wm-restack = bspwm
+
+
+[module/date]
+type = internal/date
+
+interval = 5.0
+
+date = %b %d
+time = %l:%M %p
+
+label = %{A1:gnome-calendar:}%date%, %time%%{A}
+
+
+[module/battery]
+type = internal/battery
+
+battery = BAT0
+adapter = AC
+
+format-charging = <ramp-capacity> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+label-charging =  %percentage% %time%
+label-discharging = %percentage% %time%
+label-full =   %percentage%
+time-format = (%H:%M)
+
+; lightning bolt!
+;label-charging =  %percentage% %time%
+;label-full =   %percentage%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+
+[module/bspwm]
+type = internal/bspwm
+
+pin-workspaces = false
+
+format = <label-monitor> <label-state>
+
+label-monitor = " %name%:"
+label-focused = "%{+u} %name% %{-u}"
+label-occupied = " %name% "
+label-occupied-foreground = ${xrdb:color8}
+label-empty =
+
+
+[module/memory]
+type = internal/memory
+interval = 3
+format = <label>
+label = "RAM %gb_used% / %gb_total%"
+;bar-used-width = 20
+;bar-used-foreground = #55aa55
+;bar-used-fill = ─
+;bar-used-empty = ─
+;bar-used-empty-foreground = #444444
+;bar-used-indicator = |
+
+[module/cpu]
+type = internal/cpu
+format = <label> <ramp-coreload>
+
+label = CPU %percentage%
+
+;ramp-coreload-foreground = ${xrdb:color4}
+ramp-coreload-5-foreground = ${xrdb:color1}
+ramp-coreload-6-foreground = ${xrdb:color1}
+ramp-coreload-7-foreground = ${xrdb:color1}
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+
+
+[module/temperature]
+type = internal/temperature
+
+interval = 1
+
+; Thermal zone to use
+; To list all the zone types, run
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 1
+
+; Threshold temperature to display warning label
+warn-temperature = 70
+format = <ramp> <label>
+
+label = TEMP %temperature%
+label-warn = TEMP %temperature%
+label-warn-foreground = ${xrdb:color1}
+
+ramp-0 =
+
+
+[module/volume]
+type = internal/volume
+
+; Name of the master mixer
+; Default: Master
+master-mixer = Master
+
+; Use volume mapping (similar to amixer -M and alsamixer), where the increase in volume is linear to the ear
+; Default: false
+mapping = false
+
+format-volume = <ramp-volume> <label-volume>
+
+; Available tokens:
+;   %percentage% (default)
+label-muted = "X  "
+label-muted-foreground = ${xrdb:color8}
+label-volume = "%percentage%  "
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+; vim: set ft=dosini:

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-txt="$1"
+format="$1"
 
 set -euo pipefail
 
@@ -70,7 +70,7 @@ if [ -n "$active_mon" ]; then
     output="${output}${end_active_mon}"
 fi
 
-if [ -n "$txt" ]; then
+if [ -n "$format" ]; then
     echo "<txt><span fgcolor='$fgcolor'>$output</span></txt>"
 else
     echo "<span fgcolor='$fgcolor'>$output</span>"

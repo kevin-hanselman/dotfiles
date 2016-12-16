@@ -1,9 +1,9 @@
-# make sxhkd reload its configuration files:
+# make sxhkd reload this configuration file:
 super + Escape
     pkill -USR1 -x sxhkd
 
 #
-# bspwm hotkeys
+# misc bspwm hotkeys
 #
 
 # quit bspwm normally
@@ -11,7 +11,7 @@ super + alt + Escape
     bspc quit
 
 # close and kill
-super + {_,shift + }w
+super + {_,shift} + w
     bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
@@ -29,6 +29,9 @@ super + {t,shift + t,s,f}
 # set the node flags
 super + ctrl + {x,y,z}
     bspc node -g {locked,sticky,private}
+
+super + ctrl + f
+    bspc node -f next.floating
 
 #
 # focus/swap
@@ -58,15 +61,15 @@ super + shift + j
 
 # focus/send-to a desktop of the focused monitor
 # (this assumes each monitor has desktops named 1-5)
-super + {_,shift + }{1-5}
+super + {_,shift} + {1-5}
     bspc {desktop -f,node -d} focused:^{1-5}
 
 # focus on monitor, move window to monitor
-super + {_,shift + }bracket{left,right}
+super + {_,shift} + bracket{left,right}
     bspc {monitor -f, node -m} {prev,next}
 
 # rotate nodes CW/CCW
-super + {_,shift +}r
+super + {_,shift} + r
     bspc node @/ -R {90, 270}
 
 # focus the older or newer node in the focus history
@@ -96,7 +99,7 @@ super + ctrl + shift + space
     bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
-# move/resize
+# resize
 #
 
 # expand a window by moving one of its sides outward
@@ -112,11 +115,15 @@ super + {Left,Down,Up,Right}
     bspc node -v {-100 0,0 100,0 -100,100 0}
 
 #
-# wm independent hotkeys
+# applications
 #
 
 super + Return
     urxvt
+
+# open a terminal in monocle mode, go back to tiled when the termal is closed
+super + shift + Return
+    bspc desktop -l monocle; urxvt; bspc desktop -l tiled
 
 super + shift + f
     firefox
@@ -127,14 +134,18 @@ super + shift + v
 super + shift + x
     xfce4-settings-manager
 
-super + space
-    rofi -show drun -modi drun
+super + {_,alt} + space
+    rofi -show {drun -modi drun, run}
 
-super + alt + space
-    rofi -show run
-
-alt + Tab
+super + Tab
     rofi -show window
 
 super + shift + Escape
     xautolock -locknow
+
+XF86AudioMute
+    amixer set Master toggle
+
+{XF86AudioRaiseVolume, XF86AudioLowerVolume}
+    amixer set Master 5%{+,-}
+

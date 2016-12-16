@@ -24,19 +24,17 @@ run_daemon() {
 
 run_detached sxhkd
 run_detached compton
-run_detached xfce4-panel
-run_detached nm-applet
 
 run_detached xautolock -time 3 \
-    -locker "sxlock -f '-*-envy code r-medium-r-*-*-*-*-*-*-*-*-*-*'" \
+    -locker "sxlock -f '-*-terminesspowerline-medium-r-*-*-18-*-*-*-*-*-*-*'" \
     -corners -000
 
 run_daemon xfce4-power-manager
 
-run_daemon xfce4-volumed
-
-run_detached ~/.config/bspwm/bspc_notify_xfce_genmon.sh
-
 run_detached ~/.config/bspwm/bspc_monitor_event_listener.sh
+
+MONITOR=$(xrandr | grep primary | awk '{print $1}') run_detached polybar top
+
+run_detached nm-applet
 
 run_daemon dropbox

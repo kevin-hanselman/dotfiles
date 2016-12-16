@@ -18,7 +18,9 @@ bspc config normal_border_color  "$(xrdb -query | grep background | awk '{ print
 [ -f ~/.config/bspwm/bspc_setup_monitors.sh ] && ~/.config/bspwm/bspc_setup_monitors.sh
 bspc config -m primary top_padding 20
 
-bspc rule -a Gimp follow=on floating=on
+bspc rule -a Gimp-2.8 state=floating follow=on
+bspc rule -a Gnome-calendar state=floating follow=on
 
 xsetroot -cursor_name left_ptr
+[ -f ~/.fehbg ] && source ~/.fehbg
 [ -f ~/.config/bspwm/startup.sh ] && ~/.config/bspwm/startup.sh

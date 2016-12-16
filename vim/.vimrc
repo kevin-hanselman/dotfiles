@@ -44,7 +44,7 @@ set ttyfast                         " faster, smoother redraw
 " line wrapping
 set textwidth=0                     " don't split lines (in the actual file) when they're too long
 set wrap                            " wrap lines in the vim buffer, but not in the actual file
-set linebreak                       " ^^, and break on words
+set linebreak                       " ^^, and break on WORDs, not characters
 set showbreak=\ \ …                 " prepend these chars to lines broken by linebreak
 set formatoptions+=rn1              " see :h fo-table
 set colorcolumn=120                 " highlight the prefered EOL column
@@ -65,7 +65,7 @@ set gdefault                        " s///g is implied, explicitly adding g nega
 set incsearch                       " jump to the first instance as you type the search term
 set showmatch                       " always show matching ()'s
 set hlsearch                        " Highlight all of the search terms
-set tags=./.tags;$HOME              " search for a tag file named '.tags' upwards until $HOME
+set tags=./.tags,.tags              " look for a tag file first in the current file's dir, then in Vim's CWD
 
 " ------------------------------------------
 " Plugins
@@ -158,8 +158,8 @@ nnoremap j gj
 nnoremap k gk
 
 " keep cursor in middle of screen when jumping/scrolling
-nnoremap <C-j> 10j
-nnoremap <C-k> 10k
+"nnoremap <C-j> 10j
+"nnoremap <C-k> 10k
 nmap <C-D> <C-D>zz
 nmap <C-U> <C-U>zz
 nmap n nzz
@@ -194,9 +194,6 @@ autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
-
-" uncomment to debug errors on Vim exit
-"autocmd VimLeave * :sleep 5
 
 " toggle between relative and absolute line numbers
 function! NumberToggle()
