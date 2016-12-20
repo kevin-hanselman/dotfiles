@@ -21,12 +21,11 @@ endfunction
     " fancypants status line. Powerline patched fonts require manual install
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-"let g:airline_theme='distinguished'
 let g:airline_theme='base16'
 let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#show_buffers = 0
@@ -44,27 +43,17 @@ nnoremap <leader>f :NERDTreeFind<CR>
 Plug 'scrooloose/nerdcommenter'
 
     " syntax checking and reporting
-Plug 'scrooloose/syntastic'
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-nnoremap <leader>S :Errors<CR>
+Plug 'w0rp/ale'
 
     " multi-cursors ala Sublime Text
 Plug 'terryma/vim-multiple-cursors'
 
     " syntax autocompletion and intellisense. requires llvm/clang for c/c++
-Plug 'Valloric/YouCompleteMe'
-let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_enable_diagnostic_highlighting = 1
-let g:ycm_add_preview_to_completeopt = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_confirm_extra_conf = 0
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-nnoremap <F6> :YcmDiags<CR>
-nnoremap <leader>gd :YcmCompleter GoTo<CR>
-
-"Plug 'ajh17/VimCompletesMe'
-"let b:vcm_tab_complete = 'tags'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
+" <TAB>: completion:
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"Plug 'zchee/deoplete-clang'
 
     " sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'
@@ -111,14 +100,16 @@ nmap g/ <Plug>(incsearch-stay)
 Plug 'derekwyatt/vim-fswitch'
 nnoremap <leader>a :FSHere<CR>
 
-    " vim front end for 'the silver searcher'
-Plug 'rking/ag.vim'
-let g:ag_highlight = 1
-let g:ag_prg="ag --column --smart-case"
-nnoremap <leader>* * :AgFromSearch!<CR>
-nnoremap <leader>/ :Ag!<Space>
+    " vim front end for ack, retrofitted for ag
+    " (ag.vim has been deprecated by it's maintainer)
+Plug 'mileszs/ack.vim'
+let g:ackprg = 'ag --vimgrep --smart-case'
+cnoreabbrev ag Ack
+cnoreabbrev Ag Ack
+nnoremap <leader>* * :AckFromSearch!<CR>
+nnoremap <leader>/ :Ack!<Space>
     " a rough search for the definition of a function
-nnoremap <leader><leader>ld yiw:Ag! 'function.*<c-r>"\b' -Glua<CR>
+nnoremap <leader><leader>ld yiw:Ack! 'function.*<c-r>"\b' -Glua<CR>
 
     " provides hg/git change status in the left gutter
 Plug 'mhinz/vim-signify'
@@ -210,4 +201,3 @@ nnoremap <leader>B :AccordionStop<CR>
 Plug 'ciaranm/detectindent'
 
 call plug#end()
-

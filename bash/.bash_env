@@ -33,9 +33,6 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-alias bsrc='source ~/.bash_profile'
-alias Xres='xrdb -merge ~/.Xresources'
-
 alias pg='ps -ef | grep -v grep | grep'
 alias ff='find . -type f -iname'
 
@@ -52,10 +49,6 @@ alias pac-standalone='comm -23 <(pacman -Qetq|sort) <(pacman -Qgq base base-deve
 alias pac-log='vim /var/log/pacman.log'
 alias pac-big="pacgraph -c | grep --color=never -P 'GB|[0-9]{2,}MB|[0-9]{5,}kB'"
 
-# bspwm
-alias mon-geo="bspc wm -d | jq -r -c '.focusedMonitorId as \$monid | .monitors[] | select(.id == \$monid) .rectangle | [.width, .height] | \"\\(.[0])x\\(.[1])\"'"
-
-# IP addresses
 alias myip='echo "$(curl -s ipecho.net/plain)"'
 
 # URL-encode strings
@@ -71,6 +64,15 @@ cl() {
     clear; cd "$@" && ls
 }
 
+mon-geo() {
+    bspc wm -d | \
+        jq -r -c '.focusedMonitorId as $monid |
+                  .monitors[] |
+                  select(.id == $monid) .rectangle |
+                  [.width, .height] |
+                  "\(.[0])x\(.[1])"'
+}
+
 # move back directories
 bk() {
     back="cd .."
@@ -84,53 +86,24 @@ bk() {
 
 conf() {
     case "$1" in
-        vim)                  $EDITOR ~/.vimrc ;;
-        plug*)                $EDITOR ~/.vimrc.plugins ;;
-        bash)                 $EDITOR ~/.bashrc ;;
-        conf|alias|func|env*) $EDITOR ~/.bash_env ;;
-        X*)                   $EDITOR ~/.Xresources ;;
-        tmux)                 $EDITOR ~/.tmux.conf ;;
-        zsh*)                 $EDITOR ~/.zshrc ;;
-        prez*)                $EDITOR ~/.zpreztorc ;;
-        prompt)               $EDITOR ~/.zfunctions/prompt_subliminal_setup ;;
-        sxh*)                 $EDITOR ~/.config/sxhkd/sxhkdrc ;;
-        bspwm)                $EDITOR ~/.config/bspwm/bspwmrc ;;
+        vim)                    $EDITOR ~/.vimrc ;;
+        plug*)                  $EDITOR ~/.vimrc.plugins ;;
+        bash)                   $EDITOR ~/.bashrc ;;
+        conf|alias|func|env*)   $EDITOR ~/.bash_env ;;
+        X*)                     $EDITOR ~/.Xresources ;;
+        tmux)                   $EDITOR ~/.tmux.conf ;;
+        zsh*)                   $EDITOR ~/.zshrc ;;
+        prez*)                  $EDITOR ~/.zpreztorc ;;
+        prompt)                 $EDITOR ~/.zfunctions/prompt_subliminal_setup ;;
+        sxh*)                   $EDITOR ~/.config/sxhkd/sxhkdrc ;;
+        bspwm)                  $EDITOR ~/.config/bspwm/bspwmrc ;;
+        poly*)                  $EDITOR ~/.config/polybar/config ;;
         *)
             awk '/conf\(\)/{p=1;print;next} p&&/ \*\)/{p=0};p' ~/.bash_env | \
                 tail -n +3 | sed -e 's/^ *//g'
             [ -n "$1" ] && echo "Unrecognized config command: '$1'" >&2
             ;;
     esac
-}
-
-shparproc() {
-    head -1 "/proc/$PPID/status" | cut -f2
-}
-
-# change extensions for all files in the current directory
-chext() {
-    if [[ "$*" == *-h* ]]; then
-        echo "chext '.old_ext' '.new_ext'"
-        echo 'Changes file extensions in the current directory'
-        echo 'NOTE: include the period in both extensions, as above'
-        return 0
-    fi
-    if [ -n "$1" ] && [ -n "$2" ]; then
-        for f in *$1; do
-            name=$(echo "$f" | cut -d . -f 1)
-            new=$name$2
-            mv -iv "$f" "$new"
-        done
-    else
-        echo "chext '.old_ext' '.new_ext'"
-        echo 'Changes file extensions in the current directory'
-        echo 'NOTE: include the period in both extensions, as above'
-        return 1
-    fi
-}
-
-gui2pid() {
-    xprop _NET_WM_PID | sed 's/_NET_WM_PID(CARDINAL) = //' | ps "$(cat)"
 }
 
 ping-avg() {
