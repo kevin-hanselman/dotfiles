@@ -21,6 +21,10 @@ usage() {
     echo "  -h              show this help text and exit"
 }
 
+warn() {
+    echo "$prog: $1" >&2
+}
+
 error() {
     echo -e "$prog: $1" >&2
     exit 1
@@ -65,8 +69,8 @@ unlink_file() {
     # trim duplicate forward slashes
     local target_file="${HOME%/}/${relpath_source_file}"
 
-    [ -f "$target_file" ] || error "File '$target_file' does not exist."
-    [ -L "$target_file" ] || error "File '$target_file' is not a link."
+    [ -f "$target_file" ] || { warn "File '$target_file' does not exist."; return; }
+    [ -L "$target_file" ] || { warn "File '$target_file' is not a link."; return; }
 
     local backup_file="${target_file}.df.bak"
 

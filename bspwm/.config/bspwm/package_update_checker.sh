@@ -2,7 +2,7 @@
 
 format="$1"
 
-packages=$(packer --quickcheck)
+packages=$(checkupdates)
 num_updates=$(echo "$packages" | wc -l)
 
 if [ "$num_updates" -eq 0 ]; then

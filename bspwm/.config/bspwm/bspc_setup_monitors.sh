@@ -10,4 +10,4 @@ for monitor in $(bspc query -M); do
 done
 
 killall polybar
-MONITOR=$(xrandr | grep primary | awk '{print $1}') polybar top
+~/.config/bspwm/start_polybar.sh

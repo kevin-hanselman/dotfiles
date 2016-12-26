@@ -26,15 +26,17 @@ run_detached sxhkd
 run_detached compton
 
 run_detached xautolock -time 3 \
-    -locker "sxlock -f '-*-terminesspowerline-medium-r-*-*-18-*-*-*-*-*-*-*'" \
+    -locker "sxlock -f '-*-terminus-medium-r-*-*-17-*-*-*-*-*-*-*'" \
     -corners -000
 
 run_daemon xfce4-power-manager
 
-run_detached ~/.config/bspwm/bspc_monitor_event_listener.sh
+run_detached orage
 
-MONITOR=$(xrandr | grep primary | awk '{print $1}') run_detached polybar top
+~/.config/bspwm/start_polybar.sh
 
 run_detached nm-applet
 
 run_daemon dropbox
+
+run_detached ~/.config/bspwm/bspc_monitor_event_listener.sh

@@ -17,8 +17,8 @@ height = 22
 offset-x = 0
 offset-y = 0
 
-border-left = 8
-border-right = 8
+;border-left = 8
+;border-right = 8
 ;border-top = 4
 border-color = #0000
 
@@ -32,7 +32,7 @@ module-margin-right = 2
 font-0 = EnvyCodeR:size=10
 font-1 = FontAwesome:size=10
 ; for CPU bars and other stuff EnvyCodeR doesn't have:
-font-2 = RobotoRegular:size=10
+font-2 = RobotoMono:size=10
 
 ;background = #0000
 background = ${xrdb:background}
@@ -57,7 +57,7 @@ type = internal/date
 interval = 5.0
 date = %b %d
 time = %l:%M %p
-label = %{A1:gnome-calendar:}%date%, %time%%{A}
+label = %{A1:orage --toggle:}%date%, %time%%{A}
 
 
 [module/battery]
@@ -69,7 +69,7 @@ format-charging = <ramp-capacity> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 label-charging =  %percentage% %time%
 label-discharging = %percentage% %time%
-label-full =   %percentage%
+label-full =   %percentage%
 time-format = (%H:%M)
 
 ; lightning bolt!
@@ -141,13 +141,11 @@ interval = 3
 thermal-zone = 1
 
 ; Threshold temperature to display warning label
-warn-temperature = 70
+warn-temperature = 75
 format = <ramp> <label>
-
 label = TEMP %temperature%
 label-warn = TEMP %temperature%
 label-warn-foreground = ${xrdb:color1}
-
 ramp-0 =
 
 
@@ -156,7 +154,7 @@ type = internal/volume
 master-mixer = Master
 ; Use volume mapping (similar to amixer -M and alsamixer), where the increase in volume is linear to the ear
 ; Default: false
-mapping = false
+mapping = true
 
 format-volume = <ramp-volume> <label-volume>
 
@@ -178,7 +176,7 @@ label =  %output%
 
 [module/weather]
 type = custom/script
-exec = ~/.config/bspwm/weatherjsh
+exec = ~/.config/bspwm/weather.sh
 interval = 900
 label = %{A1:~/.config/bspwm/weather_gui.sh:}%output%%{A}
 

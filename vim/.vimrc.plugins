@@ -200,4 +200,6 @@ nnoremap <leader>B :AccordionStop<CR>
     " :DetectIndent tries to match vim whitespace settings to the given file
 Plug 'ciaranm/detectindent'
 
+Plug 'racer-rust/vim-racer'
+
 call plug#end()
