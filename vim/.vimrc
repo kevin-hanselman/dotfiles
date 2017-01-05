@@ -153,7 +153,7 @@ map <down> <nop>
 map <left> <nop>
 map <right> <nop>
 
-" fix direction keys for line wrap, otherwise they jump over wrapped lines
+" up/down movement shouldn't skip wrapped sections of lines
 nnoremap j gj
 nnoremap k gk
 
@@ -196,18 +196,20 @@ autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
 
 " toggle between relative and absolute line numbers
-function! NumberToggle()
+function! LineNumberToggle()
     if(&relativenumber == 1)
         set norelativenumber
     else
         set relativenumber
     endif
 endfunc
-nnoremap <leader>n :call NumberToggle()<CR>
+nnoremap <leader>n :call LineNumberToggle()<CR>
 
 command! ShrinkMultipleNewlines %s/\n\{2,\}$/\r/e
 
 command! TrimTrailingWhitespace %s/\s\+$//e
 
-" When you forget to run sudoedit
+" generate a ctags file (named so Vim will recognize it) in Vim's CWD
+command! GenerateCtags :execute '!ctags -R -f ' . split(&tags, ',')[0] . ' .'
+
 command! SudoWrite :execute ':silent w !sudo tee % > /dev/null' | :edit!

@@ -2,13 +2,13 @@
 
 format="$1"
 
-packages=$(checkupdates)
-num_updates=$(echo "$packages" | wc -l)
+packages=$(checkupdates | awk '{print $1}')
+num_updates=$(echo "$packages" | wc -w)
 
 if [ "$num_updates" -eq 0 ]; then
     color=$(xrdb -query | grep 'color8' | awk '{ print $2 }')
 
-elif echo "$packages" | qrep -qi '^linux\b' ; then
+elif echo "$packages" | grep -qi '^linux\b' ; then
     color=$(xrdb -query | grep 'color3' | awk '{ print $2 }')
 
 else

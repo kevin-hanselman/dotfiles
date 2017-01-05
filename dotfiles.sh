@@ -26,7 +26,7 @@ warn() {
 }
 
 error() {
-    echo -e "$prog: $1" >&2
+    warn "$1"
     exit 1
 }
 

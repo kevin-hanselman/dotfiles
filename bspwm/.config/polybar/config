@@ -30,9 +30,8 @@ module-margin-left = 2
 module-margin-right = 2
 
 font-0 = EnvyCodeR:size=10
-font-1 = FontAwesome:size=10
-; for CPU bars and other stuff EnvyCodeR doesn't have:
-font-2 = RobotoMono:size=10
+font-1 = Tamsyn:size=10
+font-2 = FontAwesome:size=10
 
 ;background = #0000
 background = ${xrdb:background}
@@ -40,8 +39,8 @@ foreground = ${xrdb:foreground}
 
 modules-left = bspwm
 modules-center = date weather
-modules-right = cpu temperature memory packages volume battery
-separator = |
+modules-right = cpu memory packages volume battery
+separator = ⋮
 
 tray-position = right
 tray-padding = 5
@@ -55,7 +54,7 @@ wm-restack = bspwm
 [module/date]
 type = internal/date
 interval = 5.0
-date = %b %d
+date = %b %_d
 time = %l:%M %p
 label = %{A1:orage --toggle:}%date%, %time%%{A}
 
@@ -67,20 +66,48 @@ adapter = AC
 
 format-charging = <ramp-capacity> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
 label-charging =  %percentage% %time%
 label-discharging = %percentage% %time%
-label-full =   %percentage%
+label-full =  %percentage%
 time-format = (%H:%M)
 
 ; lightning bolt!
 ;label-charging =  %percentage% %time%
-;label-full =   %percentage%
+;label-full =  %percentage%
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
+
+animation-charging-0 = ${self.ramp-capacity-0}
+animation-charging-1 = ${self.ramp-capacity-1}
+animation-charging-2 = ${self.ramp-capacity-2}
+animation-charging-3 = ${self.ramp-capacity-3}
+animation-charging-4 = ${self.ramp-capacity-4}
+animation-charging-framerate = 750
+
+
+[module/life]
+type = internal/battery
+battery = BAT0
+adapter = AC
+
+format-charging = <bar-capacity> <label-charging>
+format-discharging = <bar-capacity> <label-discharging>
+format-full = <bar-capacity> <label-full>
+label-charging =  %percentage% %time%
+label-discharging = %percentage% %time%
+label-full =  %percentage%
+time-format = (%H:%M)
+
+bar-capacity-foreground-0 = ${xrdb:color1}
+bar-capacity-width = 6
+bar-capacity-fill = 
+bar-capacity-empty = 
+bar-capacity-indicator =
 
 
 [module/bspwm]
@@ -92,7 +119,8 @@ pin-workspaces = false
 
 format = <label-monitor> <label-state>
 label-monitor = " %name%:"
-label-focused = "%{+u} %name% %{-u}"
+label-focused = " %name% "
+label-focused-underline = ${xrdb:foreground}
 label-occupied = " %name% "
 label-occupied-foreground = ${xrdb:color8}
 label-empty =
@@ -102,7 +130,7 @@ label-empty =
 type = internal/memory
 interval = 3
 format = <label>
-label = "RAM %gb_used% / %gb_total%"
+label = RAM %gb_used%
 ;bar-used-width = 20
 ;bar-used-foreground = #55aa55
 ;bar-used-fill = ─
@@ -113,10 +141,9 @@ label = "RAM %gb_used% / %gb_total%"
 [module/cpu]
 type = internal/cpu
 format = <label> <ramp-coreload>
-
 label = CPU %percentage%
 
-;ramp-coreload-foreground = ${xrdb:color4}
+ramp-coreload-font = 2
 ramp-coreload-5-foreground = ${xrdb:color1}
 ramp-coreload-6-foreground = ${xrdb:color1}
 ramp-coreload-7-foreground = ${xrdb:color1}
@@ -158,9 +185,9 @@ mapping = true
 
 format-volume = <ramp-volume> <label-volume>
 
-label-muted = "X  "
+label-muted = x
 label-muted-foreground = ${xrdb:color8}
-label-volume = "%percentage%  "
+label-volume = %percentage%
 
 ramp-volume-0 = 
 ramp-volume-1 = 
@@ -171,7 +198,8 @@ ramp-volume-2 = 
 type = custom/script
 exec = ~/.config/bspwm/package_update_checker.sh lemonbar
 interval = 300
-label =  %output%
+;label =  %output%
+label = PKG %output%
 
 
 [module/weather]
