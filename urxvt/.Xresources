@@ -74,6 +74,11 @@ URxvt*highlightTextColor:               base04
 *color20:      base04
 *color21:      base06
 
+Xautolock.time: 3
+Xautolock.locker: sxlock -f '-*-terminus-medium-r-*-*-17-*-*-*-*-*-*-*'
+Xautolock.killtime: 60
+Xautolock.killer: systemctl suspend
+
 ! ------------------------------------------------------------------------------
 ! ROFI Color theme
 ! ------------------------------------------------------------------------------

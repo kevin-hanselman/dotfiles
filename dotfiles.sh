@@ -16,8 +16,13 @@ usage() {
     echo "                  (defaults to all subdirectories)"
     echo
     echo "Options:"
-    echo "  -r              remove symlinks and restore backups if present"
     echo "  -n              show what would be done, but take no other action"
+    echo "  -r              remove symlinks and restore backups if present"
+    echo "  -S              install files as root via sudo"
+    echo "                  (USE CAREFULLY)"
+    echo "  -C              copy files rather than using symlinks"
+    echo "  -t TARGET       use TARGET as the base target directory"
+    echo "                  (defaults to \$HOME)"
     echo "  -h              show this help text and exit"
 }
 
@@ -43,7 +48,7 @@ link_file() {
     [ -f "$fullpath_source_file" ] || error "File '$fullpath_source_file' does not exist."
 
     # trim duplicate forward slashes
-    local target_file="${HOME%/}/${relpath_source_file}"
+    local target_file="${base_target_dir}/${relpath_source_file}"
 
     local backup_file="${target_file}.df.bak"
 
@@ -51,11 +56,13 @@ link_file() {
 
     if [ -f "$target_file" ] && [ ! -L "$target_file" ]; then
         echo "backup '$target_file' to '$backup_file'"
-        [ -n "$noaction" ] || cp "$target_file" "$backup_file"
+        [ -n "$noaction" ] || $maybe_sudo cp "$target_file" "$backup_file"
     fi
 
-    echo "symlink '$fullpath_source_file' to '$target_file'"
-    [ -n "$noaction" ] || ln -sf "$fullpath_source_file" "$target_file"
+    echo "$install_cmd '$fullpath_source_file' -> '$target_file'"
+    # (ignore quoting for $install_cmd)
+    # shellcheck disable=SC2086
+    [ -n "$noaction" ] || $maybe_sudo $install_cmd "$fullpath_source_file" "$target_file"
 }
 
 unlink_file() {
@@ -67,7 +74,7 @@ unlink_file() {
     local relpath_source_file="$2"
 
     # trim duplicate forward slashes
-    local target_file="${HOME%/}/${relpath_source_file}"
+    local target_file="${base_target_dir}/${relpath_source_file}"
 
     [ -f "$target_file" ] || { warn "File '$target_file' does not exist."; return; }
     [ -L "$target_file" ] || { warn "File '$target_file' is not a link."; return; }
@@ -76,10 +83,10 @@ unlink_file() {
 
     if [ -f "$backup_file" ]; then
         echo "restore backup of '$target_file' from '$backup_file'"
-        [ -n "$noaction" ] || mv "$backup_file" "$target_file"
+        [ -n "$noaction" ] || $maybe_sudo mv "$backup_file" "$target_file"
     else
         echo "remove '$target_file'"
-        [ -n "$noaction" ] || rm "$target_file"
+        [ -n "$noaction" ] || $maybe_sudo rm "$target_file"
     fi
 }
 
@@ -88,7 +95,10 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 restore=
 noaction=
-while getopts ":h :r :n" opt; do
+base_target_dir=$HOME
+maybe_sudo=
+install_cmd='ln -sf'
+while getopts ':h :r :n :t: :S :C' opt; do
     case $opt in
         h)
             usage
@@ -96,6 +106,9 @@ while getopts ":h :r :n" opt; do
             ;;
         r) restore=yes ;;
         n) noaction=yes ;;
+        t) base_target_dir=$OPTARG ;;
+        S) maybe_sudo=sudo ;;
+        C) install_cmd='cp' ;;
         \?)
             usage
             error "Invalid option: -$OPTARG"
@@ -106,6 +119,8 @@ while getopts ":h :r :n" opt; do
             ;;
     esac
 done
+# strip trailing forward-slashes
+base_target_dir=${base_target_dir%/}
 if [ -n "$noaction" ]; then
     echo '===> Dry-run only: not modifying filesystem <==='
 fi

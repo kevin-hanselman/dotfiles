@@ -10,7 +10,7 @@ run_detached() {
     cmd_name="$1"
     if process_not_running "$cmd_name"; then
         echo "Starting command '$*'"
-        nohup "$@" 2>&1 >/dev/null </dev/null &
+        nohup "$@" &>/dev/null </dev/null &
     fi
 }
 
@@ -25,11 +25,7 @@ run_daemon() {
 run_detached sxhkd
 run_detached compton
 
-run_detached xautolock -time 3 \
-    -locker "sxlock -f '-*-terminus-medium-r-*-*-17-*-*-*-*-*-*-*'" \
-    -corners -000
-
-run_daemon xfce4-power-manager
+run_detached xautolock -detectsleep
 
 run_detached orage
 

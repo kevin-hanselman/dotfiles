@@ -12,6 +12,7 @@ set history=1000                    " remember a ton of commands
 set backspace=indent,eol,start      " backspace over everything
 set encoding=utf-8                  " sensible default encoding
                                     " (utf-8 now so listchars and showbreak work)
+set spell                           " enable spell-check
 
 " whitespace and indentation
 set tabstop=4                       " a tab is four spaces.

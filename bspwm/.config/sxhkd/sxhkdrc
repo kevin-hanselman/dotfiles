@@ -125,6 +125,9 @@ super + Return
 super + shift + Return
     bspc desktop -l monocle; urxvt; bspc desktop -l tiled
 
+super + shift + u
+    thunar
+
 super + shift + f
     firefox
 
@@ -149,3 +152,5 @@ XF86AudioMute
 {XF86AudioRaiseVolume, XF86AudioLowerVolume}
     amixer set Master 5%{+,-}
 
+{XF86MonBrightnessUp, XF86MonBrightnessDown}
+    xbacklight {+,-}10%

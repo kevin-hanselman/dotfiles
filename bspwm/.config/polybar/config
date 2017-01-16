@@ -30,14 +30,14 @@ module-margin-left = 2
 module-margin-right = 2
 
 font-0 = EnvyCodeR:size=10
-font-1 = Tamsyn:size=10
-font-2 = FontAwesome:size=10
+font-1 = FontAwesome:size=12
+font-2 = Tamsyn:size=8
 
 ;background = #0000
 background = ${xrdb:background}
 foreground = ${xrdb:foreground}
 
-modules-left = bspwm
+modules-left = bspwm stocks
 modules-center = date weather
 modules-right = cpu memory packages volume battery
 separator = ⋮
@@ -87,7 +87,7 @@ animation-charging-1 = ${self.ramp-capacity-1}
 animation-charging-2 = ${self.ramp-capacity-2}
 animation-charging-3 = ${self.ramp-capacity-3}
 animation-charging-4 = ${self.ramp-capacity-4}
-animation-charging-framerate = 750
+animation-charging-framerate = 500
 
 
 [module/life]
@@ -143,7 +143,7 @@ type = internal/cpu
 format = <label> <ramp-coreload>
 label = CPU %percentage%
 
-ramp-coreload-font = 2
+ramp-coreload-font = 3
 ramp-coreload-5-foreground = ${xrdb:color1}
 ramp-coreload-6-foreground = ${xrdb:color1}
 ramp-coreload-7-foreground = ${xrdb:color1}
@@ -185,7 +185,7 @@ mapping = true
 
 format-volume = <ramp-volume> <label-volume>
 
-label-muted = x
+label-muted = 
 label-muted-foreground = ${xrdb:color8}
 label-volume = %percentage%
 
@@ -198,6 +198,7 @@ ramp-volume-2 = 
 type = custom/script
 exec = ~/.config/bspwm/package_update_checker.sh lemonbar
 interval = 300
+; Tux!
 ;label =  %output%
 label = PKG %output%
 
@@ -207,5 +208,11 @@ type = custom/script
 exec = ~/.config/bspwm/weather.sh
 interval = 900
 label = %{A1:~/.config/bspwm/weather_gui.sh:}%output%%{A}
+
+
+[module/stocks]
+type = custom/script
+exec = ~/Dropbox/Projects/portfolio_checker/stocks.py
+interval = 300
 
 ; vim: set ft=dosini:

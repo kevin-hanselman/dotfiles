@@ -19,8 +19,6 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 # Aliases
 #
 
-alias vim=nvim
-
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ll -A'

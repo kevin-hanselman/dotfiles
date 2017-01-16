@@ -74,7 +74,7 @@ nnoremap <leader>pm :CtrlPMRUFiles<CR>
 nnoremap <leader>pc :CtrlPChange<CR>
 nnoremap <leader>pt :CtrlPBufTag<CR>
 if executable('rg')
-    let g:ctrlp_user_command = 'rg --smart-case --files -L %s'
+    let g:ctrlp_user_command = 'rg --hidden --smart-case --files -L %s'
 endif
 
     " ctrl-p for shells, managed by vim-plug for simplicity
