@@ -6,13 +6,13 @@ packages=$(checkupdates | awk '{print $1}')
 num_updates=$(echo "$packages" | wc -w)
 
 if [ "$num_updates" -eq 0 ]; then
-    color=$(xrdb -query | grep 'color8' | awk '{ print $2 }')
+    color=$(xrdb -query | grep -m1 'color8' | awk '{ print $2 }')
 
 elif echo "$packages" | grep -qi '^linux\b' ; then
-    color=$(xrdb -query | grep 'color3' | awk '{ print $2 }')
+    color=$(xrdb -query | grep -m1 'color3' | awk '{ print $2 }')
 
 else
-    color=$(xrdb -query | grep 'foreground' | awk '{ print $2 }')
+    color=$(xrdb -query | grep -m1 'foreground' | awk '{ print $2 }')
 fi
 
 if [ "${format,,}" == pango ]; then

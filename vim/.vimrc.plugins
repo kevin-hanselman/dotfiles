@@ -1,22 +1,8 @@
-call plug#begin('~/.vim/plugins')
-
-let g:plug_window = "above new"
-
-"
-" General maps and functions
-"
-
-" play nice with Vim sessions: close all extraneous buffers before leaving vim
-autocmd VimLeavePre * :tabdo call CloseExtraBuffers()
-function! CloseExtraBuffers()
-    :NERDTreeClose
-    :TagbarClose
-    :GundoHide
-endfunction
-
 "
 " Plugins and related settings
 "
+call plug#begin('~/.vim/plugins')
+let g:plug_window = "above new"
 
     " fancypants status line. Powerline patched fonts require manual install
 Plug 'vim-airline/vim-airline'
@@ -36,7 +22,7 @@ let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase = 1
 
     " file tree
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeFind' }
 nnoremap <leader>f :NERDTreeFind<CR>
 
     " quickly (un)comment code <leader> c {space, i, c, ...}
@@ -53,6 +39,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 let g:deoplete#enable_at_startup = 1
 " <TAB>: completion:
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+Plug 'zchee/deoplete-jedi'
+"Plug 'Shougo/neoinclude.vim'
 "Plug 'zchee/deoplete-clang'
 
     " sidebar that shows functions, members, etc.
@@ -61,8 +49,8 @@ let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 nnoremap <leader>tb :TagbarToggle<CR>
 
-    " visual undo tree. nice for when you need to go back to a branch
-Plug 'sjl/gundo.vim'
+    " visual undo tree
+Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
 nnoremap <leader>u :GundoToggle<CR>
 let g:gundo_preview_bottom = 1
 
@@ -73,12 +61,9 @@ nnoremap <leader>pb :CtrlPBuffer<CR>
 nnoremap <leader>pm :CtrlPMRUFiles<CR>
 nnoremap <leader>pc :CtrlPChange<CR>
 nnoremap <leader>pt :CtrlPBufTag<CR>
-if executable('rg')
-    let g:ctrlp_user_command = 'rg --hidden --smart-case --files -L %s'
-endif
 
     " ctrl-p for shells, managed by vim-plug for simplicity
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
     " align text easily
 Plug 'junegunn/vim-easy-align'
@@ -111,17 +96,15 @@ nnoremap <leader>/ :Ack!<Space>
 Plug 'mhinz/vim-signify'
 
     " show indent levels
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' }
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
+nnoremap <leader>ig :IndentGuidesToggle<CR>
 
     " colorschemes
 "Plug 'flazz/vim-colorschemes'
 Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
-Plug 'jaxbot/semantic-highlight.vim'
-Plug 'morhetz/gruvbox'
-Plug 'joshdick/onedark.vim'
 
     " syntax highlighting for a ton of languages
 Plug 'sheerun/vim-polyglot'
@@ -138,25 +121,14 @@ Plug 'tpope/vim-abolish'
     " browse and manage open buffers
 Plug 'jlanzarotta/bufexplorer'
 
-    " :BOnly deletes all but the current buffer
-Plug 'vim-scripts/BufOnly.vim'
+    " :BufOnly deletes all but the current buffer
+Plug 'vim-scripts/BufOnly.vim', { 'on': 'BufOnly' }
 
-    " a new command line that highlights matches during s/// et. al.
-Plug 'osyo-manga/vim-over'
+    " spawns a new command line that previews s///
+Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }
 
     " fancy start menu when opening vim without a filename
 Plug 'mhinz/vim-startify'
-
-    " a better, asynchronous :make and other arbitrary commands
-Plug 'tpope/vim-dispatch'
-nnoremap <F9> :Dispatch<CR>
-nnoremap <F10> :Dispatch!<CR>
-nnoremap <F11> :FocusDispatch <C-r>=g:dispatch<CR>
-
-    " syntax highlighting, filetype detection, makeprg = plantuml
-Plug 'aklt/plantuml-syntax'
-    " below requires vim-dispatch
-autocmd BufWritePost *.uml :Dispatch! plantuml %
 
     " a slightly less demanding 'hardmode'
 Plug 'takac/vim-hardtime'
@@ -164,10 +136,6 @@ autocmd VimEnter * silent! call HardTimeOn()
 let g:hardtime_allow_different_key = 1
 let g:hardtime_ignore_quickfix = 1
 let g:hardtime_maxcount = 5
-
-    " searches up directories for an '.lvimrc' file, sources it
-Plug 'embear/vim-localvimrc'
-let g:localvimrc_persistent = 1
 
     " the notorious git plugin
 Plug 'tpope/vim-fugitive'
@@ -187,13 +155,13 @@ let g:QQ_python_executable = '/usr/bin/python2'
 Plug 'wesQ3/vim-windowswap'
 
     " only used for AccordionStop, which evenly spaces current splits
-Plug 'mattboehm/vim-accordion'
+Plug 'mattboehm/vim-accordion', { 'on': 'AccordionStop' }
 nnoremap <leader>B :AccordionStop<CR>
 
     " :DetectIndent tries to match vim whitespace settings to the given file
-Plug 'ciaranm/detectindent'
+Plug 'ciaranm/detectindent', { 'on': 'DetectIndent' }
 
-    " automatically find VCS et. al. dirs and cd to project root
+    " automatically find VCS (et. al.) dirs and cd to project root
 Plug 'airblade/vim-rooter'
 
 call plug#end()

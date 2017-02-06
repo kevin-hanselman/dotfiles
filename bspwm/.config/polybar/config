@@ -1,7 +1,7 @@
 [global/wm]
 ; Adjust the _NET_WM_STRUT_PARTIAL top value
 ;   Used for top aligned bars
-margin-top = 20
+;margin-top = 20
 
 ; Adjust the _NET_WM_STRUT_PARTIAL bottom value
 ;   Used for bottom aligned bars
@@ -67,13 +67,13 @@ adapter = AC
 format-charging = <ramp-capacity> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 format-full = <ramp-capacity> <label-full>
-label-charging =  %percentage% %time%
-label-discharging = %percentage% %time%
-label-full =  %percentage%
+label-charging =  %percentage%% %time%
+label-discharging = %percentage%% %time%
+label-full =  %percentage%%
 time-format = (%H:%M)
 
 ; lightning bolt!
-;label-charging =  %percentage% %time%
+;label-charging =  %percentage%% %time%
 ;label-full =  %percentage%
 
 ramp-capacity-0 = 
@@ -82,6 +82,7 @@ ramp-capacity-2 = 
 ramp-capacity-3 = 
 ramp-capacity-4 = 
 
+; enable this by changing 'format-charging' above
 animation-charging-0 = ${self.ramp-capacity-0}
 animation-charging-1 = ${self.ramp-capacity-1}
 animation-charging-2 = ${self.ramp-capacity-2}
@@ -98,9 +99,9 @@ adapter = AC
 format-charging = <bar-capacity> <label-charging>
 format-discharging = <bar-capacity> <label-discharging>
 format-full = <bar-capacity> <label-full>
-label-charging =  %percentage% %time%
-label-discharging = %percentage% %time%
-label-full =  %percentage%
+label-charging =  %percentage%% %time%
+label-discharging = %percentage%% %time%
+label-full =  %percentage%%
 time-format = (%H:%M)
 
 bar-capacity-foreground-0 = ${xrdb:color1}
@@ -141,7 +142,7 @@ label = RAM %gb_used%
 [module/cpu]
 type = internal/cpu
 format = <label> <ramp-coreload>
-label = CPU %percentage%
+label = CPU %percentage%%
 
 ramp-coreload-font = 3
 ramp-coreload-5-foreground = ${xrdb:color1}
@@ -187,7 +188,7 @@ format-volume = <ramp-volume> <label-volume>
 
 label-muted = 
 label-muted-foreground = ${xrdb:color8}
-label-volume = %percentage%
+label-volume = %percentage%%
 
 ramp-volume-0 = 
 ramp-volume-1 = 

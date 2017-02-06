@@ -6,13 +6,13 @@ filetype plugin indent on   " required!
 " General options
 " ------------------------------------------
 " misc
-let mapleader=' '                   " change the leader key
-set clipboard=unnamedplus           " use OS clipboard as default yank buffer
+let mapleader=' '                   " change the leader key to the space bar
+set clipboard=unnamed               " use OS clipboard as default yank buffer
 set history=1000                    " remember a ton of commands
 set backspace=indent,eol,start      " backspace over everything
+set spell                           " enable spell-check
 set encoding=utf-8                  " sensible default encoding
                                     " (utf-8 now so listchars and showbreak work)
-set spell                           " enable spell-check
 
 " whitespace and indentation
 set tabstop=4                       " a tab is four spaces.
@@ -47,7 +47,7 @@ set textwidth=0                     " don't split lines (in the actual file) whe
 set wrap                            " wrap lines in the vim buffer, but not in the actual file
 set linebreak                       " ^^, and break on WORDs, not characters
 set showbreak=\ \ …                 " prepend these chars to lines broken by linebreak
-set formatoptions+=rn1              " see :h fo-table
+set formatoptions+=jrn1             " see :h fo-table
 set colorcolumn=120                 " highlight the prefered EOL column
 
 " buffers
@@ -76,10 +76,6 @@ if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
     set noshowmode                  " airline shows me my editor mode
 
-    " Use (customized) hybrd colorscheme
-    "let g:hybrid_use_Xresources = 1
-    "colorscheme hybrid-arc
-
     " Use a base16 colorscheme
     " NOTE: Make sure you source the base16 shell script
     "       for proper colors in terminal vim
@@ -92,7 +88,7 @@ endif
 
 if has("gui_running")
     set guioptions=a
-    set guifont="Envy Code R for Powerline 10"
+    set guifont="Envy Code R 10"
 
     " set normal, visual, selection cursor to an underline N% of the
     " character height
@@ -159,8 +155,6 @@ nnoremap j gj
 nnoremap k gk
 
 " keep cursor in middle of screen when jumping/scrolling
-"nnoremap <C-j> 10j
-"nnoremap <C-k> 10k
 nmap <C-D> <C-D>zz
 nmap <C-U> <C-U>zz
 nmap n nzz
@@ -187,9 +181,6 @@ nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " ------------------------------------------
 " Functions, commands, and autocmds
 " ------------------------------------------
-
-" strip trailing whitespace prior to save
-"autocmd BufWritePre * :TrimTrailingWhitespace
 
 autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab

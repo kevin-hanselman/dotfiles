@@ -13,7 +13,6 @@ fi
 
 export EDITOR=vim
 export SUDO_EDITOR=vim
-export RANGER_LOAD_DEFAULT_RC=FALSE
 
 #
 # Aliases
@@ -22,20 +21,17 @@ export RANGER_LOAD_DEFAULT_RC=FALSE
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ll -A'
+alias grep='grep --color=auto'
 
 alias cls='clear; ls'
 
 alias tmux='tmux -2'
 
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
-
 alias pg='ps -ef | grep -v grep | grep'
 alias ff='find . -type f -iname'
 
 alias vim-prof='vim --startuptime /dev/stdout +qall'
-alias vim-maps="vim -c 'redir > ~/vim-maps.txt' -c 'map' -c 'qa!'"
+alias vim-maps="vim -c 'redir > /tmp/vim-maps.txt' -c 'map' -c 'qa!'"
 
 alias games='pacman -Qlq bsd-games | grep -P "bin/.+" | xargs -n1 basename'
 
@@ -44,15 +40,16 @@ alias pac-junk='pacman -Qdtq'
 alias pac-aur='pacman -Qmq'
 alias pac-manual='comm -23 <(pacman -Qeq|sort) <(pacman -Qgq base base-devel|sort)'
 alias pac-standalone='comm -23 <(pacman -Qetq|sort) <(pacman -Qgq base base-devel|sort)'
-alias pac-log='vim /var/log/pacman.log'
+alias pac-log='$EDITOR /var/log/pacman.log'
 alias pac-big="pacgraph -c | grep --color=never -P 'GB|[0-9]{2,}MB|[0-9]{5,}kB'"
+alias pac-recent='grep --color=never Running /var/log/pacman.log'
 
-alias myip='echo "$(curl -s ipecho.net/plain)"'
+alias myip="curl -s 'https://duckduckgo.com/?q=what+is+my+ip&ia=answer&format=json' | jq -r .Answer | grep --color=never -Po '(?:\d{1,3}\.){3}\d{1,3}'"
 
 # URL-encode strings
-alias urlencode='python2 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias urlencode='python -c "import sys, urllib.parse as p; print(p.quote_plus('' ''.join(sys.argv[1:])));"'
 
-# ROT13-encode text. Works for decoding, too! ;)
+# ROT13-encode text
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 
 #
@@ -71,15 +68,33 @@ mon-geo() {
                   "\(.[0])x\(.[1])"'
 }
 
-# move back directories
+# move back/up N directories
 bk() {
-    back="cd .."
+    back='cd ..'
     if [ -n "$1" ] && [ "$1" -gt 1 ]; then
-        for i in $(seq 2 $1); do
+        for _ in $(seq 2 "$1"); do
             back="${back}/.."
         done
     fi
     eval "$back"
+}
+
+flw() {
+    last_cmd=$(cat <(fc -l mkdir mkdir) \
+                   <(fc -l mv mv) \
+                   <(fc -l cp cp) \
+                   <(fc -l touch touch) \
+                   | sort | tail -n1 | xargs | cut -d' ' -f2- | xargs | sed 's/-\S\+//g')
+    case "$last_cmd" in
+        mkdir*|touch*)
+            flw=$(echo "$last_cmd" | awk '{print $2}')
+            ;;
+        *)
+            flw=$(echo "$last_cmd" | awk '{print $3}')
+            ;;
+    esac
+    echo "Following '$last_cmd' to '$flw'"
+    cd "$flw" || return 1
 }
 
 conf() {
@@ -102,13 +117,4 @@ conf() {
             [ -n "$1" ] && echo "Unrecognized config command: '$1'" >&2
             ;;
     esac
-}
-
-ping-avg() {
-    if [ -n "$2" ]; then
-        count="$2"
-    else
-        count=20
-    fi
-    ping "$1" -c "$count" -A -q | tail -1 | cut -d'/' -f5
 }
