@@ -81,7 +81,7 @@ if filereadable(expand("~/.vimrc.plugins"))
     "       for proper colors in terminal vim
     set background=dark
     let base16colorspace=256
-    colorscheme base16-solar-flare
+    colorscheme base16-solarflare
 else
     colorscheme slate
 endif

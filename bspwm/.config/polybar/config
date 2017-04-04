@@ -5,8 +5,24 @@
 
 ; Adjust the _NET_WM_STRUT_PARTIAL bottom value
 ;   Used for bottom aligned bars
-margin-bottom = 0
+;margin-bottom = 0
 
+[colors]
+transparent = #99000000
+invisible = #0000
+background = ${xrdb:background}
+foreground = ${xrdb:foreground}
+red = ${xrdb:color1}
+dim = ${xrdb:color8}
+
+[settings]
+; Define fallback values used by all module formats
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+format-padding = 1
+; margin between multiple labels in a module
+; e.g. bspwm workspace module
+;format-margin = 1
 
 [bar/top]
 monitor = ${env:MONITOR:LVDS-0}
@@ -17,37 +33,36 @@ height = 22
 offset-x = 0
 offset-y = 0
 
-;border-left = 8
-;border-right = 8
-;border-top = 4
-border-color = #0000
+border-left-size = 8
+border-right-size = 8
+border-top-size = 8
+border-color = ${colors.invisible}
 
 padding-left = 0
 ; leave room for detached tray
 padding-right = 15
 
-module-margin-left = 2
-module-margin-right = 2
+module-margin = 1
 
 font-0 = EnvyCodeR:size=10
 font-1 = FontAwesome:size=12
-font-2 = Tamsyn:size=8
+font-2 = Tamsyn:size=6
 
-;background = #0000
-background = ${xrdb:background}
-foreground = ${xrdb:foreground}
+background = ${colors.background}
+foreground = ${colors.foreground}
+separator =
 
 modules-left = bspwm stocks
 modules-center = date weather
 modules-right = cpu memory packages volume battery
-separator = ⋮
 
 tray-position = right
 tray-padding = 5
 tray-detached = true
+tray-background = ${colors.background}
 
 underline-size = 2
-underline-color = ${xrdb:foreground}
+underline-color = ${colors.foreground}
 wm-restack = bspwm
 
 
@@ -60,21 +75,40 @@ label = %{A1:orage --toggle:}%date%, %time%%{A}
 
 
 [module/battery]
+format-charging-background = ${settings.format-background}
+format-charging-padding = ${settings.format-padding}
+format-discharging-background = ${settings.format-background}
+format-discharging-padding = ${settings.format-padding}
+format-full-background = ${settings.format-background}
+format-full-padding = ${settings.format-padding}
+
 type = internal/battery
 battery = BAT0
 adapter = AC
 
+format-charging = <label-charging>
+format-discharging = <label-discharging>
+format-full = <label-full>
+label-discharging = BAT - %percentage%% %time%
+label-charging = BAT + %percentage%% %time%
+label-full = BAT %percentage%%
+time-format = (%H:%M)
+
+
+[module/battery_fa_icons]
+inherit = module/battery
+
 format-charging = <ramp-capacity> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 format-full = <ramp-capacity> <label-full>
-label-charging =  %percentage%% %time%
 label-discharging = %percentage%% %time%
+label-charging =  %percentage%% %time%
 label-full =  %percentage%%
 time-format = (%H:%M)
 
 ; lightning bolt!
 ;label-charging =  %percentage%% %time%
-;label-full =  %percentage%
+;label-full =  %percentage%%
 
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -90,11 +124,43 @@ animation-charging-3 = ${self.ramp-capacity-3}
 animation-charging-4 = ${self.ramp-capacity-4}
 animation-charging-framerate = 500
 
+[module/battery_md_icons]
+inherit = module/battery
 
-[module/life]
-type = internal/battery
-battery = BAT0
-adapter = AC
+format-charging = <ramp-capacity> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <ramp-capacity> <label-full>
+label-discharging = %percentage%% %time%
+label-charging =  %percentage%% %time%
+label-full =  %percentage%%
+time-format = (%H:%M)
+
+; lightning bolt!
+;label-charging =  %percentage%% %time%
+;label-full =  %percentage%%
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-5 = 
+ramp-capacity-6 = 
+ramp-capacity-7 = 
+ramp-capacity-8 = 
+ramp-capacity-9 = 
+
+; enable this by changing 'format-charging' above
+animation-charging-0 = ${self.ramp-capacity-0}
+animation-charging-1 = ${self.ramp-capacity-1}
+animation-charging-2 = ${self.ramp-capacity-2}
+animation-charging-3 = ${self.ramp-capacity-3}
+animation-charging-4 = ${self.ramp-capacity-4}
+animation-charging-framerate = 500
+
+
+[module/battery_hearts]
+inherit = module/battery
 
 format-charging = <bar-capacity> <label-charging>
 format-discharging = <bar-capacity> <label-discharging>
@@ -104,8 +170,8 @@ label-discharging = %percentage%% %time%
 label-full =  %percentage%%
 time-format = (%H:%M)
 
-bar-capacity-foreground-0 = ${xrdb:color1}
-bar-capacity-width = 6
+bar-capacity-foreground-0 = ${colors.red}
+bar-capacity-width = 5
 bar-capacity-fill = 
 bar-capacity-empty = 
 bar-capacity-indicator =
@@ -119,11 +185,11 @@ type = internal/bspwm
 pin-workspaces = false
 
 format = <label-monitor> <label-state>
-label-monitor = " %name%:"
+label-monitor = "%name%:"
 label-focused = " %name% "
-label-focused-underline = ${xrdb:foreground}
+label-focused-underline = ${colors.foreground}
 label-occupied = " %name% "
-label-occupied-foreground = ${xrdb:color8}
+label-occupied-foreground = ${colors.dim}
 label-empty =
 
 
@@ -132,12 +198,7 @@ type = internal/memory
 interval = 3
 format = <label>
 label = RAM %gb_used%
-;bar-used-width = 20
-;bar-used-foreground = #55aa55
-;bar-used-fill = ─
-;bar-used-empty = ─
-;bar-used-empty-foreground = #444444
-;bar-used-indicator = |
+
 
 [module/cpu]
 type = internal/cpu
@@ -145,9 +206,9 @@ format = <label> <ramp-coreload>
 label = CPU %percentage%%
 
 ramp-coreload-font = 3
-ramp-coreload-5-foreground = ${xrdb:color1}
-ramp-coreload-6-foreground = ${xrdb:color1}
-ramp-coreload-7-foreground = ${xrdb:color1}
+ramp-coreload-5-foreground = ${colors.red}
+ramp-coreload-6-foreground = ${colors.red}
+ramp-coreload-7-foreground = ${colors.red}
 ramp-coreload-0 = ▁
 ramp-coreload-1 = ▂
 ramp-coreload-2 = ▃
@@ -173,21 +234,35 @@ warn-temperature = 75
 format = <ramp> <label>
 label = TEMP %temperature%
 label-warn = TEMP %temperature%
-label-warn-foreground = ${xrdb:color1}
+label-warn-foreground = ${colors.red}
 ramp-0 =
 
 
 [module/volume]
 type = internal/volume
+
+format-volume-background = ${settings.format-background}
+format-volume-padding = ${settings.format-padding}
+format-muted-background = ${settings.format-background}
+format-muted-padding = ${settings.format-padding}
+
 master-mixer = Master
 ; Use volume mapping (similar to amixer -M and alsamixer), where the increase in volume is linear to the ear
 ; Default: false
-mapping = true
+;mapping = true
+
+format-volume = <label-volume>
+
+label-muted-foreground = ${colors.dim}
+label-muted = VOL -
+label-volume = VOL %percentage%%
+
+
+[module/volume_icons]
+inherit = module/volume
 
 format-volume = <ramp-volume> <label-volume>
-
 label-muted = 
-label-muted-foreground = ${xrdb:color8}
 label-volume = %percentage%%
 
 ramp-volume-0 = 

@@ -8,7 +8,7 @@ num_updates=$(echo "$packages" | wc -w)
 if [ "$num_updates" -eq 0 ]; then
     color=$(xrdb -query | grep -m1 'color8' | awk '{ print $2 }')
 
-elif echo "$packages" | grep -qi '^linux\b' ; then
+elif echo "$packages" | grep -qi '^linux$' ; then
     color=$(xrdb -query | grep -m1 'color3' | awk '{ print $2 }')
 
 else

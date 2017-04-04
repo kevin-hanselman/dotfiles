@@ -5,8 +5,8 @@ URxvt.cursorUnderline: true
 URxvt.font: xft: Envy Code R:size=10
 Xft.antialias: true
 
-#include ".config/base16-builder/output/rxvt-unicode/base16-solarflare-dark"
 #include ".config/base16-builder/output/xresources/base16-solarflare.dark.xresources"
+#include ".config/base16-builder/output/rxvt-unicode/base16-solarflare-dark"
 
 Xautolock.time: 3
 Xautolock.locker: sxlock -f '-*-terminus-medium-r-*-*-17-*-*-*-*-*-*-*'

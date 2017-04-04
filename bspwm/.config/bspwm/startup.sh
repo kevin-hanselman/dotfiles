@@ -29,10 +29,11 @@ run_detached xautolock -detectsleep
 
 run_detached orage
 
-~/.config/bspwm/start_polybar.sh
+MONITOR=$(xrandr | grep primary | awk '{print $1}') run_detached polybar top
 
 run_detached nm-applet
 
 run_daemon dropbox
 
 run_detached ~/.config/bspwm/bspc_monitor_event_listener.sh
+run_detached ~/.config/bspwm/bspwm_auto_padding.py
