@@ -18,6 +18,12 @@ super + {_,shift} + w
 super + m
     bspc desktop -l next
 
+super + p
+    bspc config -d focused top_padding 0 \
+    && bspc config -d focused bottom_padding 0 \
+    && bspc config -d focused left_padding 0 \
+    && bspc config -d focused right_padding 0
+
 #
 # state/flags
 #

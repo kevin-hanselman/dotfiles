@@ -118,6 +118,7 @@ conf() {
         sxh*)                   $EDITOR ~/.config/sxhkd/sxhkdrc ;;
         bspwm)                  $EDITOR ~/.config/bspwm/bspwmrc ;;
         poly*)                  $EDITOR ~/.config/polybar/config ;;
+        compton)                $EDITOR ~/.config/compton.conf ;;
         *)
             awk '/conf\(\)/{p=1;print;next} p&&/ \*\)/{p=0};p' ~/.bash_env | \
                 tail -n +3 | sed -e 's/^ *//g'
