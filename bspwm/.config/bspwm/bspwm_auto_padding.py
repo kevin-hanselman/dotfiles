@@ -3,11 +3,11 @@
 import bspwm
 
 
-def auto_pad(*, vpad_size, hpad_size):
+def auto_pad(*, vpad_scale, hpad_scale):
     '''Auto-pad bspwm desktops with only one node
 
     Parameters:
-        (h/v)pad_size: size of padding as a fraction of screen width/height
+        (h/v)pad_scale: size of padding as a fraction of screen width/height
     '''
     bspwm_state = bspwm.get_state()
     focused_desktop_ids = [mon['focusedDesktopId']
@@ -17,21 +17,24 @@ def auto_pad(*, vpad_size, hpad_size):
 
     for desktop in focused_desktops:
         num_nodes = len(list(find_keys(desktop, 'className')))
+        padding = None
         if num_nodes == 1:
             if desktop['padding']['left'] == 0:
-                horiz_pad = int(desktop['root']['rectangle']['width'] * hpad_size)
-                vert_pad = int(desktop['root']['rectangle']['height'] * vpad_size)
-                padding = {'top_padding':    vert_pad,
-                           'bottom_padding': vert_pad,
-                           'left_padding':   horiz_pad,
-                           'right_padding':  horiz_pad}
+                hpad_size = int(desktop['root']['rectangle']['width']
+                                * hpad_scale)
+                vpad_size = int(desktop['root']['rectangle']['height']
+                                * vpad_scale)
+                padding = {'top_padding':    vpad_size,
+                           'bottom_padding': vpad_size,
+                           'left_padding':   hpad_size,
+                           'right_padding':  hpad_size}
         else:
             padding = {'top_padding':    0,
                        'bottom_padding': 0,
                        'left_padding':   0,
                        'right_padding':  0}
-
-        bspwm_set_padding(desktop['id'], padding)
+        if padding:
+            bspwm_set_padding(desktop['id'], padding)
 
 
 def get_all_desktops(bspwm_state):
@@ -63,4 +66,4 @@ def find_keys(var, target_key):
 
 if __name__ == '__main__':
     for _ in bspwm.subscribe('node_manage', 'node_unmanage', 'node_transfer'):
-        auto_pad(vpad_size=0.05, hpad_size=0.2)
+        auto_pad(vpad_scale=0.05, hpad_scale=0.2)

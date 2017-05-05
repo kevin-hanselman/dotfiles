@@ -48,7 +48,7 @@ set wrap                            " wrap lines in the vim buffer, but not in t
 set linebreak                       " ^^, and break on WORDs, not characters
 set showbreak=\ \ …                 " prepend these chars to lines broken by linebreak
 set formatoptions+=jrn1             " see :h fo-table
-set colorcolumn=120                 " highlight the prefered EOL column
+set colorcolumn=100                 " highlight the prefered EOL column
 
 " buffers
 set hidden                          " dont delete buffers, just hide them

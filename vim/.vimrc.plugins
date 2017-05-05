@@ -42,6 +42,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 Plug 'zchee/deoplete-jedi'
 "Plug 'Shougo/neoinclude.vim'
 "Plug 'zchee/deoplete-clang'
+Plug 'Rip-Rip/clang_complete'
 
     " sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'
@@ -61,6 +62,7 @@ nnoremap <leader>pb :CtrlPBuffer<CR>
 nnoremap <leader>pm :CtrlPMRUFiles<CR>
 nnoremap <leader>pc :CtrlPChange<CR>
 nnoremap <leader>pt :CtrlPBufTag<CR>
+let g:ctrlp_show_hidden = 1
 
     " ctrl-p for shells, managed by vim-plug for simplicity
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }

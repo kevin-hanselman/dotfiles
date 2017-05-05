@@ -25,18 +25,20 @@ format-padding = 1
 ;format-margin = 1
 
 [bar/top]
-monitor = ${env:MONITOR:LVDS-0}
+monitor = ${env:MONITOR}
 
-width = 100%
+width = 80%
 height = 22
 
-offset-x = 0
-offset-y = 0
+offset-x = 10%
+offset-y = 8
 
-border-left-size = 8
-border-right-size = 8
-border-top-size = 8
-border-color = ${colors.invisible}
+radius = 0.0
+
+;border-left-size = 8
+;border-right-size = 8
+;border-top-size = 8
+;border-color = ${colors.invisible}
 
 padding-left = 0
 ; leave room for detached tray
