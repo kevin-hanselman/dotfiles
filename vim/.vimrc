@@ -25,6 +25,7 @@ set listchars=tab:»\ ,trail:·,extends:…
 
 " UI
 syntax enable                       " syntax highlighting
+set termguicolors                   " enable 24-bit colors from the terminal
 set mouse=a                         " allow for better mouse interaction
 set scrolloff=5                     " always show N lines veritcally
 set sidescroll=10                   " always show N chars horizontally
@@ -73,13 +74,8 @@ set tags=./.tags,.tags              " look for a tag file first in the current f
 
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
-
-    " Use a base16 colorscheme
-    " NOTE: Make sure you source the base16 shell script
-    "       for proper colors in terminal vim
     set background=dark
-    let base16colorspace=256
-    colorscheme base16-default-dark
+    colorscheme base16-phd
 else
     colorscheme slate
 endif

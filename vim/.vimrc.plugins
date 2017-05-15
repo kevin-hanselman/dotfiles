@@ -113,7 +113,6 @@ nnoremap <leader>ig :IndentGuidesToggle<CR>
 
     " colorschemes
 "Plug 'flazz/vim-colorschemes'
-Plug 'w0ng/vim-hybrid'
 Plug 'chriskempson/base16-vim'
 
     " syntax highlighting for a ton of languages
