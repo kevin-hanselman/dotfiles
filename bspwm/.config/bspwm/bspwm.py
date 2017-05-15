@@ -4,7 +4,7 @@ import json
 
 
 def subscribe(*subscribe_args):
-    '''A generator that returns messages from a 'bspc subscribe' call.'''
+    '''Returns a generator for messages from a 'bspc subscribe' call.'''
     proc = subprocess.Popen(['bspc', 'subscribe'] + list(subscribe_args),
                             stdout=subprocess.PIPE)
     while proc.poll() is None:

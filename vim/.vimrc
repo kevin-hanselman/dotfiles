@@ -24,7 +24,6 @@ set list                            " show whitespace indicated by 'listchars'
 set listchars=tab:»\ ,trail:·,extends:…
 
 " UI
-set t_Co=256                        " let terminal vim use 256 colors
 syntax enable                       " syntax highlighting
 set mouse=a                         " allow for better mouse interaction
 set scrolloff=5                     " always show N lines veritcally
@@ -74,14 +73,13 @@ set tags=./.tags,.tags              " look for a tag file first in the current f
 
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
-    set noshowmode                  " airline shows me my editor mode
 
     " Use a base16 colorscheme
     " NOTE: Make sure you source the base16 shell script
     "       for proper colors in terminal vim
     set background=dark
     let base16colorspace=256
-    colorscheme base16-solarflare
+    colorscheme base16-default-dark
 else
     colorscheme slate
 endif
@@ -131,12 +129,6 @@ inoremap jj <Esc>
 
 " Y yanks to EOL (to match D and C)
 nnoremap Y y$
-
-" window navigation
-"map <M-h> <C-w>h
-"map <M-j> <C-w>j
-"map <M-k> <C-w>k
-"map <M-l> <C-w>l
 
 " grow and shrink windows
 map <M-=> 10<C-w>+
@@ -203,5 +195,3 @@ command! TrimTrailingWhitespace %s/\s\+$//e
 
 " generate a ctags file (named so Vim will recognize it) in Vim's CWD
 command! GenerateCtags :execute '!ctags -R -f ' . split(&tags, ',')[0] . ' .'
-
-command! SudoWrite :execute ':silent w !sudo tee % > /dev/null' | :edit!

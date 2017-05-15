@@ -43,7 +43,7 @@ def get_all_desktops(bspwm_state):
 
 
 def bspwm_set_padding(desktop_id, padding_dict):
-    '''Set the left and right padding of the given desktop_id to pad_pixels'''
+    '''Set the padding parameters of the given desktop_id'''
     for pad_str, pad_val in padding_dict.items():
         bspwm.bspc('config',
                    '-d', str(desktop_id),

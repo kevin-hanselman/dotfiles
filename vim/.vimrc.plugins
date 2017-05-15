@@ -7,6 +7,7 @@ let g:plug_window = "above new"
     " fancypants status line. Powerline patched fonts require manual install
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+set noshowmode
 let g:airline_powerline_fonts = 0
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
@@ -28,21 +29,28 @@ nnoremap <leader>f :NERDTreeFind<CR>
     " quickly (un)comment code <leader> c {space, i, c, ...}
 Plug 'scrooloose/nerdcommenter'
 
-    " syntax checking and reporting
+    " code linting
 Plug 'w0rp/ale'
 
-    " multi-cursors ala Sublime Text
+    " multi-cursors a la Sublime Text
 Plug 'terryma/vim-multiple-cursors'
 
-    " syntax autocompletion and intellisense. requires llvm/clang for c/c++
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-let g:deoplete#enable_at_startup = 1
-" <TAB>: completion:
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-Plug 'zchee/deoplete-jedi'
-"Plug 'Shougo/neoinclude.vim'
-"Plug 'zchee/deoplete-clang'
+    " autocompletion
+Plug 'lifepillar/vim-mucomplete'
+set completeopt+=menuone    " (required) use the pop-up menu even when only one match
+set completeopt+=preview    " show extra info about the current selection
+set completeopt+=noinsert   " only insert text when I select a match
+set completeopt+=noselect   " don't automatically select a match
+set shortmess+=c            " suppress completion messages on bottom of the screen
+let g:mucomplete#enable_auto_at_startup = 1
+inoremap <expr> <cr> mucomplete#popup_exit("\<cr>")
+
+Plug 'davidhalter/jedi-vim'
+let g:jedi#popup_on_dot = 1
+
 Plug 'Rip-Rip/clang_complete'
+let g:clang_user_options = '-std=c++14'
+command! GenerateClangComplete :execute '!find . -type f -name ''*.h'' -printf "-I\%h\n" | sort | uniq > ./.clang_complete'
 
     " sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'
