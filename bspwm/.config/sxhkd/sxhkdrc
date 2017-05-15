@@ -125,7 +125,7 @@ super + {Left,Down,Up,Right}
 #
 
 super + Return
-    urxvt
+    roxterm -d ~
 
 # open a terminal in monocle mode, go back to tiled when the termal is closed
 super + shift + Return
