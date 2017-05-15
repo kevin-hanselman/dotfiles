@@ -90,6 +90,15 @@ function fish_right_prompt
     vi_mode
 end
 
+if status --is-login
+    if test -d ~/.bin/
+        set -x PATH $PATH ~/.bin/
+    end
+    if test -n $DISPLAY; and test $XDG_VTNR -eq 1
+        exec startx
+    end
+end
+
 if test -e /usr/share/autojump/autojump.fish
     source /usr/share/autojump/autojump.fish
 end
