@@ -18,4 +18,5 @@ if test -e /usr/share/autojump/autojump.fish
 end
 
 alias vim nvim
+alias pg="ps -ef | grep -v 'grep' | grep -i"
 set -x EDITOR vim
