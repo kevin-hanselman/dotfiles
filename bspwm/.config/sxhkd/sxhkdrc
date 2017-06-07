@@ -129,7 +129,7 @@ super + Return
 
 # open a terminal in monocle mode, go back to tiled when the termal is closed
 super + shift + Return
-    bspc desktop -l monocle; urxvt; bspc desktop -l tiled
+    bspc desktop -l monocle; roxterm --separate -d ~; bspc desktop -l tiled
 
 super + shift + u
     thunar
@@ -137,17 +137,11 @@ super + shift + u
 super + shift + f
     firefox
 
-super + shift + v
-    gvim
-
 super + shift + x
     xfce4-settings-manager
 
-super + {_,alt} + space
-    rofi -show {drun -modi drun, run}
-
-super + Tab
-    rofi -show window
+super + space
+    rofi -show combi -combi-modi 'drun,window,run' -modi combi
 
 super + shift + Escape
     xautolock -locknow

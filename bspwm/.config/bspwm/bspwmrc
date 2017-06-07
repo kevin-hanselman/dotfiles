@@ -15,15 +15,20 @@ bspc config merge_overlapping_monitors true
 bspc config focused_border_color "$(xrdb -query | grep -m1 foreground | awk '{ print $2 }')"
 bspc config normal_border_color  "$(xrdb -query | grep -m1 background | awk '{ print $2 }')"
 
-bspc rule -a Gimp-2.8 state=floating follow=on
 bspc rule -a Orage state=floating follow=on
 
 xsetroot -cursor_name left_ptr
-
 xset s 300 # blank screen after N seconds of inactivity
 xset +dpms # enable DPMS
 xset dpms 600 600 0 # trigger display {standby, suspend, off} after N seconds of inactivity
 
 [ -f ~/.config/bspwm/bspc_setup_monitors.sh ] && ~/.config/bspwm/bspc_setup_monitors.sh
-[ -f ~/.config/bspwm/startup.sh ] && ~/.config/bspwm/startup.sh
+
+# Annoyingly, the -d arg below doesn't take effect until after it finds a config file.
+# I.e. you can't use -d to tell supervisord where to look for a config.
+[ -f ~/.config/bspwm/supervisord.conf ] && supervisord -d ~/.config/bspwm/ -c ~/.config/bspwm/supervisord.conf
+
+# dropbox is a daemon, which supervisord can't handle.
+# Fortunately, starting dropbox will kill any existing Dropbox daemon.
+dropbox
 } &> /tmp/bspwmrc.log

@@ -284,7 +284,7 @@ label = PKG %output%
 [module/weather]
 type = custom/script
 exec = ~/.config/bspwm/weather.sh
-interval = 900
+interval = 600
 label = %{A1:~/.config/bspwm/weather_gui.sh:}%output%%{A}
 
 
