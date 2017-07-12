@@ -1,4 +1,8 @@
 function conf --description 'edit common config files'
+    if test -z $argv
+        cat (status --current-filename)
+        return 1
+    end
     switch $argv
         case 'conf'
             eval $EDITOR (status --current-filename)
@@ -21,6 +25,7 @@ function conf --description 'edit common config files'
         case 'fish'
             eval $EDITOR ~/.config/fish/config.fish
         case '*'
-            grep -B1 '$EDITOR' (status --current-filename)
+            cat (status --current-filename)
+            return 1
     end
 end
