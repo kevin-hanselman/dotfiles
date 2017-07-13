@@ -27,10 +27,10 @@ format-padding = 1
 [bar/top]
 monitor = ${env:MONITOR}
 
-width = 80%
+width = 90%
 height = 22
 
-offset-x = 10%
+offset-x = 5%
 offset-y = 8
 
 radius = 0.0
