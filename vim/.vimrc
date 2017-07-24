@@ -174,6 +174,7 @@ autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype python setlocal colorcolumn=80
 
 " toggle between relative and absolute line numbers
 function! LineNumberToggle()

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-'''Auto-pad bspwm desktops with only one node (i.e. window)'''
+'''Increase padding on bspwm desktops with only one node (a.k.a. window)'''
 import bspwm
 
 
@@ -12,13 +12,26 @@ def auto_pad(*, vpad_scale, hpad_scale):
     bspwm_state = bspwm.get_state()
     focused_desktop_ids = [mon['focusedDesktopId']
                            for mon in bspwm_state['monitors']]
-    focused_desktops = [desktop for desktop in get_all_desktops(bspwm_state)
-                        if desktop['id'] in focused_desktop_ids]
 
-    for desktop in focused_desktops:
-        num_nodes = len(list(find_keys(desktop, 'className')))
+    focused_desktops_first = sorted(get_all_desktops(bspwm_state),
+                                    key=lambda id: id in focused_desktop_ids,
+                                    reverse=True)
+
+    for desktop in focused_desktops_first:
+        # Get all clients (open windows) on the desktop.
+        # NOTE: Sometimes there are null-valued clients. Why?
+        clients = find_keys(desktop, 'client')
+
+        # Count the number of windows in the desktop that are tiled.
+        # (i.e. Ignore floating windows, etc.)
+        # Using timeit,
+        # len(list(<generator>)) was slightly faster than
+        # len(tuple(<generator>)) and much faster than
+        # sum(1 for _ in <generator>)
+        num_tiled_clients = len(list(c for c in clients
+                                     if c and c['state'] == 'tiled'))
         padding = None
-        if num_nodes == 1:
+        if num_tiled_clients == 1:
             if desktop['padding']['left'] == 0:
                 hpad_size = int(desktop['root']['rectangle']['width']
                                 * hpad_scale)
