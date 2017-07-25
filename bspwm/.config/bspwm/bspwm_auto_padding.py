@@ -13,9 +13,11 @@ def auto_pad(*, vpad_scale, hpad_scale):
     focused_desktop_ids = [mon['focusedDesktopId']
                            for mon in bspwm_state['monitors']]
 
-    focused_desktops_first = sorted(get_all_desktops(bspwm_state),
-                                    key=lambda id: id in focused_desktop_ids,
-                                    reverse=True)
+    focused_desktops_first = sorted(
+        get_all_desktops(bspwm_state),
+        key=lambda desktop: desktop['id'] in focused_desktop_ids,
+        reverse=True
+    )
 
     for desktop in focused_desktops_first:
         # Get all clients (open windows) on the desktop.
