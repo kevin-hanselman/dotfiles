@@ -25,7 +25,9 @@ set listchars=tab:»\ ,trail:·,extends:…
 
 " UI
 syntax enable                       " syntax highlighting
-set termguicolors                   " enable 24-bit colors from the terminal
+if (has("termguicolors"))
+  set termguicolors
+endif
 set mouse=a                         " allow for better mouse interaction
 set scrolloff=5                     " always show N lines veritcally
 set sidescroll=10                   " always show N chars horizontally

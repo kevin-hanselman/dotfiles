@@ -10,8 +10,8 @@ def auto_pad(*, vpad_scale, hpad_scale):
         (h/v)pad_scale: size of padding as a fraction of screen width/height
     '''
     bspwm_state = bspwm.get_state()
-    focused_desktop_ids = [mon['focusedDesktopId']
-                           for mon in bspwm_state['monitors']]
+    focused_desktop_ids = (mon['focusedDesktopId']
+                           for mon in bspwm_state['monitors'])
 
     focused_desktops_first = sorted(
         get_all_desktops(bspwm_state),
@@ -30,7 +30,7 @@ def auto_pad(*, vpad_scale, hpad_scale):
         # len(list(<generator>)) was slightly faster than
         # len(tuple(<generator>)) and much faster than
         # sum(1 for _ in <generator>)
-        num_tiled_clients = len(list(c for c in clients
+        num_tiled_clients = len(list(1 for c in clients
                                      if c and c['state'] == 'tiled'))
         padding = None
         if num_tiled_clients == 1:

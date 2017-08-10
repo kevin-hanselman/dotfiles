@@ -1,13 +1,12 @@
 BoldAsFont=no
-Font=Envy Code R for Powerline
-FontHeight=11
+Font=Source Code Pro
+FontHeight=10
 Transparency=off
 OpaqueWhenFocused=no
 CursorType=block
 CursorBlinks=no
 PgUpDnScroll=yes
 Term=xterm-256color
-
 ForegroundColour=197,200,198
 BackgroundColour=29,31,33
 CursorColour=197,200,198

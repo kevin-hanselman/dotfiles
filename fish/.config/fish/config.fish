@@ -19,4 +19,5 @@ end
 
 alias vim nvim
 alias pg="ps -ef | grep -v 'grep' | grep -i"
+alias ff="find . -type f -iname"
 set -x EDITOR vim
