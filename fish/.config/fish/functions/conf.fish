@@ -24,6 +24,8 @@ function conf --description 'edit common config files'
             eval $EDITOR ~/.config/compton.conf
         case 'fish'
             eval $EDITOR ~/.config/fish/config.fish
+        case '*bind*'
+            eval $EDITOR ~/.config/fish/functions/fish_user_key_bindings.fish
         case '*'
             cat (status --current-filename)
             return 1
