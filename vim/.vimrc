@@ -29,13 +29,13 @@ if (has("termguicolors"))
   set termguicolors
 endif
 set mouse=a                         " allow for better mouse interaction
-set scrolloff=5                     " always show N lines veritcally
+set scrolloff=5                     " always show N lines vertically
 set sidescroll=10                   " always show N chars horizontally
 set cursorline                      " highlight the line the cursor is on
 set number                          " show line numbers
 set relativenumber                  " number gutter shows line number as relative to current
 set virtualedit=block               " virtual-block mode can expand beyond EOL
-set ruler                           " show line num, column num, % of file, etc
+set ruler                           " show line number, column number, % of file, etc.
 set laststatus=2                    " always show status bar
 set shortmess+=I                    " no message on empty vim startup
 set splitbelow                      " show splits to right or below, as you would read
@@ -50,10 +50,10 @@ set wrap                            " wrap lines in the vim buffer, but not in t
 set linebreak                       " ^^, and break on WORDs, not characters
 set showbreak=\ \ …                 " prepend these chars to lines broken by linebreak
 set formatoptions+=jrn1             " see :h fo-table
-set colorcolumn=100                 " highlight the prefered EOL column
+set colorcolumn=100                 " highlight the preferred EOL column
 
 " buffers
-set hidden                          " dont delete buffers, just hide them
+set hidden                          " don't delete buffers, just hide them
 set undofile                        " save undo tree when file is closed
 set undodir=~/.vim/undo             " undo files should be kept out of the working dir
 set undolevels=1000                 " many many levels of undo
@@ -68,7 +68,8 @@ set gdefault                        " s///g is implied, explicitly adding g nega
 set incsearch                       " jump to the first instance as you type the search term
 set showmatch                       " always show matching ()'s
 set hlsearch                        " Highlight all of the search terms
-set tags=./.tags,.tags              " look for a tag file first in the current file's dir, then in Vim's CWD
+set tags=./.tags,.tags              " look for a tag file first in the current file's directory,
+                                    " then in Vim's CWD
 
 " ------------------------------------------
 " Plugins
@@ -116,9 +117,6 @@ endif
 " reload this file
 nnoremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
-" for local replace
-nnoremap <leader>r gdV][::s/<C-R>///c<left><left>
-
 " for global replace
 nnoremap <leader>R *N:%s/<C-R>///c<left><left>
 
@@ -163,11 +161,6 @@ vnoremap <F1> <nop>
 " no ex-mode
 nnoremap Q <nop>
 
-" show highlight group(s) under cursor
-nmap <F2> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
 " ------------------------------------------
 " Functions, commands, and autocmds
 " ------------------------------------------
@@ -177,8 +170,9 @@ autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype python setlocal colorcolumn=80
+autocmd Filetype markdown setlocal colorcolumn=80 tw=80
 
-" toggle between relative and absolute line numbers
+" Toggle between relative and absolute line numbers
 function! LineNumberToggle()
     if(&relativenumber == 1)
         set norelativenumber
@@ -192,5 +186,5 @@ command! ShrinkMultipleNewlines %s/\n\{2,\}$/\r/e
 
 command! TrimTrailingWhitespace %s/\s\+$//e
 
-" generate a ctags file (named so Vim will recognize it) in Vim's CWD
-command! GenerateCtags :execute '!ctags -R -f ' . split(&tags, ',')[0] . ' .'
+" Generate a ctags file (named so Vim will recognize it)
+command! GenerateCtags :execute '!ctags -R --fields=+l -f ' . split(&tags, ',')[0] . ' .'

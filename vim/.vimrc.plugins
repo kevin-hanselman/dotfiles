@@ -40,6 +40,12 @@ Plug 'terryma/vim-multiple-cursors'
 
     " Code/semantic completion
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --system-libclang --clang-completer' }
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_semantic_triggers = {
+    \   'c' : ['re![_a-zA-Z]{3}'],
+    \ }
 
     " A sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'
@@ -116,6 +122,9 @@ Plug 'tpope/vim-obsession'
 
     " Commands for modifying quotes, brackets, etc.
 Plug 'tpope/vim-surround'
+
+Plug 'jiangmiao/auto-pairs'
+let g:AutoPairsFlyMode = 0
 
     " Supercharged substitute (:S///)
 Plug 'tpope/vim-abolish'
