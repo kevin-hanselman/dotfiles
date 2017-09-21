@@ -8,7 +8,7 @@ error () {
 }
 
 usage () {
-    echo "usage:  $prog <base directory>"
+    echo "usage: $prog <base directory>"
 }
 
 if [ -z "$1" ]; then
@@ -20,37 +20,15 @@ basepath="$(realpath "$1" 2> /dev/null || echo "$1")"
 
 if [ ! -d "$basepath" ]; then
     usage
-    error "invalid argument: '$basepath'"
+    error "invalid directory: '$basepath'"
 fi
 
-tmpfile="$basepath/tmp_includes"
-ycmconf="$basepath/.ycm_extra_conf.py"
-tags="$basepath/.tags"
+ycm_conf_file="$basepath/.ycm_extra_conf.py"
+ctags_file="$basepath/.tags"
 
-if [ ! -f "$ycmconf" ]; then
-    echo "YCM extra config file not found. Downloading YCM's boilerplate..."
-    curl -fLo "$ycmconf" \
-        https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py
-fi
+cp -v --backup -S '.bak' ~/.vim/ycm_extra_conf.py "$ycm_conf_file"
 
-# find directories named include, as well as...
-# find header files and print their directories
-find "$basepath" \
-    -type d -name 'include' -not -path '*.hg/*' -printf "'-I%p',\n" -or \
-    -type f -iname '*.h' -printf "'-I%h',\n" | sort | uniq > "$tmpfile"
+ctags --help 2> /dev/null | grep -i 'exuberant' &> /dev/null \
+    || error 'Exuberant Ctags not found. Skipping tag file.'
 
-# delete the .pyc cache file, since we're overwriting the original
-[ -f "${ycmconf}c" ] && rm "${ycmconf}c"
-
-# if the backup is more than a day old, create a new one
-if [ ! -f "${ycmconf}.bak" ] || [ -n "$(find "$basepath" -name "$(basename "$ycmconf").bak" -mtime +1)" ]; then
-    cp -v "$ycmconf" "${ycmconf}.bak"
-fi
-
-lead="^'c++'"
-trail='^]'
-sed -i "/$lead/,/$trail/{ /$lead/{p; r $tmpfile
-        }; /$trail/p; d }" "$ycmconf" && rm "$tmpfile"
-
-ctags --help 2> /dev/null | grep -i 'exuberant' &> /dev/null || error 'Exuberant Ctags not found. Skipping tag file.'
-ctags -R -f "$tags" "$basepath"
+ctags --fields=+l -R -f "$ctags_file" "$basepath"
