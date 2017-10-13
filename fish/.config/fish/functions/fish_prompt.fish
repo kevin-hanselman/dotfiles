@@ -21,8 +21,8 @@ function vi_mode
             case insert
                 set_color --bold green
                 echo '[I]'
-            case replace-one
-                set_color --bold green
+            case replace_one
+                set_color --bold cyan
                 echo '[R]'
             case visual
                 set_color --bold magenta
@@ -42,30 +42,27 @@ function git_status
         return
     end
 
-    set -l index (git status --porcelain ^/dev/null | cut -c1-2 | sort -u)
+    set -l git_status (git status --porcelain ^/dev/null | \
+                       cut -c1-2 | \
+                       sort | uniq -c | sed 's/^\s*//')
     set -l gs
-    for i in $index
-        if echo $i | grep -q '^[AMRCD]'
-            set gs "$gs"(set_color green)
-        else
-            set gs "$gs"(set_color yellow)
-        end
+    for line in $git_status
+        set -l count (echo $line | cut -d' ' -f1)
+        set -l symbol (echo $line | cut -d' ' -f2-)
 
-        switch $i
-            case 'A '
-                set gs $gs 'A'
-            case 'M ' ' M'
-                set gs $gs 'M'
-            case 'R '
-                set gs $gs 'R'
-            case 'C '
-                set gs $gs 'C'
-            case 'D ' ' D'
-                set gs $gs 'D'
+        set gs "$gs $count"
+        switch $symbol
             case '\?\?'
-                set gs $gs (set_color blue)'?'
+                set gs "$gs"(set_color cyan)'?'
             case 'U*' '*U' 'DD' 'AA'
-                set gs $gs (set_color red)'!'
+                set gs "$gs"(set_color red)'!'
+            case '*'
+                if echo $symbol | grep -q '^[AMRCD]'
+                    set gs $gs(set_color green)
+                else
+                    set gs $gs(set_color yellow)
+                end
+                set gs "$gs"(echo $symbol | sed 's/\s*//g')
         end
         set gs "$gs"(set_color normal)
     end
@@ -74,7 +71,7 @@ end
 
 function last_error
     if test $last_status -ne 0
-        printf "%s " (set_color $fish_color_error)$last_status(set_color normal)
+        printf "%s%s%s " (set_color $fish_color_error) $last_status (set_color normal)
     end
 end
 
