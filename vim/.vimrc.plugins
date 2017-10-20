@@ -43,9 +43,12 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --system-libclang --clang-c
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
+" trigger on 3 consecutive letters for C files
 let g:ycm_semantic_triggers = {
-    \   'c' : ['re![_a-zA-Z]{3}'],
-    \ }
+\   'c' : ['re![_a-zA-Z]{3}'],
+\   }
+nnoremap <leader>] :YcmCompleter GoTo<CR>
+nnoremap <leader>} :YcmCompleter GoToReferences<CR>
 
     " A sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar'

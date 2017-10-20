@@ -25,7 +25,7 @@ set listchars=tab:»\ ,trail:·,extends:…
 
 " UI
 syntax enable                       " syntax highlighting
-if (has("termguicolors"))
+if (has("termguicolors"))           " Use fg/bg colors from terminal (compatible terminals only)
   set termguicolors
 endif
 set mouse=a                         " allow for better mouse interaction
