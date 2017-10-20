@@ -137,6 +137,9 @@ super + shift + u
 super + shift + f
     firefox
 
+super + shift + s
+    slack
+
 super + space
     rofi -show combi -combi-modi 'drun,window,run' -modi combi
 
