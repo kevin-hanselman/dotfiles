@@ -4,10 +4,17 @@ function fish_default_mode_prompt
     # Display mode using fish_right_prompt instead
 end
 
-if status --is-login
-    if test -d ~/.bin/
-        set -x PATH $PATH ~/.bin/
+function append_to_path
+    for dir in $argv
+        if test -d $dir
+            set -x PATH $PATH $dir
+        end
     end
+end
+
+append_to_path ~/.bin/ ~/go/bin/
+
+if status --is-login
     if test -n $DISPLAY; and test $XDG_VTNR -eq 1
         exec startx
     end
