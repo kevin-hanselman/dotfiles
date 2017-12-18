@@ -1,4 +1,3 @@
-.gitconfig
 weather.rc
 
-__pycache__
+__pycache__/
