@@ -5,13 +5,14 @@ URxvt.font: xft: Envy Code R:size=10
 
 Xft.antialias: true
 
-#include ".config/base16-builder/output/xresources/base16-phd.dark.xresources"
-#include ".config/base16-builder/output/rxvt-unicode/base16-phd-dark"
+#include ".config/pybase16/output/xresources/base16-phd-256.Xresources"
 
 Xautolock.time: 3
 Xautolock.locker: sxlock -f '-*-terminus-medium-r-*-*-17-*-*-*-*-*-*-*'
-Xautolock.killtime: 60
-Xautolock.killer: systemctl suspend
+!Xautolock.killtime: 60
+!Xautolock.killer: systemctl suspend
+
+Xcursor.size: 24
 
 ! ------------------------------------------------------------------------------
 ! ROFI Color theme
