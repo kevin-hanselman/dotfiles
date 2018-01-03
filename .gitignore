@@ -1,4 +1,5 @@
 weather.rc
 ticker_config.py
+.git.identity
 
 __pycache__/

@@ -1,6 +1,6 @@
 [core]
     editor = $EDITOR
-    trustctime = false
+	trustctime = false
 
 [color]
     ui = auto
@@ -29,9 +29,11 @@
 
 [alias]
     difftoolall = difftool --dir-diff
-    stat = status
-    plog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-    dlog = log --graph --oneline --simplify-by-decoration
+    st = status
+    s = status
+    lg = log
+    plg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    dlg = log --graph --oneline --simplify-by-decoration
 
 [credential]
     helper = cache --timeout=3600
