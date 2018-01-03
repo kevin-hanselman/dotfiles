@@ -7,7 +7,7 @@ filetype plugin indent on   " required!
 " ------------------------------------------
 " misc
 let mapleader=' '                   " change the leader key to the space bar
-set clipboard=unnamed               " use OS clipboard as default yank buffer
+set clipboard=unnamedplus           " use OS clipboard as default yank buffer
 set history=1000                    " remember a ton of commands
 set backspace=indent,eol,start      " backspace over everything
 set spell                           " enable spell-check
@@ -79,6 +79,9 @@ if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
     set background=dark
     colorscheme base16-phd
+    " To have (neo)vim use the terminal's background:
+    "hi Normal guibg=NONE ctermbg=NONE
+    "hi SignColumn guibg=NONE ctermbg=NONE
 else
     colorscheme slate
 endif

@@ -154,10 +154,6 @@ let g:hardtime_maxcount = 5
     " The notorious git plugin
 Plug 'tpope/vim-fugitive'
 
-    " Quickly google search from vim
-Plug 'szw/vim-g'
-nnoremap <leader>G yiw:Googlef <C-r>"
-
     " <leader>ww, select window to swap, <leader>ww again to swap
 Plug 'wesQ3/vim-windowswap'
 
