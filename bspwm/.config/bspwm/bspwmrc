@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 {
-bspc config border_width    1
+bspc config border_width    2
 bspc config window_gap      9
 
 bspc config split_ratio                0.50
@@ -9,7 +9,6 @@ bspc config focus_follows_pointer      true
 bspc config pointer_follows_monitor    true
 bspc config remove_unplugged_monitors  true
 bspc config remove_disabled_monitors   true
-bspc config remove_unplugged_monitors  true
 bspc config merge_overlapping_monitors true
 
 fg_color=$(xrdb -query | grep -m1 foreground | awk '{ print $2 }')
@@ -33,7 +32,11 @@ xset dpms 600 600 0 # trigger display {standby, suspend, off} after N seconds of
 # I.e. you can't use -d to tell supervisord where to look for a config.
 [ -f ~/.config/bspwm/supervisord.conf ] && supervisord -d ~/.config/bspwm/ -c ~/.config/bspwm/supervisord.conf
 
-# dropbox is a daemon, which supervisord can't handle.
-# Fortunately, starting dropbox will kill any existing Dropbox daemon.
+# The dropbox command starts a daemon and exits. Supervisord only handles
+# non-daemon processes, so we'll have to start Dropbox manually. Fortunately,
+# running 'dropbox' will kill any existing Dropbox daemon.
 dropbox
+
+# Same as Dropbox above. libinput-gestures is also smart enough to not start duplicate daemons.
+libinput-gestures-setup restart
 } &> /tmp/bspwmrc.log

@@ -125,11 +125,7 @@ super + {Left,Down,Up,Right}
 #
 
 super + Return
-    roxterm -d ~
-
-# open a terminal in monocle mode, go back to tiled when the termal is closed
-super + shift + Return
-    bspc desktop -l monocle; roxterm --separate -d ~; bspc desktop -l tiled
+    tilix -w ~
 
 super + shift + u
     thunar

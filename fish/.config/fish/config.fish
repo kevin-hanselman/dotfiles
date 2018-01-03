@@ -12,7 +12,7 @@ function append_to_path
     end
 end
 
-append_to_path ~/.bin/ ~/go/bin/
+append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/
 
 if status --is-login
     if test -n $DISPLAY; and test $XDG_VTNR -eq 1
