@@ -111,6 +111,9 @@ if has("nvim")
     tnoremap <C-w>j <C-\><C-n><C-w>j
     tnoremap <C-w>k <C-\><C-n><C-w>k
     tnoremap <C-w>l <C-\><C-n><C-w>l
+    tnoremap <leader>L ls<CR>
+    tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+    autocmd TermOpen * set nonumber norelativenumber nospell
 endif
 
 " ------------------------------------------
@@ -172,8 +175,10 @@ autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
-autocmd Filetype python setlocal colorcolumn=80
+autocmd Filetype python setlocal colorcolumn=80 nosmartindent
 autocmd Filetype markdown setlocal colorcolumn=80 tw=80
+autocmd Filetype elixir setlocal colorcolumn=80 ts=2 sw=2 sts=2 expandtab nosmartindent
+autocmd BufRead,BufNewFile *.exs set syntax=elixir
 
 " Toggle between relative and absolute line numbers
 function! LineNumberToggle()

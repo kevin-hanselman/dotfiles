@@ -8,8 +8,8 @@
 # https://wiki.archlinux.org/index.php/Xprofile
 # https://wiki.archlinux.org/index.php/Xinitrc
 
-[ -f /etc/xprofile ] && source /etc/xprofile
-[ -f ~/.xprofile ] && source ~/.xprofile
+[ -f /etc/xprofile ] && . /etc/xprofile
+[ -f ~/.xprofile ] && . ~/.xprofile
 
 export SXHKD_SHELL='/usr/bin/sh'
 
