@@ -23,20 +23,30 @@
 
 [pull]
     default = current
+    ff = only
 
 [push]
     default = current
 
+[rebase]
+    missingCommitsCheck = warn
+    # Interactive Rebase right-hand side format
+    instructionFormat = "[%an] %s (%cr)"
+
+# Reuse Recorded Resolutions
+# Caches conflict resolutions for future auto-resolution
+# Handy for continued rebasing
+[rerere]
+    enabled = true
+
 [alias]
-    difftoolall = difftool --dir-diff
     st = status
-    s = status
-    lg = log
+    stat = status
     plg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     dlg = log --graph --oneline --simplify-by-decoration
 
 [credential]
-    helper = cache --timeout=3600
+    helper = cache --timeout=300
 
 [include]
-    path = .git.identity
+    path = ./.git.identity
