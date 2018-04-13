@@ -14,17 +14,17 @@ def get_quote(symbol, max_rows=None):
         # samples to get us the "closing" price from yesterday.
         # (24 * 60 / 5 = 288, rounded to an even 300.)
         max_rows = 300 if max_rows is None else max_rows
-        params={'function': 'DIGITAL_CURRENCY_INTRADAY',
-                'market': 'USD',
-                'symbol': symbol,
-                'datatype': 'csv',
-                'apikey': API_KEY}
+        params = {'function': 'DIGITAL_CURRENCY_INTRADAY',
+                  'market': 'USD',
+                  'symbol': symbol,
+                  'datatype': 'csv',
+                  'apikey': API_KEY}
     else:
         max_rows = 5 if max_rows is None else max_rows
-        params={'function': 'TIME_SERIES_DAILY_ADJUSTED',
-                'symbol': symbol,
-                'datatype': 'csv',
-                'apikey': API_KEY}
+        params = {'function': 'TIME_SERIES_DAILY_ADJUSTED',
+                  'symbol': symbol,
+                  'datatype': 'csv',
+                  'apikey': API_KEY}
 
     response = requests.get('https://www.alphavantage.co/query', params=params)
 
@@ -59,7 +59,7 @@ def calculate_movement(quote_df):
 def format_ticker(symbol, current_price, price_diff):
     diff_pct = 100.0 * price_diff / current_price
     start_color, end_color = get_color_tags_for_percent(diff_pct)
-    return f'{symbol}: {current_price:.2f} ({start_color}{diff_pct:+.2f}%{end_color})'
+    return f'{symbol}: {current_price:.2f} ({start_color}{diff_pct:+.1f}%{end_color})'
 
 
 def is_cryptocurrency(symbol):

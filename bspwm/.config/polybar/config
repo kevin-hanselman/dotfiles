@@ -92,8 +92,8 @@ adapter = AC
 format-charging = <label-charging>
 format-discharging = <label-discharging>
 format-full = <label-full>
-label-discharging = BAT %percentage%%-- %time%
-label-charging = BAT %percentage%%++ %time%
+label-discharging = BAT-- %percentage%% %time%
+label-charging = BAT++ %percentage%% %time%
 label-full = BAT %percentage%%
 time-format = (%H:%M)
 
