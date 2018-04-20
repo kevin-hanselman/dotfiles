@@ -16,7 +16,7 @@ fi
 
 [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
 
-[ -f ~/.bin/displays.sh ] && ~/.bin/displays.sh
+[ -f ~/.bin/auto-config-displays.sh ] && ~/.bin/auto-config-displays.sh
 
 # remap caps lock to super (Windows key)
 setxkbmap -option caps:super
