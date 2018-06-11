@@ -8,7 +8,7 @@ apikey=$(cut -d' ' -f1 "$dir/weather.rc")
 zipcode=$(curl -s 'https://duckduckgo.com/?q=what+is+my+ip&ia=answer&format=json' | \
           jq .Answer | grep -Po '\b\d{5}\b' | tail -n1)
 
-response=$(curl -s "https://api.apixu.com/v1/current.json?key=${apikey}&q=${zipcode}" | \
+response=$(curl --compressed -s "https://api.apixu.com/v1/current.json?key=${apikey}&q=${zipcode}" | \
            jq .current)
 
 temp="$(echo "$response" | jq -r '.feelslike_f')°F"
