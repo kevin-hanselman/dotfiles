@@ -38,12 +38,20 @@ let g:ale_python_mypy_options = '--ignore-missing-imports'
     " Multiple cursors (a la Sublime Text)
 Plug 'terryma/vim-multiple-cursors'
 
+    " split/join argument lists
+Plug 'FooSoft/vim-argwrap/'
+nnoremap <leader>a :ArgWrap<CR>
+
+    " Automatically create and sync ctags files
+Plug 'ludovicchabant/vim-gutentags'
+let g:gutentags_ctags_tagfile = '.tags'
+
     " Code/semantic completion
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --system-libclang --clang-completer' }
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
-" trigger on 3 consecutive letters for C files
+" trigger on N consecutive letters for C files
 let g:ycm_semantic_triggers = {
 \   'c' : ['re![_a-zA-Z]{3}'],
 \   }
@@ -51,10 +59,10 @@ nnoremap <leader>] :YcmCompleter GoTo<CR>
 nnoremap <leader>} :YcmCompleter GoToReferences<CR>
 
     " A sidebar that shows functions, members, etc.
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+nnoremap <leader>tb :TagbarToggle<CR>
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
-nnoremap <leader>tb :TagbarToggle<CR>
 
     " Explore Vim's history of a file and revert to old versions
 Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
@@ -63,16 +71,12 @@ let g:gundo_preview_bottom = 1
 
     " Fuzzy search to jump to files, buffers, tags, etc.
 Plug 'ctrlpvim/ctrlp.vim'
+nnoremap <leader>pt :CtrlPBufTag<CR>
 nnoremap <leader>pT :CtrlPTag<CR>
 nnoremap <leader>pb :CtrlPBuffer<CR>
-nnoremap <leader>pm :CtrlPMRUFiles<CR>
+nnoremap <leader>pr :CtrlPMRUFiles<CR>
 nnoremap <leader>pc :CtrlPChange<CR>
-nnoremap <leader>pt :CtrlPBufTag<CR>
 let g:ctrlp_show_hidden = 1
-
-    " Fuzzy search for shell history and the filesystem
-    " (Managed by vim-plug for simplicity)
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
     " Pad text with whitespace to align certain characters across lines
 Plug 'junegunn/vim-easy-align'
@@ -89,10 +93,6 @@ Plug 'haya14busa/incsearch.vim'
 nmap /  <Plug>(incsearch-forward)
 nmap ?  <Plug>(incsearch-backward)
 nmap g/ <Plug>(incsearch-stay)
-
-    " Switch between header and source files
-Plug 'derekwyatt/vim-fswitch'
-nnoremap <leader>a :FSHere<CR>
 
     " Vim front end for ack, retrofitted for ag/rg
     " (ag.vim has been deprecated by it's maintainer)
@@ -123,13 +123,16 @@ let g:python_highlight_all = 1
     " Improved Vim session management
 Plug 'tpope/vim-obsession'
 
-    " Commands for modifying quotes, brackets, etc.
+    " Commands for modifying pairs quotes, brackets, etc.
 Plug 'tpope/vim-surround'
 
-Plug 'jiangmiao/auto-pairs'
-let g:AutoPairsFlyMode = 0
+"Plug 'jiangmiao/auto-pairs'
+"let g:AutoPairsFlyMode = 0
+" Ignore open paren for CompleteParameter to work
+"let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+"inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
 
-    " Supercharged substitute (:S///)
+    " Supercharged substitute (:S///): intelligently picks case and more
 Plug 'tpope/vim-abolish'
 
     " Browse and manage open buffers
@@ -165,6 +168,8 @@ nnoremap <leader>B :AccordionStop<CR>
 Plug 'ciaranm/detectindent', { 'on': 'DetectIndent' }
 
     " Automatically find VCS (et. al.) dirs and cd to project root
+    " Important for functions and shortcuts that depend on being in
+    " a project's root dir. (e.g. :GenerateCtags)
 Plug 'airblade/vim-rooter'
 
 call plug#end()

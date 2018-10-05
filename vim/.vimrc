@@ -6,8 +6,8 @@ filetype plugin indent on   " required!
 " General options
 " ------------------------------------------
 " misc
-let mapleader=' '                   " change the leader key to the space bar
-set clipboard=unnamedplus           " use OS clipboard as default yank buffer
+let g:mapleader=' '                 " change the leader key to the space bar
+set clipboard=unnamed               " use OS clipboard as default yank buffer
 set history=1000                    " remember a ton of commands
 set backspace=indent,eol,start      " backspace over everything
 set spell                           " enable spell-check
@@ -42,7 +42,6 @@ set splitbelow                      " show splits to right or below, as you woul
 set splitright                      " ^
 set wildmenu                        " improve auto complete menu
 set wildmode=list:longest,full      " filename completion
-set ttyfast                         " faster, smoother redraw
 
 " line wrapping
 set textwidth=0                     " don't split lines (in the actual file) when they're too long

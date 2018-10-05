@@ -52,7 +52,7 @@ THIS_SCRIPTS_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 FLAGS = [
     '-Wall',
     '-Wextra',
-    '-Werror',
+    # '-Werror',
     '-x',
     'c++',
     '--std=c++11'
