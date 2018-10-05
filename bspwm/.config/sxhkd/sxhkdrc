@@ -8,7 +8,7 @@ super + Escape
 
 # quit bspwm normally
 super + alt + Escape
-    bspc quit
+    bspc quit && supervisorctl -c ~/.config/bspwm/supervisord.conf shutdown
 
 # close and kill
 super + {_,shift} + w
