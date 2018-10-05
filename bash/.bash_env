@@ -10,8 +10,8 @@
 # Environment variables
 #
 
-export EDITOR=vim
-export SUDO_EDITOR=vim
+export EDITOR=nvim
+export SUDO_EDITOR=nvim
 
 #
 # Aliases
