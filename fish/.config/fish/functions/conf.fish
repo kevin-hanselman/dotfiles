@@ -20,6 +20,8 @@ function conf --description 'edit common config files'
             eval $EDITOR ~/.config/bspwm/bspwmrc
         case 'poly*'
             eval $EDITOR ~/.config/polybar/config
+        case 'super*'
+            eval $EDITOR ~/.config/bspwm/supervisord.conf
         case 'compton'
             eval $EDITOR ~/.config/compton.conf
         case 'fish'

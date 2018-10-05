@@ -1,5 +1,7 @@
 fish_vi_key_bindings
 
+set fish_greeting ''  # No greeting
+
 function fish_default_mode_prompt
     # Display mode using fish_right_prompt instead
 end
@@ -28,4 +30,6 @@ alias vim nvim
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias time="time -p"
+alias kc="kubectl"
+alias nvm="bass source ~/.nvm/nvm.sh --no-use ';' nvm"
 set -x EDITOR nvim
