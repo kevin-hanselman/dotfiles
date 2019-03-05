@@ -157,6 +157,9 @@ let g:hardtime_maxcount = 5
     " The notorious git plugin
 Plug 'tpope/vim-fugitive'
 
+    " Show the diff when editing a git commit
+Plug 'rhysd/committia.vim'
+
     " <leader>ww, select window to swap, <leader>ww again to swap
 Plug 'wesQ3/vim-windowswap'
 

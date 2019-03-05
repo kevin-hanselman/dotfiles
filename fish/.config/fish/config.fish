@@ -31,5 +31,7 @@ alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias time="time -p"
 alias kc="kubectl"
+alias kccc="kubectl config current-context"
+alias kctx="kubectx"
 alias nvm="bass source ~/.nvm/nvm.sh --no-use ';' nvm"
 set -x EDITOR nvim
