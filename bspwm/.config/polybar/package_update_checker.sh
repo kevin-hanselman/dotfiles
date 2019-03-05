@@ -1,11 +1,19 @@
 #!/bin/bash
 
+set -eo pipefail
+
 format="$1"
 
-packages=$(checkupdates | awk '{print $1}')
+set -u
+
+packages=$(checkupdates 2> /dev/null | awk '{print $1}' || echo 'ERR')
 num_updates=$(echo "$packages" | wc -w)
 
-if [ "$num_updates" -eq 0 ]; then
+if [ "$packages" == 'ERR' ]; then
+    num_updates="$packages"
+    color=$(xrdb -query | grep -m1 'color1' | awk '{ print $2 }')
+
+elif [ "$num_updates" -eq 0 ]; then
     color=$(xrdb -query | grep -m1 'color8' | awk '{ print $2 }')
 
 elif echo "$packages" | grep -qi '^linux$' ; then

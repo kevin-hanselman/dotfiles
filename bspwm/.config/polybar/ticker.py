@@ -7,53 +7,54 @@ import pandas as pd
 from ticker_config import API_KEY, SYMBOLS
 
 
-def get_quote(symbol, max_rows=None):
+def get_quote(symbol):
+    base_url = 'https://www.alphavantage.co/query'
     if is_cryptocurrency(symbol):
         # The DIGITAL_CURRENCY_DAILY endpoint does not show prices for the
-        # current day.  INTRADAY reports every 5 minutes, so we collect enough
-        # samples to get us the "closing" price from yesterday.
-        # (24 * 60 / 5 = 288, rounded to an even 300.)
-        max_rows = 300 if max_rows is None else max_rows
-        params = {'function': 'DIGITAL_CURRENCY_INTRADAY',
+        # current day. We get the current price via the CURRENCY_EXCHANGE_RATE
+        # endpoint.
+        params = {'function': 'DIGITAL_CURRENCY_DAILY',
                   'market': 'USD',
                   'symbol': symbol,
                   'datatype': 'csv',
                   'apikey': API_KEY}
     else:
-        max_rows = 5 if max_rows is None else max_rows
         params = {'function': 'TIME_SERIES_DAILY_ADJUSTED',
                   'symbol': symbol,
                   'datatype': 'csv',
                   'apikey': API_KEY}
 
-    response = requests.get('https://www.alphavantage.co/query', params=params)
+    response = requests.get(base_url, params=params)
 
-    csv = [line.split(',')
-           for line in response.text.splitlines()[:max_rows]
-           if line]
-
-    df = pd.DataFrame(csv[1:], columns=csv[0], dtype=float)
+    quote_df = parse_csv_quote(response.text)
 
     if is_cryptocurrency(symbol):
-        # Find yesterday's final record and create a new DataFrame with
-        # just that record and the latest one.
-        df.timestamp = pd.to_datetime(df.timestamp)
-        yesterday = pd.datetime.now().day - 1
-        yesterday_last_idx = df[df.timestamp.dt.day == yesterday].iloc[0].name
-        df = df.iloc[[0, yesterday_last_idx]].reset_index()
-        # The API seems to return duplicate OHLC columns. While the values
-        # appear to be duplicates, we'll average the two columns to be safe.
-        # We'll name the resulting column the same as the column used for
-        # stocks.
-        df['adjusted_close'] = df['price (USD)'].mean(axis=1)
+        quote_df = quote_df.T.drop_duplicates().T  # remove duplicate columns
+        yesterdays_price = quote_df.loc[0, 'close (USD)']
+        current_price = float(
+            requests.get(
+                base_url,
+                params={
+                    'function': 'CURRENCY_EXCHANGE_RATE',
+                    'from_currency': symbol,
+                    'to_currency': 'USD',
+                    'apikey': API_KEY
+                }
+            ).json()['Realtime Currency Exchange Rate']['5. Exchange Rate']
+        )
 
-    return df
+    else:
+        current_price = quote_df.loc[0, 'adjusted_close']
+        yesterdays_price = quote_df.loc[1, 'adjusted_close']
 
-
-def calculate_movement(quote_df):
-    current_price = quote_df.loc[0, 'adjusted_close']
-    yesterdays_price = quote_df.loc[1, 'adjusted_close']
     return current_price, current_price - yesterdays_price
+
+
+def parse_csv_quote(response_text, max_rows=5):
+    csv = [line.split(',')
+           for line in response_text.splitlines()[:(max_rows + 1)]
+           if line]
+    return pd.DataFrame(csv[1:], columns=csv[0], dtype=float)
 
 
 def format_ticker(symbol, current_price, price_diff):
@@ -87,7 +88,6 @@ def get_color_tags_for_percent(percent, style='lemonbar'):
 if __name__ == '__main__':
     symbols = sys.argv[1:] if sys.argv[1:] else SYMBOLS
     quotes = map(get_quote, symbols)
-    movements = map(calculate_movement, quotes)
-    tickers = [format_ticker(symbol, *movement)
-               for symbol, movement in zip(symbols, movements)]
+    tickers = [format_ticker(symbol, *quote)
+               for symbol, quote in zip(symbols, quotes)]
     print(' | '.join(tickers))

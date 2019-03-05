@@ -19,6 +19,12 @@ inactive_displays=$(comm -23 <(echo "$connected_displays") <(echo "$active_displ
 [ "$(echo "$inactive_displays" | wc -l)" -eq 1 ] || fatal 'more than one inactive display'
 
 case "$1" in
+    above|up)
+        position='--above'
+        ;;
+    below|down)
+        position='--below'
+        ;;
     right)
         position='--right-of'
         ;;

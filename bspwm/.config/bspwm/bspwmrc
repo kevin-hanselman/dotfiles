@@ -20,6 +20,7 @@ bspc config normal_border_color   "$bg_color"
 bspc config active_border_color   "$bg_color"
 
 bspc rule -a Orage state=floating follow=on
+bspc rule -a Matplotlib state=floating follow=on
 
 xsetroot -cursor_name left_ptr
 xset s 300 # blank screen after N seconds of inactivity

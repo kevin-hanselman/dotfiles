@@ -8,13 +8,14 @@ apikey=$(cut -d' ' -f1 "$dir/weather.rc")
 zipcode=$(curl -s 'https://duckduckgo.com/?q=what+is+my+ip&ia=answer&format=json' | \
           jq .Answer | grep -Po '\b\d{5}\b' | tail -n1)
 
-response=$(curl --compressed -s "https://api.apixu.com/v1/current.json?key=${apikey}&q=${zipcode}" | \
-           jq .current)
+response=$(curl --compressed -s "https://api.apixu.com/v1/current.json?key=${apikey}&q=${zipcode}")
 
-temp="$(echo "$response" | jq -r '.feelslike_f')°F"
-conditions=$(echo "$response" | jq -r '.condition.text')
+city=$(echo "$response" | jq -r '.location.name')
+region=$(echo "$response" | jq -r '.location.region')
+temp="$(echo "$response" | jq -r '.current.feelslike_f')°F"
+conditions=$(echo "$response" | jq -r '.current.condition.text')
 
-echo "$temp $conditions"
+echo "$temp and ${conditions,,} in ${city}, $region"
 
 # Example:
 #{
