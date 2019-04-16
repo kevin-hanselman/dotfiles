@@ -26,7 +26,7 @@ end
 
 append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/
 
-if status is-login; and on_tty 1
+if status is-login; and on_tty 1; and test -z (pgrep -x startx)
     exec startx
     exit
 end
