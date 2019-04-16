@@ -8,7 +8,7 @@ super + Escape
 
 # quit bspwm normally
 super + alt + Escape
-    bspc quit && supervisorctl -c ~/.config/bspwm/supervisord.conf shutdown
+    supervisorctl -c ~/.config/bspwm/supervisord.conf shutdown && bspc quit
 
 # close and kill
 super + {_,shift} + w
@@ -125,7 +125,7 @@ super + {Left,Down,Up,Right}
 #
 
 super + Return
-    alacritty --working-directory ~
+    tilix -w ~
 
 super + shift + u
     thunar ~

@@ -30,6 +30,8 @@ function conf --description 'edit common config files'
             eval $EDITOR ~/.config/fish/functions/fish_user_key_bindings.fish
         case 'git*'
             eval $EDITOR ~/.gitconfig
+        case 'ala*'
+            eval $EDITOR ~/.config/alacritty/alacritty.yml
         case '*'
             cat (status --current-filename)
             return 1

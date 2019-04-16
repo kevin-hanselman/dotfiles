@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 '''Increase padding on bspwm desktops with only one node (a.k.a. window)'''
+import sys
+from time import time
+
 import bspwm
 
 
@@ -81,4 +84,8 @@ def find_keys(var, target_key):
 
 if __name__ == '__main__':
     for _ in bspwm.subscribe('node_add', 'node_remove', 'node_transfer'):
+        start = time()
         auto_pad(vpad_scale=0.05, hpad_scale=0.2)
+        elapsed = time() - start
+        print(f'Elapsed time: {elapsed:.5g}')
+        sys.stdout.flush()

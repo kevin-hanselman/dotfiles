@@ -1,6 +1,6 @@
 [core]
     editor = $EDITOR
-	trustctime = false
+    trustctime = false
 
 [color]
     ui = auto
@@ -27,6 +27,7 @@
 
 [push]
     default = current
+    followTags = true
 
 [rebase]
     missingCommitsCheck = warn
