@@ -11,8 +11,6 @@
 [ -f /etc/xprofile ] && . /etc/xprofile
 [ -f ~/.xprofile ] && . ~/.xprofile
 
-export SXHKD_SHELL='/usr/bin/sh'
-
 session="${1:-bspwm}"
 case "$session" in
     awesome           ) exec awesome;;

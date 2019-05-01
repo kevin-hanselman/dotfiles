@@ -39,7 +39,7 @@ let g:ale_python_mypy_options = '--ignore-missing-imports'
 Plug 'terryma/vim-multiple-cursors'
 
     " split/join argument lists
-Plug 'FooSoft/vim-argwrap/'
+Plug 'FooSoft/vim-argwrap'
 nnoremap <leader>a :ArgWrap<CR>
 
     " Automatically create and sync ctags files
@@ -65,9 +65,8 @@ let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 
     " Explore Vim's history of a file and revert to old versions
-Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
-nnoremap <leader>u :GundoToggle<CR>
-let g:gundo_preview_bottom = 1
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+nnoremap <leader>u :UndotreeToggle<CR>
 
     " Fuzzy search to jump to files, buffers, tags, etc.
 Plug 'ctrlpvim/ctrlp.vim'

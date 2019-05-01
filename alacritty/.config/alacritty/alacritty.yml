@@ -109,10 +109,10 @@ cursor:
 # Default:
 #   - (Linux/macOS) /bin/bash --login
 #   - (Windows) powershell
-# shell:
-#   program: /bin/bash
-#  args:
-#    - --login
+shell:
+  program: /bin/fish
+  args:
+    - --login
 
 # Base16 PhD 256 - alacritty color config
 # Hennig Hasemann (http://leetless.de/vim.html)
