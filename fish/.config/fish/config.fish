@@ -21,7 +21,7 @@ function append_to_path
 end
 
 function on_tty
-    test -n $DISPLAY; and test $XDG_VTNR -eq $argv[1]
+    set -q DISPLAY; and set -q XDG_VTNR; and test $XDG_VTNR -eq $argv[1]
 end
 
 append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/
