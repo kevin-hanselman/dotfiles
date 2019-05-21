@@ -25,7 +25,7 @@ set listchars=tab:»\ ,trail:·,extends:…
 
 " UI
 syntax enable                       " syntax highlighting
-if (has("termguicolors"))           " Use fg/bg colors from terminal (compatible terminals only)
+if has("termguicolors")           " Use fg/bg colors from terminal (compatible terminals only)
   set termguicolors
 endif
 set mouse=a                         " allow for better mouse interaction
@@ -63,10 +63,13 @@ set directory=~/.vim/tmp            " swapfiles should be kept out of the workin
 " searching
 set smartcase                       " ignore case in a search until there is some capitalization
 set ignorecase                      " needed for smartcase
+set hlsearch                        " highlight all matches of the search, not just the first
+set incsearch                       " show search matches as you type
+if has("nvim")                      " show substitutions as you type (Neovim only)
+    set inccommand=nosplit          " nosplit: don't show changes in preview split
+endif
 set gdefault                        " s///g is implied, explicitly adding g negates effect
-set incsearch                       " jump to the first instance as you type the search term
 set showmatch                       " always show matching ()'s
-set hlsearch                        " Highlight all of the search terms
 set tags=./.tags,.tags              " look for a tag file first in the current file's directory,
                                     " then in Vim's CWD
 
@@ -110,7 +113,6 @@ if has("nvim")
     tnoremap <C-w>j <C-\><C-n><C-w>j
     tnoremap <C-w>k <C-\><C-n><C-w>k
     tnoremap <C-w>l <C-\><C-n><C-w>l
-    tnoremap <leader>L ls<CR>
     tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
     autocmd TermOpen * set nonumber norelativenumber nospell
 endif
