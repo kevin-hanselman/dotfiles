@@ -1,12 +1,21 @@
 #!/usr/bin/fish
 
+set fish_greeting ''  # No greeting
+
 if not status is-interactive
     exit
 end
 
-fish_vi_key_bindings
+function on_tty
+    not set -q DISPLAY; and set -q XDG_VTNR; and test $XDG_VTNR -eq $argv[1]
+end
 
-set fish_greeting ''  # No greeting
+if status is-login; and on_tty 1; and test -z (pgrep -x startx)
+    exec startx
+    exit
+end
+
+fish_vi_key_bindings
 
 function fish_default_mode_prompt
     # Display mode using fish_right_prompt instead
@@ -20,16 +29,7 @@ function append_to_path
     end
 end
 
-function on_tty
-    set -q DISPLAY; and set -q XDG_VTNR; and test $XDG_VTNR -eq $argv[1]
-end
-
 append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/
-
-if status is-login; and on_tty 1; and test -z (pgrep -x startx)
-    exec startx
-    exit
-end
 
 if test -e /usr/share/autojump/autojump.fish
     source /usr/share/autojump/autojump.fish
@@ -44,6 +44,6 @@ alias kc="kubectl"
 alias kccc="kubectl config current-context"
 alias kctx="kubectx"
 
-if command -sq tmux; and not set -q TMUX; and on_tty 1
+if command -sq tmux; and not set -q TMUX; and set -q DISPLAY
     exec tmux
 end

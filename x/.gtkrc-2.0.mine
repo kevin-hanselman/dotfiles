@@ -1,4 +1,0 @@
-style "gvimfix" {
-        bg[NORMAL] = "#18262F"
-}
-widget "vim-main-window.*GtkForm" style "gvimfix"
