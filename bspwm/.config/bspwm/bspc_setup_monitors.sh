@@ -1,6 +1,6 @@
 #!/bin/bash
 
-[ -f ~/.fehbg ] && source ~/.fehbg
+[ -x ~/.fehbg ] && ~/.fehbg
 
 bspc config top_padding 0
 bspc config -m primary top_padding 28

@@ -36,6 +36,8 @@ function conf --description 'edit common config files'
             eval $EDITOR ~/.gitconfig
         case 'ala*'
             eval $EDITOR ~/.config/alacritty/alacritty.yml
+        case 'kit*'
+            eval $EDITOR ~/.config/kitty/kitty.conf
         case '*'
             cat (status --current-filename)
             return 1

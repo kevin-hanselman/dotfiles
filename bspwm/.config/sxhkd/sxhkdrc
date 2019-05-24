@@ -125,7 +125,7 @@ super + {Left,Down,Up,Right}
 #
 
 super + Return
-    tilix -w ~
+    kitty -d ~
 
 super + shift + u
     thunar ~
