@@ -79,14 +79,18 @@ set tags=./.tags,.tags              " look for a tag file first in the current f
 
 if filereadable(expand("~/.vimrc.plugins"))
     source ~/.vimrc.plugins
-    set background=dark
-    colorscheme base16-phd
-    " To have (neo)vim use the terminal's background:
-    "hi Normal guibg=NONE ctermbg=NONE
-    "hi SignColumn guibg=NONE ctermbg=NONE
-else
-    colorscheme slate
 endif
+
+set background=dark
+try
+    colorscheme base16-phd
+catch /^Vim\%((\a\+)\)\=:E185/
+    colorscheme slate
+endtry
+
+" To have (neo)vim use the terminal's background:
+"hi Normal guibg=NONE ctermbg=NONE
+"hi SignColumn guibg=NONE ctermbg=NONE
 
 if has("gui_running")
     set guioptions=a

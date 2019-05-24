@@ -5,27 +5,10 @@ URxvt.font: xft: Envy Code R:size=10
 
 Xft.antialias: true
 
-#include ".config/pybase16/output/xresources/base16-phd-256.Xresources"
-
 Xautolock.time: 3
 Xautolock.locker: sxlock -f '-*-terminus-medium-r-*-*-17-*-*-*-*-*-*-*'
-!Xautolock.killtime: 60
-!Xautolock.killer: systemctl suspend
 
 Xcursor.size: 24
 
-! ------------------------------------------------------------------------------
-! ROFI Color theme
-! ------------------------------------------------------------------------------
-! Use extended color scheme
-rofi.color-enabled:                  true
-! Color scheme for normal row
-rofi.color-normal:                   #ffffff,#525d76,#f5f5f5,#5294e2,#ffffff
-! Color scheme for urgent row
-rofi.color-urgent:                   #ffffff,#dc322f,#f5f5f5,#5294e2,#dc322f
-! Color scheme for active row
-rofi.color-active:                   #ffffff,#c2cad0,#f5f5f5,#5294e2,#c2cad0
-! Color scheme window
-rofi.color-window:                   #ffffff,#f5f5f5
-! Separator style (none, dash, solid)
-rofi.separator-style:                solid
+#include ".Xresources.d/pybase16"
+#include ".Xresources.d/rofi"

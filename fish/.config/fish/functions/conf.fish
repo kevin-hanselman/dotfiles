@@ -12,6 +12,10 @@ function conf --description 'edit common config files'
             eval $EDITOR ~/.vimrc.plugins
         case 'X*'
             eval $EDITOR ~/.Xresources
+        case 'xini*'
+            eval $EDITOR ~/.xinitrc
+        case 'xpro*'
+            eval $EDITOR ~/.xprofile
         case 'tmux'
             eval $EDITOR ~/.tmux.conf
         case 'sxh*'
