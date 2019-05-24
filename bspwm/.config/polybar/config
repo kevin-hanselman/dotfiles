@@ -241,23 +241,23 @@ ramp-0 =
 
 
 [module/volume]
-type = internal/volume
+type = internal/pulseaudio
+
+; increase/decrease volume interval
+interval = 5
 
 format-volume-background = ${settings.format-background}
 format-volume-padding = ${settings.format-padding}
 format-muted-background = ${settings.format-background}
 format-muted-padding = ${settings.format-padding}
 
-master-mixer = Master
-; Use volume mapping (similar to amixer -M and alsamixer), where the increase in volume is linear to the ear
-; Default: false
-;mapping = true
-
 format-volume = <label-volume>
 
 label-muted-foreground = ${colors.dim}
 label-muted = VOL -
 label-volume = VOL %percentage%%
+
+click-left = pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 
 [module/volume_icons]

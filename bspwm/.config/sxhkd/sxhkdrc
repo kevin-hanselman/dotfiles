@@ -142,8 +142,8 @@ super + space
 super + shift + Escape
     xautolock -locknow
 
-XF86AudioMute
-    pactl set-sink-mute 0 toggle
+{XF86AudioMute, super + shift + m}
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 {XF86AudioRaiseVolume, XF86AudioLowerVolume}
     amixer set Master 5%{+,-}
