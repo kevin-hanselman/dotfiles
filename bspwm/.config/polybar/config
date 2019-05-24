@@ -48,8 +48,7 @@ module-margin = 1
 
 font-0 = EnvyCodeR:size=10
 font-1 = EnvyCodeR:size=8
-font-2 = Tamsyn:size=6
-font-3 = FontAwesome:size=12
+font-2 = xos4 Terminus:size=6
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -208,7 +207,7 @@ type = internal/cpu
 format = <label> <ramp-coreload>
 label = CPU %percentage%%
 
-ramp-coreload-font = 3
+ramp-coreload-font = 2
 ramp-coreload-5-foreground = ${colors.red}
 ramp-coreload-6-foreground = ${colors.red}
 ramp-coreload-7-foreground = ${colors.red}
