@@ -199,7 +199,7 @@ label-empty =
 type = internal/memory
 interval = 3
 format = <label>
-label = RAM %gb_used%
+label = RAM %gb_used% / %gb_total%
 
 
 [module/cpu]
