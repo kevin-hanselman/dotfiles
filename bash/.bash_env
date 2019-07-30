@@ -17,6 +17,8 @@ export SUDO_EDITOR=nvim
 # Aliases
 #
 
+alias vim=nvim
+
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ll -A'
@@ -42,6 +44,7 @@ alias pac-standalone='comm -23 <(pacman -Qetq|sort) <(pacman -Qgq base base-deve
 alias pac-log='less /var/log/pacman.log'
 alias pac-size='pacgraph -c | less'
 alias pac-history="grep --color=never -F '[PACMAN] Running' /var/log/pacman.log | less"
+alias dc="docker-compose"
 
 alias myip="curl -s 'https://duckduckgo.com/?q=what+is+my+ip&ia=answer&format=json' | jq -r .Answer | grep --color=never -Po '(?:\d{1,3}\.){3}\d{1,3}'"
 
