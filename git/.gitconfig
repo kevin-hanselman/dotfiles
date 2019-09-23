@@ -42,6 +42,7 @@
 
 [alias]
     st = status
+    co = checkout
     stat = status
     oops = reset HEAD~
     plg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
