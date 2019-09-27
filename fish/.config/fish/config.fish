@@ -41,9 +41,7 @@ alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias time="time -p"
 alias kc="kubectl"
-alias kccc="kubectl config current-context"
-alias kctx="kubectx"
 
-if command -sq tmux; and not set -q TMUX; and set -q DISPLAY
+if command -sq tmux; and not set -q TMUX
     exec tmux
 end
