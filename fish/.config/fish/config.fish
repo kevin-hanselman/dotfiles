@@ -41,6 +41,7 @@ alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias time="time -p"
 alias kc="kubectl"
+alias diff="git diff --no-index"
 
 if command -sq tmux; and not set -q TMUX
     exec tmux

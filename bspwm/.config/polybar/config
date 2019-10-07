@@ -13,6 +13,7 @@ invisible = #0000
 background = ${xrdb:background}
 foreground = ${xrdb:foreground}
 red = ${xrdb:color1}
+yellow = ${xrdb:color3}
 dim = ${xrdb:color8}
 
 [settings]
@@ -208,7 +209,8 @@ format = <label> <ramp-coreload>
 label = CPU %percentage%%
 
 ramp-coreload-font = 2
-ramp-coreload-5-foreground = ${colors.red}
+ramp-coreload-4-foreground = ${colors.yellow}
+ramp-coreload-5-foreground = ${colors.yellow}
 ramp-coreload-6-foreground = ${colors.red}
 ramp-coreload-7-foreground = ${colors.red}
 ramp-coreload-0 = ▁
