@@ -22,7 +22,6 @@
     untracked = cyan
 
 [pull]
-    default = current
     ff = only
 
 [push]
@@ -33,12 +32,6 @@
     missingCommitsCheck = warn
     # Interactive Rebase right-hand side format
     instructionFormat = "[%an] %s (%cr)"
-
-# Reuse Recorded Resolutions
-# Caches conflict resolutions for future auto-resolution
-# Handy for continued rebasing
-[rerere]
-    enabled = true
 
 [alias]
     st = status
