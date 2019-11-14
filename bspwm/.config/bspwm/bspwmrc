@@ -35,6 +35,4 @@ xset dpms 600 600 0 # trigger display {standby, suspend, off} after N seconds of
 # I.e. you can't use -d to tell supervisord where to look for a config.
 [ -f ~/.config/bspwm/supervisord.conf ] && supervisord -d ~/.config/bspwm/ -c ~/.config/bspwm/supervisord.conf
 
-# Same as Dropbox above. libinput-gestures is also smart enough to not start duplicate daemons.
-libinput-gestures-setup restart
 } &> /tmp/bspwmrc.log
