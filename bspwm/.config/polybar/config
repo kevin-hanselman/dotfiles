@@ -256,7 +256,7 @@ format-muted-padding = ${settings.format-padding}
 format-volume = <label-volume>
 
 label-muted-foreground = ${colors.dim}
-label-muted = VOL -
+label-muted = "VOL ---"
 label-volume = VOL %percentage%%
 
 click-left = pactl set-sink-mute @DEFAULT_SINK@ toggle

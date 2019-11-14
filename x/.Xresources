@@ -6,7 +6,7 @@ URxvt.font: xft: Envy Code R:size=10
 Xft.antialias: true
 
 Xautolock.time: 3
-Xautolock.locker: sxlock -f '-*-terminus-medium-r-*-*-17-*-*-*-*-*-*-*'
+Xautolock.locker: sxlock -f '-*-terminus-medium-r-*-*-18-*-*-*-*-*-*-*'
 
 Xcursor.size: 24
 
