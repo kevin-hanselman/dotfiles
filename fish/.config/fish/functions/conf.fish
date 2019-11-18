@@ -27,7 +27,9 @@ function conf --description 'edit common config files'
         case 'super*'
             eval $EDITOR ~/.config/bspwm/supervisord.conf
         case 'compton'
-            eval $EDITOR ~/.config/compton.conf
+            eval $EDITOR ~/.config/picom.conf
+        case 'picom'
+            eval $EDITOR ~/.config/picom.conf
         case 'fish'
             eval $EDITOR ~/.config/fish/config.fish
         case '*bind*'
