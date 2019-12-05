@@ -1,3 +1,5 @@
+; See: https://github.com/polybar/polybar/wiki/Configuration
+
 [global/wm]
 ; Adjust the _NET_WM_STRUT_PARTIAL top value
 ;   Used for top aligned bars
@@ -26,7 +28,14 @@ format-padding = 1
 ;format-margin = 1
 
 [bar/top]
-monitor = ${env:MONITOR}
+; Use either of the following command to list available outputs:
+; If unspecified, the application will pick the first one it finds.
+; If no monitor is given, the primary monitor is used if it exists
+monitor =
+
+; Relax requirement that the monitor must be in connected state
+; XRandR sometimes reports my monitor as being disconnected (when in use)
+monitor-strict = false
 
 width = 90%
 height = 22
