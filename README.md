@@ -15,28 +15,25 @@ only with dotfiles in mind from the start. The main differences are:
 Usage
 -----
 ```
-usage: dotfiles.sh [options] [subdirectory ... ]
+usage: dotfiles.sh [options] <subdirectory ... >
 
 Configuration file manager | github.com/kevlar1818/dotfiles
 
-Copyright 2014-2016 Kevin Hanselman (See LICENSE or source)
+Copyright 2014-2020 Kevin Hanselman (See LICENSE or source)
 
 Arguments:
   subdirectory    symlinks all files in the given subdirectory
-                  (defaults to all subdirectories)
 
 Options:
   -n              show what would be done, but take no other action
   -r              remove symlinks and restore backups if present
-  -S              install files as root via sudo
-                  (USE CAREFULLY)
-  -C              copy files rather than use symlinks
+  -C              copy files rather than using symlinks
   -t TARGET       use TARGET as the base target directory
                   (defaults to $HOME)
   -h              show this help text and exit
 ```
 
-For example, to install vim and bash RCs:
+For example, to install dotfiles for vim and bash:
 
 ```
 ./dotfiles.sh vim bash

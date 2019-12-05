@@ -5,21 +5,18 @@ set -euo pipefail
 prog=$(basename "$0")
 
 usage() {
-    echo "usage: $prog [options] [subdirectory ... ]"
+    echo "usage: $prog [options] <subdirectory ... >"
     echo
     echo "Configuration file manager | github.com/kevlar1818/dotfiles"
     echo
-    echo "Copyright 2014-2016 Kevin Hanselman (See LICENSE or source)"
+    echo "Copyright 2014-2020 Kevin Hanselman (See LICENSE or source)"
     echo
     echo "Arguments:"
     echo "  subdirectory    symlinks all files in the given subdirectory"
-    echo "                  (defaults to all subdirectories)"
     echo
     echo "Options:"
     echo "  -n              show what would be done, but take no other action"
     echo "  -r              remove symlinks and restore backups if present"
-    echo "  -S              install files as root via sudo"
-    echo "                  (USE CAREFULLY)"
     echo "  -C              copy files rather than using symlinks"
     echo "  -t TARGET       use TARGET as the base target directory"
     echo "                  (defaults to \$HOME)"
@@ -56,13 +53,13 @@ link_file() {
 
     if [ -f "$target_file" ] && [ ! -L "$target_file" ]; then
         echo "backup '$target_file' to '$backup_file'"
-        [ -n "$noaction" ] || $maybe_sudo cp "$target_file" "$backup_file"
+        [ -n "$noaction" ] || cp "$target_file" "$backup_file"
     fi
 
     echo "$install_cmd '$fullpath_source_file' -> '$target_file'"
     # (ignore quoting for $install_cmd)
     # shellcheck disable=SC2086
-    [ -n "$noaction" ] || $maybe_sudo $install_cmd "$fullpath_source_file" "$target_file"
+    [ -n "$noaction" ] || $install_cmd "$fullpath_source_file" "$target_file"
 }
 
 unlink_file() {
@@ -73,7 +70,6 @@ unlink_file() {
     # relpath_source_file is a relative path starting inside a dotfiles sub-dir
     local relpath_source_file="$2"
 
-    # trim duplicate forward slashes
     local target_file="${base_target_dir}/${relpath_source_file}"
 
     [ -f "$target_file" ] || { warn "File '$target_file' does not exist."; return; }
@@ -83,23 +79,19 @@ unlink_file() {
 
     if [ -f "$backup_file" ]; then
         echo "restore backup of '$target_file' from '$backup_file'"
-        [ -n "$noaction" ] || $maybe_sudo mv "$backup_file" "$target_file"
+        [ -n "$noaction" ] || mv "$backup_file" "$target_file"
     else
         echo "remove '$target_file'"
-        [ -n "$noaction" ] || $maybe_sudo rm "$target_file"
+        [ -n "$noaction" ] || rm "$target_file"
     fi
 }
-
-# cd to this script's directory
-cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 restore=
 noaction=
 base_target_dir=$HOME
-maybe_sudo=
 install_cmd='ln -sf'
-while getopts ':h :r :n :t: :S :C' opt; do
-    case $opt in
+while getopts ':h :r :n :t: :C' opt; do
+    case "$opt" in
         h)
             usage
             exit 0
@@ -107,7 +99,6 @@ while getopts ':h :r :n :t: :S :C' opt; do
         r) restore=yes ;;
         n) noaction=yes ;;
         t) base_target_dir=$OPTARG ;;
-        S) maybe_sudo=sudo ;;
         C) install_cmd='cp' ;;
         \?)
             usage
@@ -127,20 +118,17 @@ fi
 
 shift $((OPTIND-1))
 
-if [ -n "$*" ]; then
-    files=$*
-else
-    # act on all directories which are siblings to this script
-    files=$(find . -maxdepth 1 -type d -not -path './.git' -not -path '.' -printf '%P\n')
-fi
+# cd to this script's directory
+cd "$( dirname "${BASH_SOURCE[0]}" )"
 
-for path in $files; do
-    [ -d "$path" ] || error "'$path' is not a directory."
-    find "$path" -type f -printf '%P\n' | while read -r file; do
+for subdir in "$@"; do
+    [ -d "$subdir" ] || error "'$subdir' is not a directory."
+    git ls-files "$subdir" | while read -r file; do
+        file=${file#*/}  # remove leading directory
         if [ -n "$restore" ]; then
-            unlink_file "$path" "$file"
+            unlink_file "$subdir" "$file"
         else
-            link_file "$path" "$file"
+            link_file "$subdir" "$file"
         fi
     done
 done
