@@ -276,7 +276,7 @@ ramp-volume-2 = 
 
 [module/packages]
 type = custom/script
-exec = ~/.config/polybar/package_update_checker.sh lemonbar
+exec = ~/.config/polybar/package_update_checker.py
 interval = 300
 ; Tux!
 ;label =  %output%
