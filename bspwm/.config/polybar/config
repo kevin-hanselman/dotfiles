@@ -295,7 +295,7 @@ label = PKG %output%
 [module/weather]
 type = custom/script
 exec = ~/.config/polybar/weather.sh
-interval = 600
+interval = 1800
 label = %{A1:~/.config/polybar/weather_gui.sh:}%output%%{A}
 
 
