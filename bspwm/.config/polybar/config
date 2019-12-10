@@ -51,8 +51,8 @@ radius = 0.0
 ;border-color = ${colors.invisible}
 
 padding-left = 0
-; leave room for detached tray
-padding-right = 15
+; leave room for systray
+padding-right = 10
 
 module-margin = 1
 
@@ -72,6 +72,7 @@ tray-position = right
 tray-padding = 5
 tray-detached = true
 tray-background = ${colors.background}
+tray-offset-y = -3
 
 underline-size = 2
 underline-color = ${colors.foreground}
@@ -187,6 +188,12 @@ bar-capacity-width = 5
 bar-capacity-fill = 
 bar-capacity-empty = 
 bar-capacity-indicator =
+
+
+[module/backlight]
+type = internal/xbacklight
+format = <label>
+label = LIGHT %percentage%%
 
 
 [module/bspwm]

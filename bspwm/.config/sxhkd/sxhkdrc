@@ -149,4 +149,4 @@ super + shift + Escape
     amixer set Master 5%{+,-}
 
 {XF86MonBrightnessUp, XF86MonBrightnessDown}
-    backlight.sh {up,down} 5
+    light {-A,-U} 10
