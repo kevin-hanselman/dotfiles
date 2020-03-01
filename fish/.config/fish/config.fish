@@ -39,9 +39,9 @@ alias vim nvim
 set -x EDITOR nvim
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
-alias time="time -p"
 alias kc="kubectl"
 alias diff="git diff --no-index"
+alias dc="docker-compose"
 
 if command -sq tmux; and not set -q TMUX
     exec tmux
