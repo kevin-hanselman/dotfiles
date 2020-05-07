@@ -43,6 +43,6 @@ alias kc="kubectl"
 alias diff="git diff --no-index"
 alias dc="docker-compose"
 
-if command -sq tmux; and not set -q TMUX
+if command -q tmux; and not set -q TMUX
     exec tmux
 end

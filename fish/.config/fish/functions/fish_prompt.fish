@@ -34,8 +34,8 @@ function vi_mode
 end
 
 function git_status
-    if not command -s git >/dev/null
-        return 1
+    if not command -q git
+        return
     end
     set -l branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
     if test -z $branch

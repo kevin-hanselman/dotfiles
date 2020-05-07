@@ -81,7 +81,7 @@ wm-restack = bspwm
 
 [module/date]
 type = internal/date
-interval = 5.0
+interval = 5
 date = %b %e
 time = %l:%M %p
 label = %{A1:orage --toggle:}%date%, %time%%{A}
@@ -293,7 +293,7 @@ ramp-volume-2 = 
 [module/packages]
 type = custom/script
 exec = ~/.config/polybar/package_update_checker.py
-interval = 300
+interval = 900
 ; Tux!
 ;label =  %output%
 label = PKG %output%
@@ -302,14 +302,14 @@ label = PKG %output%
 [module/weather]
 type = custom/script
 exec = ~/.config/polybar/weather.sh
-interval = 1800
+interval = 3600
 label = %{A1:~/.config/polybar/weather_gui.sh:}%output%%{A}
 
 
 [module/stocks]
 type = custom/script
 exec = ~/.config/polybar/ticker.py
-interval = 300
+interval = 1800
 label-font = 2
 
 ; vim: set ft=dosini:

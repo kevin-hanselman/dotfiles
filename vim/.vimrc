@@ -180,6 +180,7 @@ autocmd Filetype html setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype go setlocal noexpandtab
 autocmd Filetype yaml setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype python setlocal colorcolumn=80 nosmartindent
 autocmd Filetype markdown setlocal colorcolumn=80 tw=80
