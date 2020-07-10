@@ -91,6 +91,8 @@ endtry
 " To have (neo)vim use the terminal's background:
 "hi Normal guibg=NONE ctermbg=NONE
 "hi SignColumn guibg=NONE ctermbg=NONE
+hi clear SpellBad
+hi SpellBad cterm=underline
 
 if has("gui_running")
     set guioptions=a

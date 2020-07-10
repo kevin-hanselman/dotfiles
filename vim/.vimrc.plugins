@@ -50,13 +50,10 @@ let g:gutentags_ctags_tagfile = '.tags'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --go-completer' }
 let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_confirm_extra_conf = 0
-" trigger on N consecutive letters for C files
-let g:ycm_semantic_triggers = {
-\   'c' : ['re![_a-zA-Z]{3}'],
-\   }
 nnoremap <leader>] :YcmCompleter GoTo<CR>
 nnoremap <leader>} :YcmCompleter GoToReferences<CR>
+let g:ycm_auto_hover = 0
+nmap <leader>q <Plug>(YCMHover)
 
     " A sidebar that shows functions, members, etc.
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
