@@ -52,7 +52,7 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 nnoremap <leader>] :YcmCompleter GoTo<CR>
 nnoremap <leader>} :YcmCompleter GoToReferences<CR>
-let g:ycm_auto_hover = 0
+let g:ycm_auto_hover = ''
 nmap <leader>q <Plug>(YCMHover)
 
     " A sidebar that shows functions, members, etc.

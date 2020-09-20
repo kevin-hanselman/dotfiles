@@ -92,24 +92,19 @@ endtry
 "hi Normal guibg=NONE ctermbg=NONE
 "hi SignColumn guibg=NONE ctermbg=NONE
 hi clear SpellBad
+hi clear SpellCap
+hi clear SpellRare
 hi SpellBad cterm=underline
+hi SpellCap cterm=underline
+hi SpellRare cterm=underline
 
-if has("gui_running")
-    set guioptions=a
-    set guifont="Envy Code R 10"
-
-    " set normal, visual, selection cursor to an underline N% of the
-    " character height
-    set guicursor+=n-v-c:hor10-Cursor
-
-    command! SetFont set guifont=*
-else
-    " for VTE compatible terms, change insert mode cursor to a vertical bar
-    " see: http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
-    if &term =~ 'xterm.*\|rxvt.*\|gnome-terminal\|st'
-        let &t_SI = "\<Esc>[6 q"
-        let &t_EI = "\<Esc>[4 q"
-    endif
+" for VTE compatible terms, change insert mode cursor to a vertical bar
+" see: http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
+if &term =~ 'xterm.*\|rxvt.*\|gnome-terminal\|st'
+    " Use a vertical cursor in Insert mode
+    let &t_SI = "\<Esc>[6 q"
+    " Use a block cursor in Normal mode
+    let &t_EI = "\<Esc>[2 q"
 endif
 
 " neovim terminal mappings
