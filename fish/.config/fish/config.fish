@@ -35,7 +35,8 @@ if test -e /usr/share/autojump/autojump.fish
     source /usr/share/autojump/autojump.fish
 end
 
-set -x EDITOR vim
+set -x EDITOR nvim
+alias vim=nvim
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias kc="kubectl"

@@ -25,7 +25,7 @@ set listchars=tab:»\ ,trail:·,extends:…
 
 " UI
 syntax enable                       " syntax highlighting
-if has("termguicolors")           " Use fg/bg colors from terminal (compatible terminals only)
+if has("termguicolors")             " Use fg/bg colors from terminal (compatible terminals only)
   set termguicolors
 endif
 set mouse=a                         " allow for better mouse interaction
@@ -65,32 +65,23 @@ set smartcase                       " ignore case in a search until there is som
 set ignorecase                      " needed for smartcase
 set hlsearch                        " highlight all matches of the search, not just the first
 set incsearch                       " show search matches as you type
-if has("nvim")                      " show substitutions as you type (Neovim only)
-    set inccommand=nosplit          " nosplit: don't show changes in preview split
-endif
 set gdefault                        " s///g is implied, explicitly adding g negates effect
 set showmatch                       " always show matching ()'s
 set tags=./.tags,.tags              " look for a tag file first in the current file's directory,
                                     " then in Vim's CWD
 
 " ------------------------------------------
-" Plugins
+" Cosmetics
 " ------------------------------------------
 
-if filereadable(expand("~/.vimrc.plugins"))
-    source ~/.vimrc.plugins
-endif
-
 set background=dark
-try
-    colorscheme base16-phd
-catch /^Vim\%((\a\+)\)\=:E185/
-    colorscheme torte
-endtry
+colorscheme torte
 
 " To have (neo)vim use the terminal's background:
 "hi Normal guibg=NONE ctermbg=NONE
 "hi SignColumn guibg=NONE ctermbg=NONE
+
+" Underline spelling errors.
 hi clear SpellBad
 hi clear SpellCap
 hi clear SpellRare
@@ -98,24 +89,13 @@ hi SpellBad cterm=underline
 hi SpellCap cterm=underline
 hi SpellRare cterm=underline
 
-" for VTE compatible terms, change insert mode cursor to a vertical bar
-" see: http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
+" For VTE compatible terms, change insert mode cursor to a vertical bar.
+" See: http://vim.wikia.com/wiki/Change_cursor_shape_in_different_modes
 if &term =~ 'xterm.*\|rxvt.*\|gnome-terminal\|st'
     " Use a vertical cursor in Insert mode
     let &t_SI = "\<Esc>[6 q"
     " Use a block cursor in Normal mode
     let &t_EI = "\<Esc>[2 q"
-endif
-
-" neovim terminal mappings
-if has("nvim")
-    tnoremap <Esc> <C-\><C-n>
-    tnoremap <C-w>h <C-\><C-n><C-w>h
-    tnoremap <C-w>j <C-\><C-n><C-w>j
-    tnoremap <C-w>k <C-\><C-n><C-w>k
-    tnoremap <C-w>l <C-\><C-n><C-w>l
-    tnoremap <expr> <C-R> '<C-\><C-N>"'.nr2char(getchar()).'pi'
-    autocmd TermOpen * set nonumber norelativenumber nospell
 endif
 
 " ------------------------------------------
@@ -197,6 +177,3 @@ nnoremap <leader>n :call LineNumberToggle()<CR>
 command! ShrinkMultipleNewlines %s/\n\{2,\}$/\r/e
 
 command! TrimTrailingWhitespace %s/\s\+$//e
-
-" Generate a ctags file (named so Vim will recognize it)
-command! GenerateCtags :execute '!ctags -R --fields=+l -f ' . split(&tags, ',')[0] . ' .'

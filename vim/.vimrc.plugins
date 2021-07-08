@@ -55,12 +55,6 @@ nnoremap <leader>} :YcmCompleter GoToReferences<CR>
 let g:ycm_auto_hover = ''
 nmap <leader>q <Plug>(YCMHover)
 
-    " A sidebar that shows functions, members, etc.
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-nnoremap <leader>tb :TagbarToggle<CR>
-let g:tagbar_autoclose = 1
-let g:tagbar_autofocus = 1
-
     " Explore Vim's history of a file and revert to old versions
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
 nnoremap <leader>u :UndotreeToggle<CR>
@@ -73,6 +67,8 @@ nnoremap <leader>pb :CtrlPBuffer<CR>
 nnoremap <leader>pr :CtrlPMRUFiles<CR>
 nnoremap <leader>pc :CtrlPChange<CR>
 let g:ctrlp_show_hidden = 1
+" ignore files in .gitignore (from the ctrlp.vim README)
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
     " Pad text with whitespace to align certain characters across lines
 Plug 'junegunn/vim-easy-align'
@@ -107,7 +103,6 @@ let g:indent_guides_guide_size = 1
 nnoremap <leader>ig :IndentGuidesToggle<CR>
 
     " Colorschemes
-"Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
 
     " Syntax highlighting for a ton of languages
@@ -122,12 +117,6 @@ Plug 'tpope/vim-obsession'
     " Commands for modifying pairs quotes, brackets, etc.
 Plug 'tpope/vim-surround'
 
-"Plug 'jiangmiao/auto-pairs'
-"let g:AutoPairsFlyMode = 0
-" Ignore open paren for CompleteParameter to work
-"let g:AutoPairs = {'[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
-"inoremap <buffer><silent> ) <C-R>=AutoPairsInsert(')')<CR>
-
     " Supercharged substitute (:S///): intelligently picks case and more
 Plug 'tpope/vim-abolish'
 
@@ -136,9 +125,6 @@ Plug 'jlanzarotta/bufexplorer'
 
     " :BufOnly deletes all but the current buffer
 Plug 'vim-scripts/BufOnly.vim', { 'on': 'BufOnly' }
-
-    " Spawns a new command line that previews s/// in real-time
-Plug 'osyo-manga/vim-over', { 'on': 'OverCommandLine' }
 
     " Start menu replacement when opening Vim without a filename
 Plug 'mhinz/vim-startify'
@@ -155,9 +141,6 @@ Plug 'tpope/vim-fugitive'
 
     " Show the diff when editing a git commit
 Plug 'rhysd/committia.vim'
-
-    " <leader>ww, select window to swap, <leader>ww again to swap
-Plug 'wesQ3/vim-windowswap'
 
     " Only used for AccordionStop, which evenly spaces current splits
 Plug 'mattboehm/vim-accordion', { 'on': 'AccordionStop' }
