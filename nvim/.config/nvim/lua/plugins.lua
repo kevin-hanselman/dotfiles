@@ -51,7 +51,7 @@ return require("packer").startup(function(use)
     end,
   }
 
-  -- Linting, mainly for shellcheck integration. Planning to lean more heavily on LSP.
+  -- Legacy linting, mainly for shellcheck. Planning to lean more heavily on LSP.
   use {
     'dense-analysis/ale',
     ft = {'sh', 'bash', 'zsh', 'markdown'},
@@ -72,12 +72,16 @@ return require("packer").startup(function(use)
     config = function()
       require('nvim-treesitter.configs').setup {
         -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-        ensure_installed = {"go", "python"},
-        highlight = {
-          enable = true,  -- false will disable the whole extension
-        },
+        ensure_installed = {"go", "python", "toml"},
+        highlight = { enable = true },
       }
     end,
+  }
+
+  -- Treesitter highlighting tangles with Vim's spell checking; this fixes it.
+  use {
+    'lewis6991/spellsitter.nvim',
+    config = function() require('spellsitter').setup() end,
   }
 
   -- Automatically generate and update a ctags file for the current project
