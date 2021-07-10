@@ -162,7 +162,8 @@ autocmd Filetype yaml setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype python setlocal colorcolumn=80 nosmartindent
 autocmd Filetype markdown setlocal colorcolumn=80 tw=80
 autocmd Filetype elixir setlocal colorcolumn=80 ts=2 sw=2 sts=2 expandtab nosmartindent
-autocmd BufRead,BufNewFile *.exs set syntax=elixir
+autocmd BufRead,BufNewFile *.exs set filetype=elixir
+autocmd BufRead,BufNewFile *.fish set filetype=fish
 
 " Toggle between relative and absolute line numbers
 function! LineNumberToggle()

@@ -37,12 +37,12 @@ function git_status
     if not command -q git
         return
     end
-    set -l branch (git rev-parse --abbrev-ref HEAD ^/dev/null)
+    set -l branch (git rev-parse --abbrev-ref HEAD 2>/dev/null)
     if test -z $branch
         return
     end
 
-    set -l git_status (git status --porcelain ^/dev/null | \
+    set -l git_status (git status --porcelain 2>/dev/null | \
                        cut -c1-2 | \
                        sort | uniq -c | sed 's/^\s*//')
     set -l gs
