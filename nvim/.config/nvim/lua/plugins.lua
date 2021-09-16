@@ -45,7 +45,7 @@ return require("packer").startup(function(use)
           }
         }
       }
-      vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope find_files<CR>', {noremap = true})
+      vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope find_files hidden=true<CR>', {noremap = true})
       vim.api.nvim_set_keymap('n', '<leader>pb', ':Telescope buffers<CR>', {noremap = true})
       vim.api.nvim_set_keymap('n', '<leader>pt', ':Telescope tags<CR>', {noremap = true})
     end,
@@ -72,7 +72,7 @@ return require("packer").startup(function(use)
     config = function()
       require('nvim-treesitter.configs').setup {
         -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-        ensure_installed = {"go", "python", "toml", "fish"},
+        ensure_installed = {"go", "python", "toml", "fish", "hcl"},
         highlight = { enable = true },
       }
     end,
@@ -87,7 +87,10 @@ return require("packer").startup(function(use)
   -- Automatically generate and update a ctags file for the current project
   use {
     'ludovicchabant/vim-gutentags',
-    config = function() vim.g.gutentags_ctags_tagfile = '.tags' end,
+    config = function()
+      vim.g.gutentags_ctags_tagfile = '.tags'
+      vim.g.gutentags_file_list_command = 'rg --files'
+    end,
   }
 
   use {
@@ -108,7 +111,7 @@ return require("packer").startup(function(use)
     'mileszs/ack.vim',
     config = function()
       vim.g.ackprg = 'rg --vimgrep --smart-case'
-      vim.api.nvim_set_keymap('n', '<leader>*', ':AckFromSearch!<CR>', {noremap = true})
+      vim.api.nvim_set_keymap('n', '<leader>*', '*:AckFromSearch!<CR>', {noremap = true})
       vim.api.nvim_set_keymap('n', '<leader>/', ':Ack!<Space>', {noremap = true})
     end
   }
@@ -145,6 +148,16 @@ return require("packer").startup(function(use)
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
     config = function() vim.g.undotree_SetFocusWhenToggle = 1 end,
+  }
+
+  use {
+    'nathanaelkane/vim-indent-guides',
+    cmd = 'IndentGuidesToggle',
+    config = function()
+      vim.g.indent_guides_start_level = 2
+      vim.g.indent_guides_guide_size = 1
+      vim.api.nvim_set_keymap('n', '<leader>ig', ':IndentGuidesToggle<CR>', {noremap = true})
+    end
   }
 
 end)

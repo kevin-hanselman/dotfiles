@@ -39,7 +39,7 @@
     stat = status
     oops = reset HEAD~
     lg = log --graph --abbrev-commit --date=relative \
-        --pretty=format:'%C(auto)%h %w(0, 0, 7)%s %Cgreen(%cr) %C(bold blue)<%an>%C(auto)%+d'
+        --pretty=format:'%C(auto)%h %w(0, 0, 7)%s %Cgreen(%cr) %C(bold blue)<%ae>%C(auto)%+d'
     dlg = log --graph --oneline --simplify-by-decoration
 
 [credential]
@@ -47,3 +47,6 @@
 
 [include]
     path = ./.git.identity
+
+[init]
+    defaultBranch = main
