@@ -45,7 +45,7 @@ return require("packer").startup(function(use)
           }
         }
       }
-      vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope find_files hidden=true<CR>', {noremap = true})
+      vim.api.nvim_set_keymap('n', '<C-p>', ':Telescope git_files hidden=true<CR>', {noremap = true})
       vim.api.nvim_set_keymap('n', '<leader>pb', ':Telescope buffers<CR>', {noremap = true})
       vim.api.nvim_set_keymap('n', '<leader>pt', ':Telescope tags<CR>', {noremap = true})
     end,

@@ -29,7 +29,7 @@ function append_to_path
     end
 end
 
-append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/
+append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/ /opt/homebrew/bin
 
 if test -e /usr/share/autojump/autojump.fish
     source /usr/share/autojump/autojump.fish

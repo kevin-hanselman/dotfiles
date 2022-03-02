@@ -2,14 +2,25 @@
 
 set -euo pipefail
 
+readlink_cmd=readlink
+
+# Adapted from: https://gist.github.com/bittner/5436f3dc011d43ab7551
+[[ `uname` == 'Darwin' ]] && {
+	which greadlink > /dev/null && {
+		readlink_cmd=greadlink
+	} || {
+		echo 'ERROR: GNU coreutils required for Mac.'
+		echo 'You may use homebrew to install them: brew install coreutils'
+		exit 1
+	}
+}
+
 prog=$(basename "$0")
 
 usage() {
     echo "usage: $prog [options] <subdirectory ... >"
     echo
     echo "Configuration file manager | github.com/kevlar1818/dotfiles"
-    echo
-    echo "Copyright 2014-2020 Kevin Hanselman (See LICENSE or source)"
     echo
     echo "Arguments:"
     echo "  subdirectory    symlinks all files in the given subdirectory"
@@ -40,7 +51,7 @@ link_file() {
     # relpath_source_file is a relative path starting inside a dotfiles sub-dir
     local relpath_source_file="$2"
     local fullpath_source_file
-    fullpath_source_file=$(readlink -m "${subdir}/${relpath_source_file}")
+    fullpath_source_file=$("$readlink_cmd" -m "${subdir}/${relpath_source_file}")
 
     [ -f "$fullpath_source_file" ] || error "File '$fullpath_source_file' does not exist."
 
