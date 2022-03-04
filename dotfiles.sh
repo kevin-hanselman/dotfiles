@@ -5,33 +5,35 @@ set -euo pipefail
 readlink_cmd=readlink
 
 # Adapted from: https://gist.github.com/bittner/5436f3dc011d43ab7551
-[[ `uname` == 'Darwin' ]] && {
-	which greadlink > /dev/null && {
-		readlink_cmd=greadlink
-	} || {
-		echo 'ERROR: GNU coreutils required for Mac.'
-		echo 'You may use homebrew to install them: brew install coreutils'
-		exit 1
-	}
-}
+if [[ "$(uname)" == 'Darwin' ]]; then
+    if which greadlink > /dev/null; then
+        readlink_cmd=greadlink
+    else
+        echo 'GNU coreutils required for Mac. You may use homebrew to install them:'
+        echo
+        echo '    brew install coreutils'
+        exit 1
+    fi
+fi
 
 prog=$(basename "$0")
 
 usage() {
     echo "usage: $prog [options] <subdirectory ... >"
     echo
-    echo "Configuration file manager | github.com/kevlar1818/dotfiles"
+    echo 'Configuration file manager'
     echo
-    echo "Arguments:"
-    echo "  subdirectory    symlinks all files in the given subdirectory"
+    echo 'Arguments:'
+    echo '  subdirectory    symlinks all files in the given subdirectory'
     echo
-    echo "Options:"
-    echo "  -n              show what would be done, but take no other action"
-    echo "  -r              remove symlinks and restore backups if present"
-    echo "  -C              copy files rather than using symlinks"
-    echo "  -t TARGET       use TARGET as the base target directory"
-    echo "                  (defaults to \$HOME)"
-    echo "  -h              show this help text and exit"
+    echo 'Options:'
+    echo '  -n              show what would be done, but take no other action'
+    echo '  -r              remove symlinks and restore backups if present'
+    echo '  -C              copy files rather than using symlinks'
+    echo '  -t TARGET       use TARGET as the base target directory'
+    # shellcheck disable=SC2016
+    echo '                  (defaults to $HOME)'
+    echo '  -h              show this help text and exit'
 }
 
 warn() {

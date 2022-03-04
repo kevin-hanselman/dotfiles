@@ -41,6 +41,7 @@
     lg = log --graph --abbrev-commit --date=relative \
         --pretty=format:'%C(auto)%h %w(0, 0, 7)%s %Cgreen(%cr) %C(bold blue)<%ae>%C(auto)%+d'
     dlg = log --graph --oneline --simplify-by-decoration
+    fpa = fetch --prune --all
 
 [credential]
     helper = cache --timeout=300

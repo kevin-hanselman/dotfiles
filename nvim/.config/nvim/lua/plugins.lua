@@ -72,7 +72,7 @@ return require("packer").startup(function(use)
     config = function()
       require('nvim-treesitter.configs').setup {
         -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-        ensure_installed = {"go", "python", "toml", "fish", "hcl"},
+        ensure_installed = {"go", "python", "toml", "fish", "hcl", "julia"},
         highlight = { enable = true },
       }
     end,

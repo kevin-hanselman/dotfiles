@@ -10,7 +10,7 @@ function on_tty
     not set -q DISPLAY; and set -q XDG_VTNR; and test $XDG_VTNR -eq $argv[1]
 end
 
-if status is-login; and on_tty 1; and test -z (pgrep -x startx)
+if command -q startx; and status is-login; and on_tty 1; and test -z (pgrep -x startx)
     exec startx
     exit
 end
