@@ -27,10 +27,18 @@ return require("packer").startup(function(use)
   -- Packer can manage itself
   use "wbthomason/packer.nvim"
 
-  -- Language Server Protocol configuration
+  -- LSP and auto-completion
   use {
-    "neovim/nvim-lspconfig",
-    config = function() require('config.lspconfig') end,
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'neovim/nvim-lspconfig',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+    },
+    config = function() require('config.lsp') end,
   }
 
   -- A Swiss Army Knife for finding things; a modern ctrlp.vim
@@ -56,13 +64,6 @@ return require("packer").startup(function(use)
     'dense-analysis/ale',
     ft = {'sh', 'bash', 'zsh', 'markdown'},
     config = function() vim.g.ale_python_mypy_options = '--ignore-missing-imports' end
-  }
-
-  -- Auto-completion
-  use {
-    "hrsh7th/nvim-compe",
-    event = "InsertEnter",
-    config = function() require('config.compe') end,
   }
 
   -- Treesitter support for neovim
