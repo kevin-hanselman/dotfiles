@@ -1,6 +1,6 @@
 weather.rc
 ticker_config.py
 .git.identity
-.tags
+.tags*
 
 __pycache__/

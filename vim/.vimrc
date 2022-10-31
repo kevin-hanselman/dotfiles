@@ -159,6 +159,7 @@ autocmd Filetype lua setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype json setlocal ts=2 sw=2 sts=2 expandtab
 autocmd Filetype go setlocal noexpandtab
 autocmd Filetype yaml setlocal ts=2 sw=2 sts=2 expandtab
+autocmd Filetype hcl setlocal ts=2 sw=2 sts=2 expandtab nosmartindent
 autocmd Filetype python setlocal colorcolumn=80 nosmartindent
 autocmd Filetype markdown setlocal colorcolumn=80 tw=80
 autocmd Filetype elixir setlocal colorcolumn=80 ts=2 sw=2 sts=2 expandtab nosmartindent

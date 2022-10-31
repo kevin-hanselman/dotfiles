@@ -29,10 +29,10 @@ function append_to_path
     end
 end
 
-append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/ /opt/homebrew/bin
+append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/ /opt/homebrew/bin ~/.rd/bin
 
-if test -e /usr/share/autojump/autojump.fish
-    source /usr/share/autojump/autojump.fish
+if test -d ~/.kube/conf.d
+    set -x KUBECONFIG (find ~/.kube/conf.d -type f -name '*.y?ml' | tr '\n' ':' | sed 's/:$//')
 end
 
 set -x EDITOR nvim
@@ -40,6 +40,8 @@ alias vim=nvim
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias kc="kubectl"
+alias kcx="kubectx"
+alias knx="kubens"
 alias diff="git diff --no-index"
 alias dc="docker-compose"
 

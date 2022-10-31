@@ -44,7 +44,7 @@ function git_status
 
     set -l git_status (git status --porcelain 2>/dev/null | \
                        cut -c1-2 | \
-                       sort | uniq -c | sed 's/^\s*//')
+                       sort | uniq -c | sed 's/^ *//')
     set -l gs
     for line in $git_status
         set -l count (echo $line | cut -d' ' -f1)
@@ -57,12 +57,13 @@ function git_status
             case 'U*' '*U' 'DD' 'AA'
                 set gs "$gs"(set_color red)'!'
             case '*'
+                # If staged for commit
                 if echo $symbol | grep -q '^[AMRCD]'
                     set gs $gs(set_color green)
                 else
                     set gs $gs(set_color yellow)
                 end
-                set gs "$gs"(echo $symbol | sed 's/\s*//g')
+                set gs "$gs"(echo $symbol | sed 's/ *//g')
         end
         set gs "$gs"(set_color normal)
     end
@@ -80,4 +81,3 @@ function fish_right_prompt
     git_status
     vi_mode
 end
-
