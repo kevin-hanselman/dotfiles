@@ -49,7 +49,56 @@ local changeFocus = function(cardinalDirection)
 end
 
 hs.hotkey.bind(hyper, "h", function() changeFocus("west") end)
+hs.hotkey.bind(hyper, "j", function()
+  hs.window.focusedWindow():sendToBack()
+end)
 hs.hotkey.bind(hyper, "l", function() changeFocus("east") end)
+
+local getLayoutsForScreen = function(screen)
+  local layouts = nil
+  if screen:frame().aspect > 2 then
+    layouts = {
+      hs.geometry.rect(0, 0, 0.3333, 1), -- left third
+      hs.geometry.rect(0.3333, 0, 0.3333, 1), -- middle third
+      hs.geometry.rect(0.6667, 0, 0.3333, 1), -- last third
+    }
+  else
+    layouts = {
+      hs.layout.left50,
+      hs.layout.right50,
+    }
+  end
+  for k, v in pairs(layouts) do
+    layouts[k] = screen:fromUnitRect(v)
+  end
+  return layouts
+end
+
+local selectBestRectForMove = function(cardinalDirection, candidateRects, currentRect)
+  assert(
+    cardinalDirection == "east" or cardinalDirection == "west",
+    "invalid cardinalDirection"
+  )
+  local bestDistance = 99999999
+  local bestRect = nil
+  for _, candidateRect in pairs(candidateRects) do
+    local xDiff = currentRect.center.x - candidateRect.center.x
+    local correctDirection = false
+    if cardinalDirection == "east" then
+      correctDirection = xDiff < 0
+    else
+      correctDirection = xDiff > 0
+    end
+    dist = currentRect:distance(candidateRect)
+    -- If dist is really small, our current rect is probably already
+    -- at the given candidate location; ignore a no-op move.
+    if dist > 0.01 and correctDirection and dist < bestDistance then
+      bestDistance = dist
+      bestRect = candidateRect
+    end
+  end
+  return bestRect
+end
 
 local moveFocusedWindow = function(cardinalDirection)
   assert(
@@ -57,60 +106,68 @@ local moveFocusedWindow = function(cardinalDirection)
     "invalid cardinalDirection"
   )
   local focusedWindow = hs.window.focusedWindow()
-  local layout = nil
-  if cardinalDirection == "west" then
-    layout = hs.layout.left50
+  local screen = hs.screen.mainScreen()
+  local adjacentScreen = nil
+
+  if cardinalDirection == "east" then
+    adjacentScreen = screen:toEast(nil, true)
   else
-    layout = hs.layout.right50
+    adjacentScreen = screen:toWest(nil, true)
   end
 
-  local origFrame = focusedWindow:frame()
-  focusedWindow:move(layout)
-  local newFrame = focusedWindow:frame()
+  local candidateRects = getLayoutsForScreen(screen)
 
-  -- If the window hasn't moved, we're already in the correct position. If so,
-  -- push the window to the adjacent side of the adjacent screen.
-  -- hs.window:moveOneScreenWest() (etc.) is inadequate for this because it
-  -- retains the window layout (e.g. left50).
-  if origFrame:equals(newFrame) then
-    local newScreen = nil
-    local layout = nil
-    if cardinalDirection == "west" then
-      newScreen = focusedWindow:screen():toWest()
-      layout = hs.layout.right50
-    else
-      newScreen = focusedWindow:screen():toEast()
-      layout = hs.layout.left50
+  if adjacentScreen ~= nil then
+    local adjacentRects = getLayoutsForScreen(adjacentScreen)
+    for _, v in pairs(adjacentRects) do
+      table.insert(candidateRects, v)
     end
-    -- Don't move the window if there's no adjacent screen in the given
-    -- direction.
-    if newScreen ~= nil then
-      focusedWindow:move(layout, newScreen)
-    end
+  end
+
+  local moveRect = selectBestRectForMove(
+    cardinalDirection,
+    candidateRects,
+    focusedWindow:frame()
+  )
+
+  if moveRect ~= nil then
+    focusedWindow:move(moveRect)
   end
 end
 
 hs.hotkey.bind(shift_hyper, "h", function() moveFocusedWindow("west") end)
 hs.hotkey.bind(shift_hyper, "l", function() moveFocusedWindow("east") end)
 
-hs.hotkey.bind(hyper, "j", function()
-  hs.window.focusedWindow():sendToBack()
-end)
-
-hs.hotkey.bind(shift_hyper, "j", function()
-  local focusedWindow = hs.window.focusedWindow()
-  focusedWindow:minimize()
+local focusOnNearbyWindow = function(window)
   -- After minimizing the focused window, no window has focus. This breaks the
   -- navigation commands that rely on a focused window. If there are other
   -- windows on the screen, focus on one of them after minimizing. If there are
   -- no app windows, Finder will be focused.
-  local otherWindows = focusedWindow:otherWindowsSameScreen()
+  local otherWindows = window:otherWindowsSameScreen()
   if #otherWindows > 0 then
     otherWindows[1]:focus()
   end
+end
+
+hs.hotkey.bind(shift_hyper, "j", function()
+  local focusedWindow = hs.window.focusedWindow()
+  focusOnNearbyWindow(focusedWindow)
+  focusedWindow:minimize()
+end)
+
+hs.hotkey.bind(hyper, "q", function()
+  local focusedWindow = hs.window.focusedWindow()
+  focusOnNearbyWindow(focusedWindow)
+  focusedWindow:close()
 end)
 
 hs.hotkey.bind(shift_hyper, "k", function()
+  local focusedWindow = hs.window.focusedWindow()
+  -- TODO: If Finder is focused, un-minimize a window from the list of minimized
+  -- windows on the current space/screen.
+  --if focusedWindow:application():name() == "Finder" then
+  --  print(hs.inspect(hs.screen.mainScreen()))
+  --end
   focusedWindow:maximize()
 end)
 

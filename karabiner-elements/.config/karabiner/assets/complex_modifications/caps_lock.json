@@ -1,0 +1,36 @@
+{
+  "title": "Caps Lock as hyper key",
+  "rules": [
+    {
+      "description": "Caps Lock as hyper key (rcmd, rctrl, ropt)",
+      "manipulators": [
+        {
+          "description": "capslock = esc(click) | hyper(hold)",
+          "type": "basic",
+          "from": {
+            "key_code": "caps_lock",
+            "modifiers": {
+              "optional": [
+                "any"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "right_command",
+              "modifiers": [
+                "right_control",
+                "right_option"
+              ]
+            }
+          ],
+          "to_if_alone": [
+            {
+              "key_code": "escape"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

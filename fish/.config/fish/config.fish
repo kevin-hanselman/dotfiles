@@ -23,7 +23,10 @@ end
 
 function append_to_path
     for dir in $argv
-        if test -d $dir
+        # Ensure dir is a directory and that it's not already added to PATH.
+        # Because fish starts tmux which starts fish, this last condition
+        # prevents duplicate PATH values.
+        if test -d $dir; and not contains $dir $PATH
             set -x PATH $PATH $dir
         end
     end
@@ -32,11 +35,15 @@ end
 append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/ /opt/homebrew/bin ~/.rd/bin
 
 if test -d ~/.kube/conf.d
-    set -x KUBECONFIG (find ~/.kube/conf.d -type f -name '*.y?ml' | tr '\n' ':' | sed 's/:$//')
+    set -x KUBECONFIG (
+        find ~/.kube/conf.d -type f -maxdepth 1 -name '*.y?ml' \
+        | tr '\n' ':' \
+        | sed 's/:$//'
+    )
 end
 
 set -x EDITOR nvim
-alias vim=nvim
+alias vim=hx
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias kc="kubectl"
