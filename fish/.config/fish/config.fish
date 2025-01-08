@@ -1,6 +1,6 @@
 #!/usr/bin/fish
 
-set fish_greeting ''  # No greeting
+set fish_greeting '' # No greeting
 
 if not status is-interactive
     exit
@@ -21,18 +21,15 @@ function fish_default_mode_prompt
     # Display mode using fish_right_prompt instead
 end
 
-function append_to_path
-    for dir in $argv
-        # Ensure dir is a directory and that it's not already added to PATH.
-        # Because fish starts tmux which starts fish, this last condition
-        # prevents duplicate PATH values.
-        if test -d $dir; and not contains $dir $PATH
-            set -x PATH $PATH $dir
-        end
-    end
+if test -d /opt/homebrew
+    # Homebrew recommends putting its bin dirs at the front of the path so they
+    # override system binaries.
+    fish_add_path --prepend /opt/hombrew/bin /opt/homebrew/sbin
 end
-
-append_to_path ~/.bin/ ~/go/bin/ ~/.local/bin/ /opt/homebrew/bin ~/.rd/bin
+if test -d ~/.rd/bin
+    fish_add_path --append ~/.rd/bin
+end
+fish_add_path --append ~/go/bin ~/.local/bin
 
 if test -d ~/.kube/conf.d
     set -x KUBECONFIG (
@@ -42,8 +39,7 @@ if test -d ~/.kube/conf.d
     )
 end
 
-set -x EDITOR nvim
-alias vim=hx
+set -x EDITOR hx
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias kc="kubectl"

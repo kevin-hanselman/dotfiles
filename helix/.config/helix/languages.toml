@@ -1,10 +1,11 @@
-[language-server.pyright]
-command = "pyright-langserver"
-args = ["--stdio"]
+#[language-server.pyright]
+#command = "pyright-langserver"
+#args = ["--stdio"]
 
 [[language]]
 name = "python"
 roots = ["pyproject.toml", "setup.py", "poetry.lock"]
+rulers = [100]
 language-servers = [
-  { name = "pyright" },
+  { name = "basedpyright" },
 ]

@@ -8,8 +8,6 @@ function conf --description 'edit common config files'
             command $EDITOR (status --current-filename)
         case 'vim'
             command $EDITOR ~/.vimrc
-        case 'plug*'
-            command $EDITOR ~/.vimrc.plugins
         case 'X*'
             command $EDITOR ~/.Xresources
         case 'xini*'
@@ -26,18 +24,12 @@ function conf --description 'edit common config files'
             command $EDITOR ~/.config/polybar/config
         case 'super*'
             command $EDITOR ~/.config/bspwm/supervisord.conf
-        case 'compton'
-            command $EDITOR ~/.config/picom.conf
-        case 'picom'
-            command $EDITOR ~/.config/picom.conf
         case 'fish'
             command $EDITOR ~/.config/fish/config.fish
         case '*bind*'
             command $EDITOR ~/.config/fish/functions/fish_user_key_bindings.fish
         case 'git*'
             command $EDITOR ~/.gitconfig
-        case 'ala*'
-            command $EDITOR ~/.config/alacritty/alacritty.yml
         case 'kit*'
             command $EDITOR ~/.config/kitty/kitty.conf
         case '*'
