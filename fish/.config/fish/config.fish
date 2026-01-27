@@ -39,14 +39,15 @@ if test -d ~/.kube/conf.d
     )
 end
 
-set -x EDITOR hx
+set -x EDITOR helix
+alias hx=helix
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias kc="kubectl"
 alias kcx="kubectx"
 alias knx="kubens"
 alias diff="git diff --no-index"
-alias dc="docker-compose"
+alias dc="docker compose"
 
 if command -q tmux; and not set -q TMUX
     exec tmux
