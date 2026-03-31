@@ -4,9 +4,9 @@ function conf --description 'edit common config files'
         return 1
     end
     switch $argv
-        case 'conf'
+        case conf
             command $EDITOR (status --current-filename)
-        case 'vim'
+        case vim
             command $EDITOR ~/.vimrc
         case 'X*'
             command $EDITOR ~/.Xresources
@@ -14,20 +14,22 @@ function conf --description 'edit common config files'
             command $EDITOR ~/.xinitrc
         case 'xpro*'
             command $EDITOR ~/.xprofile
-        case 'tmux'
+        case tmux
             command $EDITOR ~/.tmux.conf
         case 'sxh*'
             command $EDITOR ~/.config/sxhkd/sxhkdrc
-        case 'bspwm'
+        case bspwm
             command $EDITOR ~/.config/bspwm/bspwmrc
         case 'poly*'
             command $EDITOR ~/.config/polybar/config
         case 'super*'
             command $EDITOR ~/.config/bspwm/supervisord.conf
-        case 'fish'
+        case fish
             command $EDITOR ~/.config/fish/config.fish
         case '*bind*'
             command $EDITOR ~/.config/fish/functions/fish_user_key_bindings.fish
+        case 'ghost*'
+            command $EDITOR ~/.config/ghostty/config
         case 'git*'
             command $EDITOR ~/.gitconfig
         case 'kit*'

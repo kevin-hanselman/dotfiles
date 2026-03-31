@@ -40,7 +40,7 @@
     pruneTags = true
 
 [rerere]
-    enabled = true
+    enabled = false
 
 [alias]
     st = status

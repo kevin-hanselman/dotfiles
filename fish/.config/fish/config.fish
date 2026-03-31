@@ -21,15 +21,14 @@ function fish_default_mode_prompt
     # Display mode using fish_right_prompt instead
 end
 
-if test -d /opt/homebrew
-    # Homebrew recommends putting its bin dirs at the front of the path so they
-    # override system binaries.
-    fish_add_path --prepend /opt/hombrew/bin /opt/homebrew/sbin
+if command -q fzf
+    fzf --fish | source
 end
-if test -d ~/.rd/bin
-    fish_add_path --append ~/.rd/bin
-end
-fish_add_path --append ~/go/bin ~/.local/bin
+
+# Homebrew recommends putting its bin dirs at the front of the path so they
+# override system binaries.
+fish_add_path --prepend /opt/hombrew/bin /opt/homebrew/sbin
+fish_add_path --append ~/go/bin ~/.local/bin ~/.cargo/bin
 
 if test -d ~/.kube/conf.d
     set -x KUBECONFIG (
@@ -39,8 +38,14 @@ if test -d ~/.kube/conf.d
     )
 end
 
-set -x EDITOR helix
-alias hx=helix
+if command -q hx
+    set -x EDITOR hx
+else if command -q helix
+    set -x EDITOR helix
+else if command -q vi
+    set -x EDITOR vi
+end
+
 alias pg="ps -ef | grep -v 'grep' | grep -i"
 alias ff="find . -type f -iname"
 alias kc="kubectl"

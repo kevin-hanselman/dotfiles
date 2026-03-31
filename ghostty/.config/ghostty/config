@@ -1,0 +1,11 @@
+theme = "base16-phd"
+#theme = "Aardvark Blue"
+#theme = "Adventure Time"
+#theme = "Tomorrow Night Blue"
+#theme = "Nightfox"
+
+#font-family = "IBM Plex Mono"
+#font-family = "Envy Code R"
+font-family = "Iosevka Fixed Extended"
+#font-family = "Iosevka Fixed Slab Extended"
+font-size = "14"

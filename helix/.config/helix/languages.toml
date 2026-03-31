@@ -1,11 +1,14 @@
 [[language]]
 name = "python"
-roots = ["pyproject.toml", "setup.py", "poetry.lock"]
+roots = ["pyproject.toml", "setup.py"]
 rulers = [100]
 language-servers = [
   { name = "ty" },
   #{ name = "pyright" },
 ]
+
+[language-server.pyright]
+command = "basedpyright-langserver"
 
 [language-server.ty]
 command = "ty"
@@ -15,7 +18,3 @@ args = ["server"]
 inlayHints.callArgumentNames = false
 experimental.rename = true
 experimental.autoImport = true
-
-[language-server.pyright]
-command = "basedpyright-langserver"
-args = ["--stdio"]

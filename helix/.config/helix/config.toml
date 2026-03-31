@@ -10,5 +10,8 @@ insert = "bar"
 normal = "block"
 select = "underline"
 
+[editor.inline-diagnostics]
+cursor-line = "hint"
+
 [editor.file-picker]
 hidden = false
